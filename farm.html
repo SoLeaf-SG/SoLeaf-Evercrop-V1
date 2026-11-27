@@ -4,47 +4,77 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Farm portal · Evercrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="stock.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet">
   <script src="site.js" defer></script>
   <script src="stock.js" defer></script>
+  <script src="shop.js" defer></script>
 </head>
 <body data-stock-view="farm">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
+    <symbol id="i-orders" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7 13.5 15.5l-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21 7 14.2 2 9.3l6.9-1z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></symbol>
+  </svg>
+
   <header class="header portal-sidebar" id="top" tabindex="-1">
     <div class="portal-identity">
       <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
       <p>Farm workspace</p>
     </div>
-    <nav aria-label="Portal navigation">
-      <a href="#overview" aria-current="page">Overview</a>
-      <a href="#inventory">Inventory</a>
-      <a class="portal-logout" href="login.html">Log out</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="bars" aria-hidden="true"></span></button>
+    <nav id="site-nav" aria-label="Portal navigation">
+      <a href="#overview" aria-current="page"><svg class="icon"><use href="#i-grid"/></svg>Overview</a>
+      <a href="#orders"><svg class="icon"><use href="#i-orders"/></svg>Orders<span class="nav-count" id="nav-new-count"></span></a>
+      <a href="#inventory"><svg class="icon"><use href="#i-box"/></svg>Inventory</a>
+      <a href="#assistant"><svg class="icon"><use href="#i-bot"/></svg>AI assistant</a>
+      <a href="#ask"><svg class="icon"><use href="#i-chat"/></svg>Ask Evercrop</a>
+      <a class="portal-logout" href="login.html"><svg class="icon"><use href="#i-logout"/></svg>Log out</a>
     </nav>
   </header>
+
   <main class="portal-workspace">
-    <div id="overview">
-    <section class="stock-hero" aria-labelledby="overview-title">
-      <div class="wrap">
-        <p class="eyebrow">FARM PORTAL · GARDEN ROW FARM</p>
-        <h1 id="overview-title">Stock overview</h1>
-        <p>See how many packs are available and which items are running low.</p>
-      </div>
-    </section>
-    <section class="wrap overview-content" aria-labelledby="overview-list-title">
-      <dl id="stock-summary" class="stock-summary"></dl>
-      <div class="overview-panel">
-        <div class="overview-panel-header">
-          <div><h2 id="overview-list-title">Stock to watch</h2><p id="overview-description"></p></div>
-          <a class="button secondary" href="#inventory">Open inventory</a>
+    <section id="overview" aria-labelledby="overview-title">
+      <div class="portal-hero">
+        <div>
+          <p class="eyebrow">GARDEN ROW FARM</p>
+          <h1 id="overview-title">Good morning 🌱</h1>
+          <p>Your WhatsApp assistant has been busy. Here’s today at a glance.</p>
         </div>
-        <ul class="overview-list" id="overview-list"></ul>
+        <span class="live-pill"><i></i>Assistant online</span>
+      </div>
+      <dl class="kpis" id="kpis"></dl>
+      <div class="portal-grid">
+        <div class="panel">
+          <div class="panel-head"><h2>Latest WhatsApp orders</h2><a href="#orders">View all</a></div>
+          <p class="panel-note">Collected by your assistant, newest first.</p>
+          <ul class="order-mini" id="overview-orders"></ul>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Stock to watch</h2><a href="#inventory">Update stock</a></div>
+          <p class="panel-note" id="overview-description"></p>
+          <ul class="overview-list" id="overview-list"></ul>
+        </div>
       </div>
     </section>
-    </div>
-    <section class="wrap stock-section" id="inventory" aria-labelledby="stock-heading">
+
+    <section id="orders" aria-labelledby="orders-title" hidden>
+      <div class="page-head"><h1 id="orders-title">Orders</h1><p>Orders your assistant collected on WhatsApp. Move each one along as you pack and hand it over.</p></div>
+      <ul class="order-cards" id="orders-list"></ul>
+    </section>
+
+    <section id="inventory" aria-labelledby="stock-heading" hidden>
+      <div class="page-head"><h1 id="stock-heading">Inventory</h1><p>Update your packs once — the assistant and the shop use the new numbers straight away.</p></div>
       <div class="stock-toolbar">
-        <div><h2 id="stock-heading">Produce inventory</h2><p id="stock-count" role="status"></p></div>
         <div class="stock-filters">
           <label>Search produce<input type="search" id="stock-search" placeholder="e.g. bok choy"></label>
           <label>Availability<select id="stock-filter">
@@ -54,15 +84,93 @@
             <option value="out">Sold out</option>
           </select></label>
         </div>
+        <p id="stock-count" role="status"></p>
       </div>
       <div class="stock-table-wrap" role="region" aria-label="Inventory table" tabindex="0">
         <table class="stock-table">
-          <thead><tr><th scope="col">Produce</th><th scope="col">Pack size</th><th scope="col">Available packs</th><th scope="col">Price per pack</th><th scope="col">Status</th></tr></thead>
+          <thead><tr><th scope="col">Produce</th><th scope="col">Pack size</th><th scope="col">Packs available</th><th scope="col">Price per pack</th><th scope="col">Status</th></tr></thead>
           <tbody id="stock-list"></tbody>
         </table>
       </div>
       <p id="stock-empty" class="stock-empty" hidden>No produce matches these filters.</p>
       <noscript><p>Enable JavaScript to view stock.</p></noscript>
+    </section>
+
+    <section id="assistant" aria-labelledby="assistant-title" hidden>
+      <div class="page-head"><h1 id="assistant-title">AI assistant</h1><p>Recent WhatsApp chats your assistant handled for you.</p></div>
+      <div class="assistant-settings">
+        <span><i class="dot"></i>Online 24/7</span>
+        <span>Replies in English &amp; 中文</span>
+        <span>Hands off to you when asked for a human</span>
+      </div>
+      <div class="chat-cards">
+        <article class="panel chat-card">
+          <header><span class="av" aria-hidden="true">ML</span><div><strong>Mei Ling</strong><small>Today, 8:40am</small></div><span class="tag">Order taken</span></header>
+          <div class="wa-chat">
+            <div class="wa-msg in">Hi, what’s fresh today?<small>8:40</small></div>
+            <div class="wa-msg out">Morning! 🌱 Bok choy S$3.20, cherry tomatoes S$4.80, salad greens S$4.50.<small>8:40</small></div>
+            <div class="wa-msg in">2 bok choy + 1 tomatoes, pickup Sat<small>8:41</small></div>
+            <div class="wa-msg out">Done ✅ S$11.20 · pickup Sat 9am. See you!<small>8:42</small></div>
+          </div>
+        </article>
+        <article class="panel chat-card">
+          <header><span class="av" aria-hidden="true">AT</span><div><strong>Aisha T.</strong><small>Today, 7:55am</small></div><span class="tag">Question answered</span></header>
+          <div class="wa-chat">
+            <div class="wa-msg in">Do you still have kailan?<small>7:55</small></div>
+            <div class="wa-msg out">Sorry, kailan is sold out today 🙏 Next harvest is Thursday. Want me to save you a pack?<small>7:55</small></div>
+            <div class="wa-msg in">Yes please!<small>7:56</small></div>
+            <div class="wa-msg out">Saved ✅ I’ll message you Thursday morning.<small>7:56</small></div>
+          </div>
+        </article>
+        <article class="panel chat-card">
+          <header><span class="av" aria-hidden="true">KW</span><div><strong>Kenneth W.</strong><small>Yesterday, 9:12pm</small></div><span class="tag warn">Handed to you</span></header>
+          <div class="wa-chat">
+            <div class="wa-msg in">Can I order 20 packs for a restaurant every week?<small>21:12</small></div>
+            <div class="wa-msg out">That sounds great! A bulk order needs the farm team — I’ve passed your request on and they’ll reply tomorrow.<small>21:12</small></div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section id="ask" aria-labelledby="ask-title" hidden>
+      <div class="page-head"><h1 id="ask-title">Ask Evercrop</h1><p>Answers about your stock, sales and orders, straight from your farm data.</p></div>
+      <div class="ask-layout">
+        <div class="ask-chat">
+          <header class="ask-head">
+            <span class="ask-av" aria-hidden="true">E</span>
+            <div><b>Ask Evercrop</b><small><i class="dot"></i>Bot online 24/7 · SoLeaf team back Mon–Sat 9am</small></div>
+            <span class="ask-badge">AI-assisted</span>
+          </header>
+          <div class="ask-log" id="ask-messages" role="log" aria-label="Conversation with Evercrop" data-greeting="Hi Garden Row Farm! I’m Ask Evercrop 🌱 Ask me what’s running low, how today’s sales are going, or what sells best."></div>
+          <div class="ask-prompts">
+            <button type="button">What’s running low?</button>
+            <button type="button">How much did I sell today?</button>
+            <button type="button">Any new orders?</button>
+            <button type="button">What sells best?</button>
+          </div>
+          <form id="ask-form" class="ask-input">
+            <label class="sr-only" for="ask-question">Your question</label>
+            <input id="ask-question" required maxlength="250" placeholder="Type a message… e.g. how many bok choy left?" autocomplete="off">
+            <button type="submit" aria-label="Send"><svg class="icon" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+          </form>
+        </div>
+        <aside class="ask-side">
+          <div class="panel">
+            <h2>I can help with</h2>
+            <ul class="help-topics">
+              <li><svg class="icon-tile"><use href="#i-box"/></svg><div><strong>Stock levels</strong><small>What’s low or sold out</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-trend"/></svg><div><strong>Today’s sales</strong><small>Orders and takings so far</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-orders"/></svg><div><strong>New orders</strong><small>What still needs packing</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-star"/></svg><div><strong>Best sellers</strong><small>What customers order most</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-tag"/></svg><div><strong>Any one product</strong><small>Packs left and price, e.g. bok choy</small></div></li>
+            </ul>
+          </div>
+          <div class="panel need-person">
+            <h2>Need a person?</h2>
+            <p>Questions about billing, your account or how the assistant replies go to the SoLeaf team. We reply Mon–Sat, 9am–6pm.</p>
+            <a class="button" href="contact.html">Contact SoLeaf</a>
+          </div>
+        </aside>
+      </div>
     </section>
   </main>
   <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></button>

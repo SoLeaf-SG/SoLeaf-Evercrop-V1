@@ -4,72 +4,83 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shopper portal · Evercrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="stock.css">
   <link rel="stylesheet" href="account.css">
-  <link rel="stylesheet" href="customer.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stock.css">
   <script src="site.js" defer></script>
+  <script src="tree.js" defer></script>
   <script src="stock.js" defer></script>
   <script src="shop.js" defer></script>
   <script src="preferences.js" defer></script>
   <script src="account.js" defer></script>
 </head>
 <body data-stock-view="shop">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></symbol>
+    <symbol id="i-orders" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M2 14h4M10 8h4M18 16h4"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+    <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3zm0 0v7"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></symbol>
+  </svg>
   <a class="customer-skip" href="#customer-main">Skip to content</a>
+
   <header class="header portal-sidebar" id="top" tabindex="-1">
     <div class="portal-identity">
       <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-      <p>Customer portal</p>
+      <p>Shopper</p>
     </div>
-    <nav aria-label="Portal navigation">
-      <a href="#overview" aria-current="page">Home</a>
-      <a href="#inventory">Browse produce</a>
-      <a href="#orders">My orders</a>
-      <a href="#rewards">Rewards</a>
-      <a href="#ask">Ask Evercrop</a>
-      <a href="#preferences">Preferences</a>
-      <a class="portal-logout" id="shop-sign-out" href="login.html">Log out</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="bars" aria-hidden="true"></span></button>
+    <nav id="site-nav" aria-label="Portal navigation">
+      <a href="#overview" aria-current="page"><svg class="icon"><use href="#i-home"/></svg>Home</a>
+      <a href="#inventory"><svg class="icon"><use href="#i-basket"/></svg>Shop<span class="nav-count" id="basket-count"></span></a>
+      <a href="#orders"><svg class="icon"><use href="#i-orders"/></svg>My orders</a>
+      <a href="#rewards"><svg class="icon"><use href="#i-sprout"/></svg>My tree</a>
+      <a href="#ask"><svg class="icon"><use href="#i-chat"/></svg>Ask Evercrop</a>
+      <a href="#preferences"><svg class="icon"><use href="#i-sliders"/></svg>Preferences</a>
+      <a class="portal-logout" id="shop-sign-out" href="login.html"><svg class="icon"><use href="#i-logout"/></svg>Log out</a>
     </nav>
   </header>
-  <main class="portal-workspace" id="customer-main" tabindex="-1">
-    <div class="wrap portal-status">
-      <p id="shop-account" class="account-note" hidden></p>
-    </div>
-    <div id="overview">
-    <section class="stock-hero" aria-labelledby="overview-title">
-      <div class="wrap market-hero">
-        <div class="market-copy">
-          <p class="eyebrow">SHOPPER PORTAL</p>
-          <h1 id="overview-title">Produce from Garden Row Farm</h1>
-          <p>Check stock, pack sizes and prices before you shop.</p>
-          <a class="button" href="#inventory">Browse produce</a>
-        </div>
-        <img class="market-photo" src="assets/farm-produce.jpg" alt="An assortment of vegetables on a table">
-      </div>
-    </section>
-    <section class="wrap customer-shortcuts" aria-labelledby="customer-shortcuts-title">
-      <h2 id="customer-shortcuts-title">Orders, rewards and help</h2>
-      <div class="customer-shortcut-grid">
-        <a href="#orders"><strong>My orders</strong><span>See your farm orders.</span></a>
-        <a href="#rewards"><strong>Rewards</strong><span>See your points and tree.</span></a>
-        <a href="#ask"><strong>Ask Evercrop</strong><span>Get help finding and cooking produce.</span></a>
-      </div>
-    </section>
-    <section class="wrap overview-content" aria-labelledby="overview-list-title">
-      <div class="overview-panel">
-        <div class="overview-panel-header">
-          <div><h2 id="overview-list-title">Available now</h2><p id="overview-description"></p></div>
-          <a class="button secondary" href="#inventory">Browse all produce</a>
-        </div>
-        <ul class="overview-list" id="overview-list"></ul>
-      </div>
-    </section>
-    </div>
-    <section class="wrap stock-section" id="inventory" aria-labelledby="stock-heading">
 
+  <main class="portal-workspace" id="customer-main" tabindex="-1">
+    <p id="shop-account" class="account-note" hidden></p>
+
+    <section id="overview" aria-labelledby="overview-title">
+      <div class="portal-hero">
+        <div>
+          <p class="eyebrow">GARDEN ROW FARM · TODAY</p>
+          <h1 id="overview-title">Hi <span id="hello-name">there</span> 👋</h1>
+          <p>Fresh veg was picked this morning. Order straight from the farm — no middleman.</p>
+          <a class="button wa" href="#inventory">Shop today’s harvest</a>
+        </div>
+        <a class="tree-mini" href="#rewards">
+          <small>Your tree</small>
+          <b id="home-stage">Seedling</b>
+          <progress id="home-progress" value="0" max="100" aria-label="Tree growth points"></progress>
+          <span><span id="home-points">0 / 100 pts</span> · +25 every order</span>
+        </a>
+      </div>
+      <div class="portal-grid">
+        <div class="panel">
+          <div class="panel-head"><h2>Fresh today</h2><a href="#inventory">See all</a></div>
+          <ul class="overview-list" id="overview-list"></ul>
+        </div>
+        <div class="latest">
+          <div class="panel-head"><h2>Latest order</h2><a href="#orders">All orders</a></div>
+          <ul class="order-cards single" id="latest-order"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="inventory" aria-labelledby="stock-heading" hidden>
+      <div class="page-head"><h1 id="stock-heading">Shop</h1><p>Pick what you want — your basket is sent to the farm as a WhatsApp order.</p></div>
       <div class="stock-toolbar">
-        <div><h1 id="stock-heading">Browse produce</h1><p id="stock-count" role="status"></p></div>
         <div class="stock-filters">
           <label>Search produce<input type="search" id="stock-search" placeholder="Try bok choy"></label>
           <label>Availability<select id="stock-filter">
@@ -79,53 +90,114 @@
             <option value="out">Sold out</option>
           </select></label>
         </div>
+        <p id="stock-count" role="status"></p>
       </div>
-      <ul id="stock-list" class="stock-grid"></ul>
-      <p id="stock-empty" class="stock-empty" hidden>No produce matches these filters.</p>
-      <noscript><p>Enable JavaScript to view stock.</p></noscript>
-    </section>
-    <section id="orders" class="wrap customer-page" aria-labelledby="orders-title" hidden>
-      <h1 id="orders-title">My orders</h1>
-      <p class="customer-intro">Keep track of your farm orders in one place.</p>
-      <div class="overview-panel">
-        <h2>No orders yet</h2>
-        <p>Start by seeing what local produce is available.</p>
-        <a class="button secondary" href="#inventory">Browse produce</a>
-      </div>
-    </section>
-    <section id="rewards" class="wrap customer-page" aria-labelledby="rewards-title" hidden>
-      <h1 id="rewards-title">Rewards</h1>
-      <p class="customer-intro">Earn points with farm orders and watch your virtual tree grow.</p>
-      <div class="overview-panel customer-rewards">
-        <div class="tree-card"><div class="tree" aria-hidden="true">🌱</div><h2>Your seedling</h2><div class="progress"><progress value="0" max="100" aria-label="Tree growth points"></progress><span>0 / 100 pts</span></div></div>
+      <div class="shop-layout">
         <div>
-          <h2>Tree milestones</h2>
-          <ul class="overview-list">
-            <li><div><strong>Seedling</strong><small>0 points</small></div></li>
-            <li><div><strong>Sapling</strong><small>50 points</small></div></li>
-            <li><div><strong>Full canopy</strong><small>100 points</small></div></li>
-          </ul>
+          <ul id="stock-list" class="stock-grid"></ul>
+          <p id="stock-empty" class="stock-empty" hidden>No produce matches these filters.</p>
+          <noscript><p>Enable JavaScript to view stock.</p></noscript>
+        </div>
+        <aside class="panel basket" aria-labelledby="basket-title">
+          <h2 id="basket-title">Your basket</h2>
+          <p class="basket-empty" id="basket-empty">Add some veg to get started.</p>
+          <ul class="basket-lines" id="basket-lines"></ul>
+          <div class="basket-total"><span>Total</span><span id="basket-total">S$0.00</span></div>
+          <label>Pickup or delivery<select id="basket-method">
+            <option>Pickup · Sat 9am</option>
+            <option>Pickup · Sun 9am</option>
+            <option>Delivery · Sat 2–5pm</option>
+          </select></label>
+          <button class="button wa" type="button" id="basket-send" disabled><svg class="icon"><use href="#i-chat"/></svg>Send order on WhatsApp</button>
+          <p class="basket-note">Pay the farm at pickup or by PayNow. +25 pts for your tree.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="orders" aria-labelledby="orders-title" hidden>
+      <div class="page-head"><h1 id="orders-title">My orders</h1><p>Every order you send to the farm, and where it’s at.</p></div>
+      <ul class="order-cards" id="my-orders"></ul>
+    </section>
+
+    <section id="rewards" aria-labelledby="rewards-title" hidden>
+      <div class="page-head"><h1 id="rewards-title">My tree</h1><p>Every order waters your tree. Grow it to full size for a free harvest pack.</p></div>
+      <div class="reward-layout">
+        <div class="panel tree-panel">
+          <svg class="tree-art" viewBox="0 0 240 220" aria-hidden="true">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3f1fb"/><stop offset="1" stop-color="#f7fbf2"/></linearGradient>
+              <radialGradient id="fruit" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#ff9a76"/><stop offset=".6" stop-color="#e8452c"/><stop offset="1" stop-color="#b52a18"/></radialGradient>
+              <linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#4d2f1b"/><stop offset=".5" stop-color="#7a4c2c"/><stop offset="1" stop-color="#4d2f1b"/></linearGradient>
+              <path id="leaf" d="M0 0C-5-4-7-11-1-18 0-19 1-19 1-18 7-11 5-4 0 0Z"/>
+            </defs>
+            <rect width="240" height="220" rx="16" fill="url(#sky)"/>
+            <circle class="sun" cx="200" cy="38" r="16"/>
+            <g class="cloud"><ellipse cx="46" cy="40" rx="18" ry="7"/><ellipse cx="58" cy="35" rx="12" ry="8"/></g>
+            <path d="M0 202Q60 190 120 194T240 200V220H0Z" fill="#9bc36b"/>
+            <path d="M0 210Q70 200 130 205T240 208V220H0Z" fill="#86b257"/>
+            <ellipse cx="120" cy="199" rx="30" ry="5" fill="#6d4a2e" opacity=".55"/>
+            <g id="plant"></g>
+            <g id="drops"></g>
+          </svg>
+          <h2 id="reward-stage">Seedling</h2>
+          <div class="progress"><progress id="reward-progress" value="0" max="100" aria-label="Tree growth points"></progress><span id="reward-points" aria-live="polite">0 / 100 pts</span></div>
+        </div>
+        <div class="panel">
+          <h2>How it grows</h2>
+          <ol class="milestones">
+            <li><span>🌱</span><div><strong>Seedling</strong><small>Your first order plants it</small></div><b>0</b></li>
+            <li><span>🌿</span><div><strong>Sapling</strong><small>Two orders in</small></div><b>50</b></li>
+            <li><span>🌳</span><div><strong>Full tree</strong><small>Unlocks a free harvest pack</small></div><b>100</b></li>
+          </ol>
+          <a class="button" href="#inventory">Order to earn +25 pts</a>
         </div>
       </div>
     </section>
-    <section id="ask" class="wrap customer-page" aria-labelledby="ask-title" hidden>
-      <h1 id="ask-title">Ask Evercrop</h1>
-      <p class="customer-intro">Ask about stock, prices, pack sizes, or what to cook.</p>
-      <div class="overview-panel customer-chat">
-        <div class="customer-messages" id="ask-messages" role="log" aria-label="Conversation with Evercrop"><p>Hi! Ask me what’s in stock or what you can cook with bok choy.</p></div>
-        <div class="ask-prompts">
-          <button type="button" class="button secondary">What’s in stock?</button>
-          <button type="button" class="button secondary">How do I cook bok choy?</button>
+
+    <section id="ask" aria-labelledby="ask-title" hidden>
+      <div class="page-head"><h1 id="ask-title">Ask Evercrop</h1><p>Quick answers about stock, prices and what to cook.</p></div>
+      <div class="ask-layout">
+        <div class="ask-chat">
+          <header class="ask-head">
+            <span class="ask-av" aria-hidden="true">E</span>
+            <div><b>Ask Evercrop</b><small><i class="dot"></i>Bot online 24/7 · Farm team back Mon–Sat 9am</small></div>
+            <span class="ask-badge">AI-assisted</span>
+          </header>
+          <div class="ask-log" id="ask-messages" role="log" aria-label="Conversation with Evercrop" data-greeting="Hi! I’m Ask Evercrop 🌱 I can check what’s in stock at Garden Row Farm, prices, and simple ways to cook it."></div>
+          <div class="ask-prompts">
+            <button type="button">What’s in stock?</button>
+            <button type="button">How do I cook bok choy?</button>
+            <button type="button">Price of cherry tomatoes?</button>
+            <button type="button">Is kailan available?</button>
+          </div>
+          <form id="ask-form" class="ask-input">
+            <label class="sr-only" for="ask-question">Your question</label>
+            <input id="ask-question" required maxlength="250" placeholder="Type a message…" autocomplete="off">
+            <button type="submit" aria-label="Send"><svg class="icon" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+          </form>
         </div>
-        <form id="ask-form">
-          <label for="ask-question">Your question</label>
-          <div class="ask-input"><input id="ask-question" required maxlength="250" placeholder="Ask about a vegetable"><button class="button" type="submit">Send</button></div>
-        </form>
+        <aside class="ask-side">
+          <div class="panel">
+            <h2>I can help with</h2>
+            <ul class="help-topics">
+              <li><svg class="icon-tile"><use href="#i-tag"/></svg><div><strong>Stock &amp; prices</strong><small>Live from the farm</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-utensils"/></svg><div><strong>Cooking ideas</strong><small>Simple ways to cook what’s fresh</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-orders"/></svg><div><strong>Your orders</strong><small>See them under My orders</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-basket"/></svg><div><strong>Pack sizes</strong><small>How much is in each pack</small></div></li>
+              <li><svg class="icon-tile"><use href="#i-sprout"/></svg><div><strong>Rewards</strong><small>Points and your tree</small></div></li>
+            </ul>
+          </div>
+          <div class="panel need-person">
+            <h2>Need a person?</h2>
+            <p>Refunds, payment or delivery problems go straight to the farm team. They reply Mon–Sat, 9am–6pm.</p>
+            <a class="button" href="contact.html">Message the team (demo)</a>
+          </div>
+        </aside>
       </div>
     </section>
-    <section id="preferences" class="wrap customer-page" aria-labelledby="preferences-title" hidden>
-      <h1 id="preferences-title">Preferences</h1>
-      <p class="customer-intro">Manage your profile, messages, and browsing preferences.</p>
+
+    <section id="preferences" aria-labelledby="preferences-title" hidden>
+      <div class="page-head"><h1 id="preferences-title">Preferences</h1><p>Manage your profile, messages, and browsing preferences.</p></div>
 
       <div class="profile-card">
         <div class="profile-avatar" aria-hidden="true"><span id="profile-initials">EC</span><img id="profile-image" alt="" hidden></div>
@@ -138,28 +210,28 @@
       </div>
 
       <div class="preference-layout">
-        <form id="preferences-form" class="overview-panel">
+        <form id="preferences-form" class="panel">
           <h2>Messages and browsing</h2>
           <div class="preference-row">
-            <label for="prefer-promotions"><strong>WhatsApp promotions</strong><small>Save your preference for harvest updates and offers.</small></label>
+            <label for="prefer-promotions"><strong>WhatsApp promotions</strong><small>Harvest updates and offers from the farm.</small></label>
             <input class="preference-switch" id="prefer-promotions" type="checkbox" role="switch">
           </div>
           <div class="preference-row">
-            <label for="prefer-picks"><strong>Personalised picks</strong><small>Save your preference for recommendations based on past orders.</small></label>
+            <label for="prefer-picks"><strong>Personalised picks</strong><small>Recommendations based on past orders.</small></label>
             <input class="preference-switch" id="prefer-picks" type="checkbox" role="switch">
           </div>
           <div class="preference-row">
-            <label for="prefer-language"><strong>Preferred language</strong><small>Save your language choice.</small></label>
+            <label for="prefer-language"><strong>Preferred language</strong><small>Used by the farm assistant.</small></label>
             <select id="prefer-language"><option value="en">English</option><option value="zh">中文</option><option value="ms">Bahasa Melayu</option><option value="ta">தமிழ்</option></select>
           </div>
           <div class="preference-row">
-            <label for="available-only"><strong>Show available produce only</strong><small>Set the default filter in Browse produce.</small></label>
+            <label for="available-only"><strong>Show available produce only</strong><small>Default filter in Shop.</small></label>
             <input class="preference-switch" id="available-only" type="checkbox" role="switch">
           </div>
           <button class="button" type="submit">Save preferences</button>
           <p id="preferences-status" role="status"></p>
         </form>
-        <aside class="overview-panel preference-summary" aria-labelledby="preference-summary-title">
+        <aside class="panel preference-summary" aria-labelledby="preference-summary-title">
           <h2 id="preference-summary-title">Your choices at a glance</h2>
           <ul id="preference-summary-list"></ul>
           <p id="preference-updated">Preferences are saved on this device.</p>
@@ -194,6 +266,7 @@
       </dialog>
     </section>
   </main>
+  <p class="portal-toast" id="portal-toast" role="status" aria-live="polite"></p>
   <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></button>
 </body>
 </html>

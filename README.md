@@ -21,7 +21,12 @@ The WhatsApp-style conversations, prices, orders, and rewards are simulated in t
 | [index.html](index.html) | Homepage, shopper and farm paths, and rewards |
 | [contact.html](contact.html) | Contact page and sample enquiry form |
 | [styles.css](styles.css) | Shared layout, typography, and responsive styles |
-| [app.js](app.js) | Chat demos and tree growth |
+| [app.js](app.js) | Homepage phone chat and demo-order points |
+| [tree.js](tree.js) | Animated reward tree, shared by the homepage and the shopper portal |
+| [farm.html](farm.html) | Farm portal: overview, WhatsApp orders inbox, inventory, AI assistant chats |
+| [shop.html](shop.html) | Shopper portal: home, shop and basket, orders, my tree, Ask Evercrop, preferences |
+| [stock.js](stock.js) | Shared portal demo data (stock, orders, points) kept in the browser; open a portal with `?reset` to start fresh |
+| [stock.css](stock.css) | Styles for both portals |
 | [site.js](site.js) | Sticky navigation offsets, hamburger menu, back-to-top button, and demo form |
 | [faq-bot.js](faq-bot.js) | "Ask Evercrop" help chat on public pages (scripted FAQ answers) |
 | [assets/harvest.jpg](assets/harvest.jpg) | Homepage harvest photo |
