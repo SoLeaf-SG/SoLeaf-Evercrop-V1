@@ -7,7 +7,7 @@
   <title>Contact us — Evercrop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
   <script src="site.js" defer></script>
@@ -17,7 +17,7 @@
 <body class="contact-page">
 <header class="header" id="top" tabindex="-1"><div class="wrap nav">
     <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    <nav aria-label="Main navigation"><a href="index.html#how">For shoppers</a><a href="index.html#rewards">Rewards</a><a href="index.html#farms">For farms</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
+    <nav aria-label="Main navigation"><a href="index.html#how">How it works</a><a href="index.html#rewards">Grow a tree</a><a href="index.html#farms">For farms</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
   </div></header>
 <main class="wrap contact">
   <div class="contact-intro">
@@ -53,7 +53,15 @@
     <a class="footer-link" id="contact-draft" hidden>Open email app</a>
   </form>
 </main>
-<footer><div class="wrap footer"><a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
+<footer class="site-footer"><div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Fresh veg straight from Singapore farms, ordered on WhatsApp.</p></div>
+      <nav aria-label="Shoppers"><h3>Shoppers</h3><a href="index.html#how">How it works</a><a href="index.html#rewards">Grow a tree</a><a href="register.html">Create account</a></nav>
+      <nav aria-label="Farms"><h3>Farms</h3><a href="index.html#farms">Sales assistant</a><a href="farm.html?demo=farm">Farm portal</a><a href="contact.html">Join the pilot</a></nav>
+      <nav aria-label="Company"><h3>Company</h3><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html">Sign in</a></nav>
+    </div>
+    <p class="footer-note">© 2026 SoLeaf · Evercrop is a prototype. Prices, names and chats shown are examples.</p>
+  </div></footer>
 <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>
 </body>
 </html>

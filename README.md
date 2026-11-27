@@ -5,9 +5,9 @@ Evercrop is a public website prototype for buying and selling fresh produce thro
 ## Try the prototype
 
 1. Open [index.html](index.html) in a browser. The site uses plain HTML, CSS, and JavaScript and requires no installation or build.
-2. Choose **Try shopping** to browse a sample harvest box and complete a demo order for pickup or delivery.
-3. Choose **Explore farm sales**, then **See a farm sales demo** to see how the assistant handles stock questions and hands order details back to the farm.
-4. Open **Rewards** to see how order points grow a virtual tree from seedling to full canopy. Use **Add 25 demo points** to try the progression without placing a sample order.
+2. Watch the phone in the hero play a sample WhatsApp order with a farm.
+3. Read **For farms** for the sales assistant pitch, or open the farm portal from **Farm portal** in the footer.
+4. In **Grow a tree**, use **Place a demo order · +25 pts** to grow the virtual tree from seedling to full canopy.
 5. Open **Contact** to try the enquiry form with sample details.
 
 ## Prototype scope

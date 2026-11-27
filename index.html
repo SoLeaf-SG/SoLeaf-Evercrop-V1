@@ -3,57 +3,167 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Shop fresh produce directly from farms and explore how Evercrop helps farmers sell through WhatsApp.">
-  <title>Evercrop — Fresh from the farm</title>
+  <meta name="description" content="Order fresh Singapore-grown vegetables straight from the farm on WhatsApp. Lower prices for shoppers, an AI sales assistant for farms, and a tree that grows with every order.">
+  <title>Evercrop — Straight from the farm, on WhatsApp</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
   <script src="site.js" defer></script>
   <script src="account.js" defer></script>
 </head>
 <body>
+  <!-- One icon set (Lucide-style line icons) reused via <use>. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M2 7 6.4 2.6A2 2 0 0 1 7.8 2h8.4a2 2 0 0 1 1.4.6L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  </svg>
+
   <header class="header" id="top" tabindex="-1"><div class="wrap nav">
     <a class="brand" href="#" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    <nav aria-label="Main navigation"><a href="#how">For shoppers</a><a href="#rewards">Rewards</a><a href="#farms">For farms</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
+    <nav aria-label="Main navigation"><a href="#how">How it works</a><a href="#rewards">Grow a tree</a><a href="#farms">For farms</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
   </div></header>
 
   <main class="public-home">
     <section class="hero" aria-labelledby="hero-title"><div class="wrap hero-layout">
       <div class="hero-copy">
-        <p class="eyebrow">EVERCROP BY SOLEAF</p>
-        <h1 id="hero-title">Buy vegetables from Singapore farms.</h1>
-        <p class="intro">See what growers have in stock, check their prices, and order directly on WhatsApp.</p>
+        <p class="eyebrow">SINGAPORE FARMS · ON WHATSAPP</p>
+        <h1 id="hero-title">Straight from the farm. <em>Straight to your chat.</em></h1>
+        <p class="intro">Order fresh, local veg by messaging the farm. No middleman, lower prices — and every order grows your tree.</p>
+        <ul class="trust">
+          <li><svg class="icon"><use href="#i-check"/></svg>Farm-direct prices</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>No app to download</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Grown in Singapore</li>
+        </ul>
       </div>
-      <figure class="hero-photo"><img src="assets/farm-produce.jpg" alt="Bok choy, tomatoes and other vegetables arranged on a table"></figure>
+      <div class="hero-visual" role="img" aria-label="Example WhatsApp chat: a shopper orders bok choy and tomatoes from Garden Row Farm and earns 25 points">
+        <div class="iphone" aria-hidden="true">
+          <span class="iphone-btn b1"></span><span class="iphone-btn b2"></span><span class="iphone-btn b3"></span><span class="iphone-btn b4"></span>
+          <div class="iphone-screen">
+            <div class="status-bar">
+              <b>9:41</b><span class="island"></span>
+              <span class="status-icons">
+                <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+                <svg viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.6 6.6 0 0 1 9.2 0l-1.4 1.4a4.6 4.6 0 0 0-6.4 0zM1 4.4a10 10 0 0 1 14 0l-1.4 1.4a8 8 0 0 0-11.2 0z"/></svg>
+                <svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="18" height="9" rx="2"/><path d="M25 4.5v4a2 2 0 0 0 0-4z" opacity=".5"/></svg>
+              </span>
+            </div>
+            <div class="wa-head">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+              <span class="wa-av">GR</span>
+              <div class="wa-who"><b>Garden Row Farm</b><small id="wa-status">online</small></div>
+              <svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            </div>
+            <div class="wa-chat" id="wa-chat"></div>
+            <div class="wa-input">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+              <span class="wa-field">Message</span>
+              <svg class="icon" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></svg>
+              <span class="wa-mic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></span>
+            </div>
+            <span class="home-bar"></span>
+          </div>
+        </div>
+        <p class="toast" id="hero-toast" aria-hidden="true"><svg class="icon"><use href="#i-sprout"/></svg><span><b>+25 points</b>Your tree grew</span></p>
+      </div>
     </div></section>
 
-    <section class="wrap how" id="how" aria-labelledby="how-title">
-      <p class="eyebrow">FOR SHOPPERS</p>
-      <h2 id="how-title">How to buy from a farm</h2>
-      <div class="steps">
-        <article><h3>See what’s fresh</h3><p>Check what’s available and how much each pack costs.</p></article>
-        <article><h3>Order from the farm</h3><p>Tell the farm what you’d like and ask about pickup or delivery.</p></article>
-        <article><h3>Grow your tree</h3><p>Earn points on orders and watch your virtual tree grow.</p></article>
+    <section class="wrap section split how" id="how" aria-labelledby="how-title">
+      <figure class="photo"><img src="assets/farm-produce.jpg" alt="Fresh pumpkins, tomatoes, bok choy and greens laid out on a table" loading="lazy"></figure>
+      <div>
+        <p class="eyebrow">FOR SHOPPERS</p>
+        <h2 id="how-title">Three steps to fresh veg</h2>
+        <ol class="steps">
+          <li><h3>Message the farm</h3><p>See today’s harvest and prices right in the chat.</p></li>
+          <li><h3>Pick what you want</h3><p>The assistant confirms your order and total.</p></li>
+          <li><h3>Collect &amp; earn</h3><p>Pick up or get it delivered. Points go to your tree.</p></li>
+        </ol>
       </div>
     </section>
 
-    <section class="wrap split" id="farms" aria-labelledby="farms-title">
-      <div class="farm-copy"><p class="eyebrow">FOR FARMS</p><h2 id="farms-title">Take farm orders on WhatsApp</h2><p>Give customers a place to ask about stock, prices, and pickup. Evercrop’s assistant can collect the order details for your team.</p><button class="button" data-chat="farm">Try the farm assistant</button></div>
-      <div class="chat-preview" aria-label="Example farm sales conversation"><div class="chat-head"><span aria-hidden="true">✳</span><div><strong>Evercrop farm assistant</strong><small>Example conversation</small></div></div><div class="chat-body"><p class="outgoing">Hi! What’s fresh this week?</p><p>We have bok choy, cherry tomatoes and mixed greens. Would you like to see the harvest box?</p><p class="outgoing">One harvest box, please!</p><p>Got it! Would you prefer pickup or delivery?</p></div></div>
-    </section>
+    <section class="band" id="rewards" aria-labelledby="rewards-title"><div class="wrap split">
+      <div>
+        <p class="eyebrow">EVERCROP REWARDS</p>
+        <h2 id="rewards-title">Order veg. Grow a tree. Get a real harvest.</h2>
+        <p class="lead">Every order waters your virtual tree. Grow it to full size and the farm sends you a free harvest pack.</p>
+        <button class="button" id="grow">Place a demo order · +25 pts</button>
+      </div>
+      <div class="tree-card">
+        <svg class="tree-art" id="tree" viewBox="0 0 240 220" aria-hidden="true">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3f1fb"/><stop offset="1" stop-color="#f7fbf2"/></linearGradient>
+            <radialGradient id="fruit" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#ff9a76"/><stop offset=".6" stop-color="#e8452c"/><stop offset="1" stop-color="#b52a18"/></radialGradient>
+            <linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#4d2f1b"/><stop offset=".5" stop-color="#7a4c2c"/><stop offset="1" stop-color="#4d2f1b"/></linearGradient>
+            <path id="leaf" d="M0 0C-5-4-7-11-1-18 0-19 1-19 1-18 7-11 5-4 0 0Z"/>
+          </defs>
+          <rect width="240" height="220" rx="16" fill="url(#sky)"/>
+          <circle class="sun" cx="200" cy="38" r="16"/>
+          <g class="cloud"><ellipse cx="46" cy="40" rx="18" ry="7"/><ellipse cx="58" cy="35" rx="12" ry="8"/></g>
+          <path d="M0 202Q60 190 120 194T240 200V220H0Z" fill="#9bc36b"/>
+          <path d="M0 210Q70 200 130 205T240 208V220H0Z" fill="#86b257"/>
+          <ellipse cx="120" cy="199" rx="30" ry="5" fill="#6d4a2e" opacity=".55"/>
+          <g id="plant"></g>
+          <g id="drops"></g>
+        </svg>
+        <h3 id="stage">Seedling</h3>
+        <div class="progress"><progress id="progress" value="0" max="100" aria-label="Tree growth points"></progress><span id="points" aria-live="polite">0 / 100 pts</span></div>
+        <ol class="stages" aria-label="Tree stages"><li>Seedling<b>0</b></li><li>Sapling<b>50</b></li><li>Full tree<b>100</b></li></ol>
+      </div>
+    </div></section>
 
-    <section class="wrap split rewards" id="rewards" aria-labelledby="rewards-title">
-      <div><p class="eyebrow">EVERCROP REWARDS</p><h2 id="rewards-title">Grow a tree with your points</h2><p>Earn points with farm orders. Your virtual tree grows at 50 and 100 points.</p><button class="button secondary" id="grow">Preview 25 points</button></div>
-      <div class="tree-card"><div class="tree" id="tree" aria-hidden="true">🌱</div><h3 id="stage">Seedling</h3><div class="progress"><progress id="progress" value="0" max="100" aria-label="Tree growth points"></progress><span id="points" aria-live="polite">0 / 100 pts</span></div></div>
+    <section class="farms" id="farms" aria-labelledby="farms-title"><div class="wrap split">
+      <div>
+        <p class="eyebrow">FOR FARMS</p>
+        <h2 id="farms-title">Your AI sales assistant, on WhatsApp 24/7.</h2>
+        <ul class="ticks">
+          <li><svg class="icon"><use href="#i-check"/></svg><span><b>Answers instantly</b> — stock, prices and pickup, even mid-harvest.</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span><b>Turns chats into orders</b> — clean summaries for your team.</span></li>
+          <li><svg class="icon"><use href="#i-check"/></svg><span><b>Sell direct, keep the margin</b> — no wholesaler cut.</span></li>
+        </ul>
+      </div>
+      <div class="dash" role="img" aria-label="Example farm dashboard: 14 WhatsApp orders, 52 questions answered automatically and S$186 in sales today">
+        <div class="dash-top" aria-hidden="true"><span class="dash-dot"></span><b>Garden Row Farm</b><small>Today</small></div>
+        <div class="dash-stats" aria-hidden="true">
+          <div><b>14</b><span>WhatsApp orders</span></div>
+          <div><b>52</b><span>Auto-answered</span></div>
+          <div><b>S$186</b><span>Sales today</span></div>
+        </div>
+        <ul class="dash-orders" aria-hidden="true">
+          <li><span class="av">ML</span><div><b>Mei Ling</b><small>2 bok choy · 1 tomatoes</small></div><em>S$8.90</em></li>
+          <li><span class="av">RK</span><div><b>Rahul K.</b><small>Harvest box</small></div><em>S$12.00</em></li>
+          <li><span class="av">JT</span><div><b>Jia Tong</b><small>3 kailan · 1 basil</small></div><em>S$9.40</em></li>
+        </ul>
+      </div>
+    </div></section>
+
+    <section class="wrap section join" aria-labelledby="join-title">
+      <h2 id="join-title">Be one of the first.</h2>
+      <p class="lead">We’re launching with a small group of Singapore farms.</p>
+      <div class="join-cards">
+        <a href="register.html"><svg class="icon-tile"><use href="#i-basket"/></svg><h3>I’m a shopper</h3><p>Create a free account and plant your first seed.</p><b>Sign up <svg class="icon"><use href="#i-arrow"/></svg></b></a>
+        <a href="contact.html"><svg class="icon-tile"><use href="#i-store"/></svg><h3>I’m a farm</h3><p>Join our pilot and start selling direct on WhatsApp.</p><b>Talk to us <svg class="icon"><use href="#i-arrow"/></svg></b></a>
+      </div>
     </section>
   </main>
 
-  <footer><div class="wrap footer"><a class="brand" href="#"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
+  <footer class="site-footer"><div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand" href="#"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Fresh veg straight from Singapore farms, ordered on WhatsApp.</p></div>
+      <nav aria-label="Shoppers"><h3>Shoppers</h3><a href="#how">How it works</a><a href="#rewards">Grow a tree</a><a href="register.html">Create account</a></nav>
+      <nav aria-label="Farms"><h3>Farms</h3><a href="#farms">Sales assistant</a><a href="farm.html?demo=farm">Farm portal</a><a href="contact.html">Join the pilot</a></nav>
+      <nav aria-label="Company"><h3>Company</h3><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html">Sign in</a></nav>
+    </div>
+    <p class="footer-note">© 2026 SoLeaf · Evercrop is a prototype. Prices, names and chats shown are examples.</p>
+  </div></footer>
 
   <dialog id="demo" aria-labelledby="demo-title">
-    <div class="chat-head"><span aria-hidden="true">✳</span><div><strong id="demo-title">Evercrop assistant</strong><small>Chat preview</small></div><form method="dialog"><button class="close" aria-label="Close chat">×</button></form></div>
+    <div class="chat-head"><span aria-hidden="true">GR</span><div><strong id="demo-title">Evercrop assistant</strong><small>Chat preview</small></div><form method="dialog"><button class="close" aria-label="Close chat">×</button></form></div>
     <div id="messages" class="chat-body" role="log" aria-live="polite"></div>
     <div id="replies" class="replies"></div>
   </dialog>
