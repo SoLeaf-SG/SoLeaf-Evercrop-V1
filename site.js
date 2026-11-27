@@ -15,6 +15,25 @@ function updateBackTop() {
 window.addEventListener('scroll', updateBackTop, { passive: true });
 updateBackTop();
 
+// Hamburger menu on public pages (portals have no .menu-toggle).
+const menuToggle = document.querySelector('.menu-toggle');
+if (menuToggle) {
+  const setMenu = (open) => {
+    pageHeader.classList.toggle('menu-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+  };
+  menuToggle.addEventListener('click', () => setMenu(!pageHeader.classList.contains('menu-open')));
+  document.querySelector('#site-nav').addEventListener('click', (event) => {
+    if (event.target.closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && pageHeader.classList.contains('menu-open')) {
+      setMenu(false);
+      menuToggle.focus();
+    }
+  });
+}
+
 backTop.addEventListener('click', () => {
   pageHeader.focus({ preventScroll: true });
   window.scrollTo({ top: 0 });

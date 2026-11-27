@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="site.js" defer></script>
   <script src="account.js" defer></script>
+  <script src="faq-bot.js" defer></script>
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -20,7 +21,7 @@
   </svg>
   <header class="header" id="top" tabindex="-1"><div class="wrap nav">
     <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    <nav aria-label="Main navigation"><a href="index.html#how">How it works</a><a href="index.html#rewards">Grow a tree</a><a href="index.html#farms">For farms</a><a href="about.html" aria-current="page">About</a><a href="contact.html">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="bars" aria-hidden="true"></span></button><nav id="site-nav" aria-label="Main navigation"><a href="index.html#how">How it works</a><a href="index.html#rewards">Grow a tree</a><a href="index.html#farms">For farms</a><a href="about.html" aria-current="page">About</a><a href="contact.html">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
   </div></header>
 
   <main>
@@ -88,6 +89,6 @@
     </div>
     <p class="footer-note">© 2026 SoLeaf · Evercrop is a prototype. Prices, names and chats shown are examples.</p>
   </div></footer>
-<button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>
+<button class="back-top" type="button" hidden><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></button>
 </body>
 </html>

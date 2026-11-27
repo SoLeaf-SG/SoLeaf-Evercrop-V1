@@ -22,5 +22,6 @@ The WhatsApp-style conversations, prices, orders, and rewards are simulated in t
 | [contact.html](contact.html) | Contact page and sample enquiry form |
 | [styles.css](styles.css) | Shared layout, typography, and responsive styles |
 | [app.js](app.js) | Chat demos and tree growth |
-| [site.js](site.js) | Sticky navigation offsets, back-to-top button, and demo form |
+| [site.js](site.js) | Sticky navigation offsets, hamburger menu, back-to-top button, and demo form |
+| [faq-bot.js](faq-bot.js) | "Ask Evercrop" help chat on public pages (scripted FAQ answers) |
 | [assets/harvest.jpg](assets/harvest.jpg) | Homepage harvest photo |
