@@ -216,15 +216,19 @@ progress{width:min(200px,60%);accent-color:var(--green)}
 .page-hero .eyebrow{color:var(--mint)}
 .page-hero h1{max-width:16ch;font-size:clamp(2.4rem,5vw,4rem)}
 .page-hero .intro{color:#eef3ea}
-.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stat-card{background:var(--deep);color:#fff;border-radius:24px;padding:clamp(28px,4vw,44px);box-shadow:var(--card-shadow)}
+.stat-card b{display:block;font:800 clamp(4rem,9vw,6.5rem)/1 var(--display);letter-spacing:-.05em;color:var(--sun)}
+.stat-card p{margin-top:10px;font:700 1.3rem var(--display)}
+.stat-card span{display:block;margin-top:14px;padding-top:14px;border-top:1px solid #ffffff2b;color:#c9d8cd}
+.center-title{text-align:center}
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
 .about-cards article{padding:30px}
-.about-cards h2{font-size:1.6rem}
-.mission{text-align:center;max-width:760px}
-.mission h2{margin-top:6px}
-.mission .lead{margin-inline:auto}
-.mission .eyebrow{justify-content:center}
-.photo-credit{font-size:.85rem;color:var(--muted);margin-top:28px}
-.photo-credit a{text-decoration:underline;text-underline-offset:3px}
+.about-cards h3{font:800 1.5rem var(--display)}
+.checks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px}
+.checks li{display:flex;align-items:center;gap:10px}
+.checks .icon{width:22px;height:22px;padding:4px;border-radius:50%;background:#e6f0e2;color:var(--green);stroke-width:3}
+.cta-box{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;background:#e6f0e2;border-radius:28px;padding:clamp(28px,5vw,56px)}
+.cta-box .lead{margin-top:10px}
 
 /* ---------- Contact ---------- */
 .contact-page{display:flex;flex-direction:column;min-height:100vh}

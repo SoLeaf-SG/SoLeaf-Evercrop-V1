@@ -16,6 +16,7 @@
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="i-basket" viewBox="0 0 24 24"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></symbol>
     <symbol id="i-store" viewBox="0 0 24 24"><path d="M2 7 6.4 2.6A2 2 0 0 1 7.8 2h8.4a2 2 0 0 1 1.4.6L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
   </svg>
   <header class="header" id="top" tabindex="-1"><div class="wrap nav">
     <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
@@ -26,19 +27,55 @@
     <section class="page-hero"><div class="wrap">
       <p class="eyebrow">ABOUT EVERCROP</p>
       <h1>Making local veg the easy choice.</h1>
-      <p class="intro">Singapore imports over 90% of its food. Local farms grow great produce, but reaching shoppers directly is hard. Evercrop puts the farm in your WhatsApp.</p>
+      <p class="intro">Evercrop puts Singapore’s farms in your WhatsApp — fresher veg for you, a fairer deal for growers.</p>
     </div></section>
 
-    <section class="wrap section about-cards" aria-label="Who Evercrop is for">
-      <article><svg class="icon-tile"><use href="#i-basket"/></svg><h2>For shoppers</h2><p>Know who grew your veg, pay farm-direct prices, and order with a simple chat. Every order grows your tree towards a free harvest pack.</p></article>
-      <article><svg class="icon-tile"><use href="#i-store"/></svg><h2>For farms</h2><p>An AI assistant answers stock and price questions on WhatsApp, collects orders and hands your team a clean summary — so you can sell direct and keep the margin.</p></article>
+    <section class="wrap section split why" aria-labelledby="why-title">
+      <div class="stat-card">
+        <b>90%+</b>
+        <p>of Singapore’s food is imported</p>
+        <span>Local farms grow great produce — but most of it never reaches shoppers directly.</span>
+      </div>
+      <div>
+        <p class="eyebrow">WHY WE EXIST</p>
+        <h2 id="why-title">A shorter path from farm to table.</h2>
+        <p class="lead">Middlemen add cost and time. We help farms sell straight to the people who eat what they grow — through the app everyone already uses.</p>
+      </div>
     </section>
 
-    <section class="wrap mission" aria-labelledby="mission-title" style="padding-bottom:clamp(64px,8vw,104px)">
-      <p class="eyebrow">WHO WE ARE</p>
-      <h2 id="mission-title">Built by SoLeaf</h2>
-      <p class="lead">We’re a young Singapore team working with local growers to test Evercrop. Want to be part of the pilot? <a class="footer-link" href="contact.html">Get in touch</a>.</p>
-      <p class="photo-credit">Produce photograph by <a href="https://commons.wikimedia.org/wiki/File:Fresh_vegetables_from_a_local_farm_(44924370242).jpg">Ella Olsson</a>, cropped for display under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>.</p>
+    <section class="band" aria-labelledby="sides-title"><div class="wrap">
+      <h2 id="sides-title" class="center-title">One platform, two sides</h2>
+      <div class="about-cards">
+        <article>
+          <svg class="icon-tile"><use href="#i-basket"/></svg>
+          <h3>For shoppers</h3>
+          <ul class="checks">
+            <li><svg class="icon"><use href="#i-check"/></svg>Farm-direct prices</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Order by chatting on WhatsApp</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Grow a tree, earn a free harvest</li>
+          </ul>
+        </article>
+        <article>
+          <svg class="icon-tile"><use href="#i-store"/></svg>
+          <h3>For farms</h3>
+          <ul class="checks">
+            <li><svg class="icon"><use href="#i-check"/></svg>AI assistant answers 24/7</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Chats turned into clean orders</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Sell direct, keep the margin</li>
+          </ul>
+        </article>
+      </div>
+    </div></section>
+
+    <section class="wrap section">
+      <div class="cta-box">
+        <div>
+          <p class="eyebrow">WHO WE ARE</p>
+          <h2>Built by SoLeaf</h2>
+          <p class="lead">A young Singapore team working with local growers to bring Evercrop to life.</p>
+        </div>
+        <a class="button" href="contact.html">Join the pilot</a>
+      </div>
     </section>
   </main>
 
