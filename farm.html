@@ -11,26 +11,38 @@
   <script src="stock.js" defer></script>
 </head>
 <body data-stock-view="farm">
-  <header class="header" id="top" tabindex="-1">
-    <div class="wrap nav">
+  <header class="header portal-sidebar" id="top" tabindex="-1">
+    <div class="portal-identity">
       <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-      <nav aria-label="Portal navigation">
-        <a href="index.html">Home</a>
-        <a href="farm.html" aria-current="page">Farm portal</a>
-      </nav>
+      <p>Farm workspace</p>
     </div>
+    <nav aria-label="Portal navigation">
+      <a href="#overview" aria-current="page">Overview</a>
+      <a href="#inventory">Inventory</a>
+      <a class="portal-logout" href="login.html">Log out</a>
+    </nav>
   </header>
-  <main>
-    <section class="stock-hero">
+  <main class="portal-workspace">
+    <div id="overview">
+    <section class="stock-hero" aria-labelledby="overview-title">
       <div class="wrap">
         <p class="eyebrow">FARM PORTAL · GARDEN ROW FARM</p>
-        <h1>Stock overview</h1>
-        <p>Check inventory for Garden Row Farm and see what shoppers can browse.</p>
+        <h1 id="overview-title">Stock overview</h1>
+        <p>See how many packs are available and which items are running low.</p>
       </div>
     </section>
-    <section class="wrap stock-section" aria-labelledby="stock-heading">
-      <div class="stock-demo" id="stock-demo" hidden><p>Farm view</p><a href="login.html">Return to sign in</a></div>
+    <section class="wrap overview-content" aria-labelledby="overview-list-title">
       <dl id="stock-summary" class="stock-summary"></dl>
+      <div class="overview-panel">
+        <div class="overview-panel-header">
+          <div><h2 id="overview-list-title">Stock to watch</h2><p id="overview-description"></p></div>
+          <a class="button secondary" href="#inventory">Open inventory</a>
+        </div>
+        <ul class="overview-list" id="overview-list"></ul>
+      </div>
+    </section>
+    </div>
+    <section class="wrap stock-section" id="inventory" aria-labelledby="stock-heading">
       <div class="stock-toolbar">
         <div><h2 id="stock-heading">Produce inventory</h2><p id="stock-count" role="status"></p></div>
         <div class="stock-filters">
@@ -53,7 +65,6 @@
       <noscript><p>Enable JavaScript to view stock.</p></noscript>
     </section>
   </main>
-  <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
   <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>
 </body>
 </html>

@@ -17,28 +17,31 @@
     </div>
   </header>
   <main class="wrap account-main">
-    <section class="account-card" aria-labelledby="account-title">
-      <p class="eyebrow">EVERCROP ACCOUNT</p>
-      <h1 id="account-title">Sign in</h1>
-      <p class="account-intro">Sign in to your Evercrop shopper account.</p>
-      <p class="account-note">Your account is saved in this browser.</p>
-      <form id="account-form">
-          <label>Email<input id="account-email" type="email" autocomplete="username" maxlength="254" required></label>
-          <label>Password<input id="account-password" type="password" autocomplete="current-password" maxlength="128" required></label>
-          <a class="account-link account-forgot" href="forgot-password.html">Forgot password?</a>
-          <button class="button" type="submit">Sign in</button>
-      </form>
-      <p id="account-status" role="status"></p>
-      <p class="account-footer">New to Evercrop? <a href="register.html">Create an account</a></p>
-      <section class="account-demo" aria-labelledby="account-demo-title">
-        <h2 id="account-demo-title">Choose a portal</h2>
-        <div class="account-demo-actions">
-          <a class="button secondary" href="farm.html?demo=farm">Continue as a farmer</a>
-          <a class="button secondary" href="shop.html?demo=customer">Continue as a customer</a>
-        </div>
+    <div class="account-shell">
+      <section class="account-card" aria-labelledby="account-title">
+        <p class="eyebrow">EVERCROP ACCOUNT</p>
+        <h1 id="account-title">Sign in</h1>
+        <p class="account-intro">Enter your email and password.</p>
+        <p class="account-note">Your account is saved in this browser.</p>
+        <form id="account-form">
+            <label>Email<input id="account-email" type="email" autocomplete="username" maxlength="254" required></label>
+            <label>Password<input id="account-password" type="password" autocomplete="current-password" maxlength="128" required></label>
+            <a class="account-link account-forgot" href="forgot-password.html">Forgot password?</a>
+            <button class="button" type="submit">Sign in</button>
+        </form>
+        <p id="account-status" role="status"></p>
+        <p class="account-footer">New to Evercrop? <a href="register.html">Create an account</a></p>
+        <section class="account-demo" aria-labelledby="account-demo-title">
+          <h2 id="account-demo-title">Choose a portal</h2>
+          <div class="account-demo-actions">
+            <a class="button secondary" href="farm.html?demo=farm">Continue as a farmer</a>
+            <a class="button secondary" href="shop.html?demo=customer">Continue as a customer</a>
+          </div>
+        </section>
+        <noscript><p>Enable JavaScript to use your account.</p></noscript>
       </section>
-      <noscript><p>Enable JavaScript to use your account.</p></noscript>
-    </section>
+      <div class="account-photo" aria-hidden="true"></div>
+    </div>
   </main>
   <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
   <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>

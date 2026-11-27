@@ -141,9 +141,9 @@
         // The public stock view remains usable when browser storage is unavailable.
       }
       if (signInLink) signInLink.hidden = Boolean(account);
-      if (signOut) signOut.hidden = !account;
       if (accountLink) accountLink.hidden = !account;
       if (welcome) {
+        window.dispatchEvent(new CustomEvent('evercrop:shopper', { detail: account ? { name: account.name, email: account.email } : null }));
         welcome.hidden = !account;
         welcome.textContent = account ? `Signed in as ${account.name}.` : '';
       }
@@ -151,8 +151,6 @@
 
     signOut?.addEventListener('click', () => {
       sessionStorage.removeItem(sessionKey);
-      render();
-      document.querySelector('nav [aria-current="page"]')?.focus();
     });
     window.addEventListener('pageshow', render);
     window.addEventListener('storage', render);

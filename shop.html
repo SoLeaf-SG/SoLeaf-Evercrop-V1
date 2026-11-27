@@ -7,41 +7,71 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="stock.css">
   <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="customer.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet">
   <script src="site.js" defer></script>
   <script src="stock.js" defer></script>
+  <script src="shop.js" defer></script>
+  <script src="preferences.js" defer></script>
   <script src="account.js" defer></script>
 </head>
 <body data-stock-view="shop">
-  <header class="header" id="top" tabindex="-1">
-    <div class="wrap nav">
+  <a class="customer-skip" href="#customer-main">Skip to content</a>
+  <header class="header portal-sidebar" id="top" tabindex="-1">
+    <div class="portal-identity">
       <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-      <nav aria-label="Portal navigation">
-        <a href="index.html">Home</a>
-        <a href="shop.html" aria-current="page">Shopper portal</a>
-        <button id="shop-sign-out" type="button" hidden>Sign out</button>
-      </nav>
+      <p>Customer portal</p>
     </div>
+    <nav aria-label="Portal navigation">
+      <a href="#overview" aria-current="page">Home</a>
+      <a href="#inventory">Browse produce</a>
+      <a href="#orders">My orders</a>
+      <a href="#rewards">Rewards</a>
+      <a href="#ask">Ask Evercrop</a>
+      <a href="#preferences">Preferences</a>
+      <a class="portal-logout" id="shop-sign-out" href="login.html">Log out</a>
+    </nav>
   </header>
-  <main>
-    <section class="stock-hero">
+  <main class="portal-workspace" id="customer-main" tabindex="-1">
+    <div class="wrap portal-status">
+      <p id="shop-account" class="account-note" hidden></p>
+    </div>
+    <div id="overview">
+    <section class="stock-hero" aria-labelledby="overview-title">
       <div class="wrap market-hero">
         <div class="market-copy">
           <p class="eyebrow">SHOPPER PORTAL</p>
-          <h1>Fresh from <em>Garden Row Farm.</em></h1>
-          <p>See what’s in stock, what it costs, and what you could cook tonight.</p>
+          <h1 id="overview-title">Produce from Garden Row Farm</h1>
+          <p>Check stock, pack sizes and prices before you shop.</p>
+          <a class="button" href="#inventory">Browse produce</a>
         </div>
-        <img class="market-photo" src="assets/harvest.jpg" alt="A crate of leafy greens, carrots and tomatoes on a farm">
+        <img class="market-photo" src="assets/farm-produce.jpg" alt="An assortment of vegetables on a table">
       </div>
     </section>
-    <section class="wrap stock-section" aria-labelledby="stock-heading">
-      <p id="shop-account" class="account-note" hidden></p>
-      <div class="stock-demo" id="stock-demo" hidden><p>Customer view</p><a href="login.html">Return to sign in</a></div>
+    <section class="wrap customer-shortcuts" aria-labelledby="customer-shortcuts-title">
+      <h2 id="customer-shortcuts-title">Orders, rewards and help</h2>
+      <div class="customer-shortcut-grid">
+        <a href="#orders"><strong>My orders</strong><span>See your farm orders.</span></a>
+        <a href="#rewards"><strong>Rewards</strong><span>See your points and tree.</span></a>
+        <a href="#ask"><strong>Ask Evercrop</strong><span>Get help finding and cooking produce.</span></a>
+      </div>
+    </section>
+    <section class="wrap overview-content" aria-labelledby="overview-list-title">
+      <div class="overview-panel">
+        <div class="overview-panel-header">
+          <div><h2 id="overview-list-title">Available now</h2><p id="overview-description"></p></div>
+          <a class="button secondary" href="#inventory">Browse all produce</a>
+        </div>
+        <ul class="overview-list" id="overview-list"></ul>
+      </div>
+    </section>
+    </div>
+    <section class="wrap stock-section" id="inventory" aria-labelledby="stock-heading">
 
       <div class="stock-toolbar">
-        <div><h2 id="stock-heading">Browse produce</h2><p id="stock-count" role="status"></p></div>
+        <div><h1 id="stock-heading">Browse produce</h1><p id="stock-count" role="status"></p></div>
         <div class="stock-filters">
-          <label>Search produce<input type="search" id="stock-search" placeholder="e.g. bok choy"></label>
+          <label>Search produce<input type="search" id="stock-search" placeholder="Try bok choy"></label>
           <label>Availability<select id="stock-filter">
             <option value="all">All stock</option>
             <option value="available">Available</option>
@@ -54,8 +84,116 @@
       <p id="stock-empty" class="stock-empty" hidden>No produce matches these filters.</p>
       <noscript><p>Enable JavaScript to view stock.</p></noscript>
     </section>
+    <section id="orders" class="wrap customer-page" aria-labelledby="orders-title" hidden>
+      <h1 id="orders-title">My orders</h1>
+      <p class="customer-intro">Keep track of your farm orders in one place.</p>
+      <div class="overview-panel">
+        <h2>No orders yet</h2>
+        <p>Start by seeing what local produce is available.</p>
+        <a class="button secondary" href="#inventory">Browse produce</a>
+      </div>
+    </section>
+    <section id="rewards" class="wrap customer-page" aria-labelledby="rewards-title" hidden>
+      <h1 id="rewards-title">Rewards</h1>
+      <p class="customer-intro">Earn points with farm orders and watch your virtual tree grow.</p>
+      <div class="overview-panel customer-rewards">
+        <div class="tree-card"><div class="tree" aria-hidden="true">🌱</div><h2>Your seedling</h2><div class="progress"><progress value="0" max="100" aria-label="Tree growth points"></progress><span>0 / 100 pts</span></div></div>
+        <div>
+          <h2>Tree milestones</h2>
+          <ul class="overview-list">
+            <li><div><strong>Seedling</strong><small>0 points</small></div></li>
+            <li><div><strong>Sapling</strong><small>50 points</small></div></li>
+            <li><div><strong>Full canopy</strong><small>100 points</small></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="ask" class="wrap customer-page" aria-labelledby="ask-title" hidden>
+      <h1 id="ask-title">Ask Evercrop</h1>
+      <p class="customer-intro">Ask about stock, prices, pack sizes, or what to cook.</p>
+      <div class="overview-panel customer-chat">
+        <div class="customer-messages" id="ask-messages" role="log" aria-label="Conversation with Evercrop"><p>Hi! Ask me what’s in stock or what you can cook with bok choy.</p></div>
+        <div class="ask-prompts">
+          <button type="button" class="button secondary">What’s in stock?</button>
+          <button type="button" class="button secondary">How do I cook bok choy?</button>
+        </div>
+        <form id="ask-form">
+          <label for="ask-question">Your question</label>
+          <div class="ask-input"><input id="ask-question" required maxlength="250" placeholder="Ask about a vegetable"><button class="button" type="submit">Send</button></div>
+        </form>
+      </div>
+    </section>
+    <section id="preferences" class="wrap customer-page" aria-labelledby="preferences-title" hidden>
+      <h1 id="preferences-title">Preferences</h1>
+      <p class="customer-intro">Manage your profile, messages, and browsing preferences.</p>
+
+      <div class="profile-card">
+        <div class="profile-avatar" aria-hidden="true"><span id="profile-initials">EC</span><img id="profile-image" alt="" hidden></div>
+        <div class="profile-content">
+          <h2 id="profile-name">Evercrop shopper</h2>
+          <p id="profile-contact">No contact details added</p>
+          <p id="profile-address">No delivery address added</p>
+        </div>
+        <button class="button" id="open-profile" type="button">Edit profile</button>
+      </div>
+
+      <div class="preference-layout">
+        <form id="preferences-form" class="overview-panel">
+          <h2>Messages and browsing</h2>
+          <div class="preference-row">
+            <label for="prefer-promotions"><strong>WhatsApp promotions</strong><small>Save your preference for harvest updates and offers.</small></label>
+            <input class="preference-switch" id="prefer-promotions" type="checkbox" role="switch">
+          </div>
+          <div class="preference-row">
+            <label for="prefer-picks"><strong>Personalised picks</strong><small>Save your preference for recommendations based on past orders.</small></label>
+            <input class="preference-switch" id="prefer-picks" type="checkbox" role="switch">
+          </div>
+          <div class="preference-row">
+            <label for="prefer-language"><strong>Preferred language</strong><small>Save your language choice.</small></label>
+            <select id="prefer-language"><option value="en">English</option><option value="zh">中文</option><option value="ms">Bahasa Melayu</option><option value="ta">தமிழ்</option></select>
+          </div>
+          <div class="preference-row">
+            <label for="available-only"><strong>Show available produce only</strong><small>Set the default filter in Browse produce.</small></label>
+            <input class="preference-switch" id="available-only" type="checkbox" role="switch">
+          </div>
+          <button class="button" type="submit">Save preferences</button>
+          <p id="preferences-status" role="status"></p>
+        </form>
+        <aside class="overview-panel preference-summary" aria-labelledby="preference-summary-title">
+          <h2 id="preference-summary-title">Your choices at a glance</h2>
+          <ul id="preference-summary-list"></ul>
+          <p id="preference-updated">Preferences are saved on this device.</p>
+        </aside>
+      </div>
+
+      <dialog class="profile-dialog" id="profile-dialog" aria-labelledby="profile-dialog-title">
+        <form id="profile-form">
+          <h2 id="profile-dialog-title">Edit profile</h2>
+          <div class="profile-upload">
+            <div class="profile-avatar" aria-hidden="true"><span id="edit-initials">EC</span><img id="edit-image" alt="" hidden></div>
+            <div><label for="profile-upload">Profile photo</label><small>JPG or PNG, up to 5 MB. Photos are cropped to a square.</small><input id="profile-upload" type="file" accept="image/jpeg,image/png"></div>
+          </div>
+          <label for="edit-name">Display name</label><input id="edit-name" maxlength="100" autocomplete="name" required>
+          <fieldset>
+            <legend>Contact details</legend>
+            <label for="edit-email">Contact email</label><input id="edit-email" type="email" maxlength="254" autocomplete="email">
+            <small>Your sign-in email stays the same.</small>
+            <label for="edit-mobile">Mobile number</label><input id="edit-mobile" type="tel" maxlength="24" autocomplete="tel">
+          </fieldset>
+          <fieldset>
+            <legend>Delivery address</legend>
+            <label for="edit-street">Street and block</label><input id="edit-street" maxlength="160" autocomplete="address-line1">
+            <div class="profile-fields">
+              <div><label for="edit-unit">Unit (optional)</label><input id="edit-unit" maxlength="24" autocomplete="address-line2"></div>
+              <div><label for="edit-postal">Postal code</label><input id="edit-postal" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" autocomplete="postal-code"></div>
+            </div>
+          </fieldset>
+          <p id="profile-error" role="status"></p>
+          <div class="profile-actions"><button class="button secondary" id="cancel-profile" type="button">Cancel</button><button class="button" type="submit">Save changes</button></div>
+        </form>
+      </dialog>
+    </section>
   </main>
-  <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
   <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>
 </body>
 </html>

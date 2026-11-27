@@ -17,22 +17,25 @@
     </div>
   </header>
   <main class="wrap account-main">
-    <section class="account-card" aria-labelledby="account-title">
-      <p class="eyebrow">SHOPPER ACCOUNT</p>
-      <h1 id="account-title">Create an account</h1>
-      <p class="account-intro">Set up an account for the Evercrop shopper portal.</p>
-      <p class="account-note">Your account is saved in this browser.</p>
-      <form id="account-form">
-          <label>Name<input id="account-name" autocomplete="name" maxlength="100" required></label>
-          <label>Email<input id="account-email" type="email" autocomplete="username" maxlength="254" required></label>
-          <label>Password (at least 8 characters)<input id="account-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
-          <label>Confirm password<input id="account-confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
-          <button class="button" type="submit">Create account</button>
-      </form>
-      <p id="account-status" role="status"></p>
-      <p class="account-footer">Already have an account? <a href="login.html">Sign in</a></p>
-      <noscript><p>Enable JavaScript to use your account.</p></noscript>
-    </section>
+    <div class="account-shell">
+      <section class="account-card" aria-labelledby="account-title">
+        <p class="eyebrow">SHOPPER ACCOUNT</p>
+        <h1 id="account-title">Create an account</h1>
+        <p class="account-intro">Use your email address to create a shopper account.</p>
+        <p class="account-note">Your account is saved in this browser.</p>
+        <form id="account-form">
+            <label>Name<input id="account-name" autocomplete="name" maxlength="100" required></label>
+            <label>Email<input id="account-email" type="email" autocomplete="username" maxlength="254" required></label>
+            <label>Password (at least 8 characters)<input id="account-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+            <label>Confirm password<input id="account-confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+            <button class="button" type="submit">Create account</button>
+        </form>
+        <p id="account-status" role="status"></p>
+        <p class="account-footer">Already have an account? <a href="login.html">Sign in</a></p>
+        <noscript><p>Enable JavaScript to use your account.</p></noscript>
+      </section>
+      <div class="account-photo" aria-hidden="true"></div>
+    </div>
   </main>
   <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
   <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>

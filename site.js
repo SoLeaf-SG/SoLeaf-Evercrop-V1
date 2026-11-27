@@ -23,12 +23,22 @@ backTop.addEventListener('click', () => {
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
   const result = document.querySelector('#contact-result');
+  const draft = document.querySelector('#contact-draft');
+  const value = (id) => document.getElementById(id).value.trim();
+
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    contactForm.reset();
-    result.textContent = 'Enquiry complete. Your message stayed on this page.';
+    const subject = value('topic') + ' · Evercrop';
+    const body = `${value('contact-message')}\n\n${value('contact-name')}\n${value('contact-email')}`;
+    draft.href = `mailto:${contactForm.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    draft.hidden = false;
+    result.textContent = 'Draft ready. Open it in your email app to send it.';
+    draft.focus();
   });
+
   contactForm.addEventListener('input', () => {
+    draft.hidden = true;
+    draft.removeAttribute('href');
     result.textContent = '';
   });
 }

@@ -17,17 +17,18 @@
 <body class="contact-page">
 <header class="header" id="top" tabindex="-1"><div class="wrap nav">
     <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    <nav aria-label="Main navigation"><a href="index.html#how">For shoppers</a><a href="index.html#rewards">Rewards</a><a href="index.html#farms">For farms</a><a href="contact.html" aria-current="page">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
+    <nav aria-label="Main navigation"><a href="index.html#how">For shoppers</a><a href="index.html#rewards">Rewards</a><a href="index.html#farms">For farms</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
   </div></header>
 <main class="wrap contact">
   <div class="contact-intro">
     <p class="eyebrow">CONTACT SOLEAF</p>
-    <h1>Let’s talk <em>Evercrop.</em></h1>
-    <p class="intro">Interested in selling from your farm, shopping farm-direct, or working with us? Tell the SoLeaf team what you have in mind.</p>
+    <h1>Contact Evercrop</h1>
+    <p class="intro">Get in touch with SoLeaf about selling your harvest, shopping with Evercrop, or working together.</p>
+    <a class="footer-link contact-email" href="mailto:soleaf.co@gmail.com">soleaf.co@gmail.com</a>
   </div>
-  <form class="contact-form">
-    <h2>Send an enquiry</h2>
-    <p id="contact-note">Your enquiry stays on this page.</p>
+  <form class="contact-form" data-email="soleaf.co@gmail.com">
+    <h2>Write to SoLeaf</h2>
+    <p id="contact-note">Prepare a draft to send from your email app.</p>
     <label for="topic">What’s your enquiry about?</label>
     <select id="topic" required>
       <option value="" selected disabled>Choose a topic</option>
@@ -47,8 +48,9 @@
     </div>
     <label for="contact-message">Message</label>
     <textarea id="contact-message" rows="4" required maxlength="1000"></textarea>
-    <button class="button" type="submit" aria-describedby="contact-note">Finish enquiry</button>
+    <button class="button" type="submit" aria-describedby="contact-note">Prepare email</button>
     <p id="contact-result" role="status"></p>
+    <a class="footer-link" id="contact-draft" hidden>Open email app</a>
   </form>
 </main>
 <footer><div class="wrap footer"><a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
