@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shop fresh produce directly from farms and explore how Evercrop helps farmers sell through WhatsApp.">
+  <title>Evercrop — Fresh from the farm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+<script src="site.js" defer></script></head>
+<body>
+  <header class="header" id="top" tabindex="-1"><div class="wrap nav">
+    <a class="brand" href="#" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
+    <nav aria-label="Main navigation"><a href="#how">For shoppers</a><a href="#rewards">Rewards</a><a href="#farms">For farms</a><a class="nav-farm" href="contact.html">Contact</a></nav>
+  </div></header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title"><div class="wrap hero-layout">
+      <div class="hero-copy">
+        <p class="eyebrow">EVERCROP BY SOLEAF</p>
+        <h1 id="hero-title">Fresh from<br><em>the farm.</em></h1>
+        <p class="intro">Local farms sell directly. Shoppers get fresh produce at farm-direct prices. It all happens on WhatsApp.</p>
+        <div class="actions"><button class="button" data-chat="shop">Try shopping</button><a class="button secondary" href="#farms">Explore farm sales</a></div>
+      </div>
+      <figure class="hero-photo"><img src="assets/harvest.jpg" alt="A harvest crate filled with fresh greens, tomatoes and carrots"></figure>
+    </div></section>
+
+    <section class="wrap how" id="how" aria-labelledby="how-title">
+      <p class="eyebrow">FOR SHOPPERS</p>
+      <h2 id="how-title">From farm to table in a chat.</h2>
+      <div class="steps">
+        <article><span class="step-icon" aria-hidden="true">✳</span><h3>See what’s fresh</h3><p>Ask the WhatsApp assistant what farms have available today.</p></article>
+        <article><span class="step-icon" aria-hidden="true">↔</span><h3>Order from the farm</h3><p>Pick your produce and confirm your order right in the conversation.</p></article>
+        <article><span class="step-icon" aria-hidden="true">✦</span><h3>Grow your tree</h3><p>Earn points on orders and watch your virtual tree grow.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap split" id="farms" aria-labelledby="farms-title">
+      <div class="farm-copy"><p class="eyebrow">FOR FARMS</p><h2 id="farms-title">Sell direct.<br>Keep growing.</h2><p>Sell directly to customers on WhatsApp. Evercrop’s AI assistant answers common questions, shares what’s in stock, and collects order details while you’re in the field.</p><button class="button" data-chat="farm">See a farm sales demo</button></div>
+      <div class="chat-preview" aria-label="Example farm sales conversation"><div class="chat-head"><span aria-hidden="true">✳</span><div><strong>Evercrop farm assistant</strong><small>Example conversation</small></div></div><div class="chat-body"><p class="outgoing">Hi! What’s fresh this week?</p><p>We have bok choy, cherry tomatoes and mixed greens. Would you like to see the harvest box?</p><p class="outgoing">One harvest box, please!</p><p>Got it! Would you prefer pickup or delivery?</p></div></div>
+    </section>
+
+    <section class="wrap split rewards" id="rewards" aria-labelledby="rewards-title">
+      <div><p class="eyebrow">EVERCROP REWARDS</p><h2 id="rewards-title">Every order helps your tree grow.</h2><p>Earn points with farm orders and raise your virtual tree from a seedling to a full canopy. Try it below.</p><button class="button secondary" id="grow">Add 25 demo points</button></div>
+      <div class="tree-card"><div class="tree" id="tree" aria-hidden="true">🌱</div><h3 id="stage">Seedling</h3><div class="progress"><progress id="progress" value="0" max="100" aria-label="Tree growth points"></progress><span id="points" aria-live="polite">0 / 100 pts</span></div></div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer"><a class="brand" href="#"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf. <span>Public website prototype.</span></p></div></footer>
+
+  <dialog id="demo" aria-labelledby="demo-title">
+    <div class="chat-head"><span aria-hidden="true">✳</span><div><strong id="demo-title">Evercrop assistant</strong><small>Simulated WhatsApp chat</small></div><form method="dialog"><button class="close" aria-label="Close demo">×</button></form></div>
+    <div id="messages" class="chat-body" role="log" aria-live="polite"></div>
+    <div id="replies" class="replies"></div>
+  </dialog>
+<button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>
+</body>
+</html>
