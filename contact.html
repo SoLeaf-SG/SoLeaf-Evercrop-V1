@@ -12,10 +12,10 @@
 
 <script src="site.js" defer></script></head>
 
-<body>
+<body class="contact-page">
 <header class="header" id="top" tabindex="-1"><div class="wrap nav">
     <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    <nav aria-label="Main navigation"><a href="index.html#how">How it works</a><a href="index.html#rewards">Rewards</a><a href="index.html#farms">For farms</a><a class="nav-farm" href="contact.html" aria-current="page">Contact</a></nav>
+    <nav aria-label="Main navigation"><a href="index.html#how">For shoppers</a><a href="index.html#rewards">Rewards</a><a href="index.html#farms">For farms</a><a class="nav-farm" href="contact.html" aria-current="page">Contact</a></nav>
   </div></header>
 <main class="wrap contact">
   <div class="contact-intro">
@@ -33,10 +33,16 @@
       <option>Shopping and rewards</option>
       <option>Partnerships and other enquiries</option>
     </select>
-    <label for="contact-name">Name</label>
-    <input id="contact-name" autocomplete="off" required maxlength="100">
-    <label for="contact-email">Email</label>
-    <input id="contact-email" type="email" autocomplete="off" required maxlength="254">
+    <div class="contact-fields">
+      <div>
+        <label for="contact-name">Name</label>
+        <input id="contact-name" autocomplete="off" required maxlength="100">
+      </div>
+      <div>
+        <label for="contact-email">Email</label>
+        <input id="contact-email" type="email" autocomplete="off" required maxlength="254">
+      </div>
+    </div>
     <label for="contact-message">Message</label>
     <textarea id="contact-message" rows="4" required maxlength="1000"></textarea>
     <button class="button" type="submit" aria-describedby="contact-note">Try sending a demo enquiry</button>

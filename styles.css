@@ -75,7 +75,27 @@ dialog::backdrop{background:#152719aa}
 .back-top{position:fixed;z-index:2;right:18px;bottom:18px;display:flex;align-items:center;gap:7px;border:1px solid #b2c2ac;border-radius:99px;padding:9px 13px;background:#fff;color:var(--green);box-shadow:0 4px 16px #20351f26;font-weight:700}
 .back-top[hidden]{display:none}
 .back-top:hover{background:#e4eee6}
-.contact{display:grid;grid-template-columns:1fr minmax(0,1fr);gap:clamp(28px,6vw,70px);align-items:start;padding-block:clamp(38px,8vw,100px)}
+.contact-page{display:flex;flex-direction:column;min-height:100vh}
+.contact{
+  flex:1;
+  display:grid;
+  grid-template-columns:minmax(0, 4fr) minmax(0, 5fr);
+  align-items:start;
+  align-content:center;
+  gap:clamp(32px,6vw,88px);
+  padding-block:clamp(32px,5vw,64px);
+}
+.contact-intro{padding-top:clamp(12px,3vw,42px)}
+.contact-intro h1{font-size:clamp(2.35rem,5vw,4.2rem)}
+.contact-intro h1 em{display:block}
+.contact-intro .intro{margin-top:16px}
+@media(max-width:760px){
+  .contact{width:min(calc(100% - 32px),660px);grid-template-columns:1fr;gap:24px}
+  .contact-intro{padding-top:0}
+  .contact-intro h1 em{display:inline}
+}
+.contact-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media(max-width:480px){.contact-fields{grid-template-columns:1fr;gap:0}}
 .contact-form{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(19px,4vw,34px)}
 .contact-form h2{font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:8px}
 .contact-form p{color:var(--muted);margin-bottom:16px}
@@ -84,7 +104,7 @@ dialog::backdrop{background:#152719aa}
 .contact-form textarea{resize:vertical}
 .contact-form #contact-result{margin:12px 0 0;font-weight:700;color:var(--green)}
 .contact-form #contact-result:empty{margin:0}
-@media(max-width:650px){.nav{flex-wrap:wrap;padding-block:12px}.nav nav{flex-wrap:wrap}.contact{grid-template-columns:1fr}.back-top{bottom:12px;right:12px}.footer{padding-bottom:70px}}
+@media(max-width:650px){.nav{flex-wrap:wrap;padding-block:12px}.nav nav{flex-wrap:wrap}.back-top{bottom:12px;right:12px}.footer{padding-bottom:70px}}
 
 .hero-layout {
   display: grid;
