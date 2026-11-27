@@ -26,7 +26,7 @@ if (contactForm) {
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
     contactForm.reset();
-    result.textContent = 'Demo complete. Your enquiry stayed on this page.';
+    result.textContent = 'Enquiry complete. Your message stayed on this page.';
   });
   contactForm.addEventListener('input', () => {
     result.textContent = '';

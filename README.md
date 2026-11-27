@@ -24,5 +24,3 @@ The WhatsApp-style conversations, prices, orders, and rewards are simulated in t
 | [app.js](app.js) | Chat demos and tree growth |
 | [site.js](site.js) | Sticky navigation offsets, back-to-top button, and demo form |
 | [assets/harvest.jpg](assets/harvest.jpg) | Homepage harvest photo |
-
-[Visit SoLeaf](https://soleafsg.com/)

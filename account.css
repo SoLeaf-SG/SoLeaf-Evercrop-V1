@@ -1,0 +1,26 @@
+.account-page{display:flex;flex-direction:column;min-height:100vh}
+.account-main{display:grid;flex:1;place-items:start center;padding-block:clamp(24px,5vw,60px)}
+.account-card{width:min(100%,490px);padding:clamp(20px,4vw,38px);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 42px #102d240d}
+.account-card h1{font-size:clamp(2rem,6vw,3.4rem)}
+.account-intro{margin:10px 0 16px;color:var(--muted)}
+.account-note{padding:10px 12px;border-radius:8px;background:#e4eee6;color:var(--green);font-size:.9rem}
+.account-card form{margin-top:18px}
+.account-card label{display:grid;gap:5px;margin-bottom:13px;font-weight:700}
+.account-card input{width:100%;min-width:0;padding:11px;border:1px solid #aab9ad;border-radius:9px;background:#fff;color:var(--ink);font:inherit;font-weight:400}
+.account-card .button{width:100%;margin-top:4px}
+.account-link,.account-footer a{color:var(--green);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.account-forgot{display:block;margin:0 0 12px;text-align:right}
+.account-restart{display:block;margin:10px auto 0;border:0;background:transparent}
+.account-footer{margin-top:16px;text-align:center;color:var(--muted)}
+#account-status{margin-top:12px;font-weight:600}
+#account-status:empty{margin:0}
+#reset-code{margin-bottom:12px}
+#shop-account:not([hidden]){margin-bottom:14px}
+#shop-sign-out{padding:0;border:0;background:transparent;color:inherit;font:inherit}
+#shop-sign-out:hover{text-decoration:underline}
+
+.account-demo{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.account-demo h2{font-size:1.2rem}
+.account-demo p{margin-top:6px;color:var(--muted)}
+.account-demo-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.account-demo-actions .button{width:auto;min-height:40px;margin:0;padding:7px 13px;font-size:.875rem}

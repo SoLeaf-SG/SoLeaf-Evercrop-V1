@@ -25,12 +25,12 @@ function addPoints() {
 const shopping = {
   message: 'Hi! Want to see what’s fresh from the farm today?',
   options: [['See today’s harvest', {
-    message: 'Today’s sample harvest box has bok choy, cherry tomatoes and mixed greens for S$12.',
+    message: 'Today’s harvest box has bok choy, cherry tomatoes and mixed greens for S$12.',
     options: [['Order a harvest box', {
       message: 'Would you like to pick up your box or have it delivered?',
       options: [
-        ['Farm pickup', { message: 'Sample order complete for farm pickup. You earned 25 demo points!', reward: true }],
-        ['Delivery', { message: 'Sample order complete with delivery selected. You earned 25 demo points!', reward: true }]
+        ['Farm pickup', { message: 'Order preview complete for farm pickup. You earned 25 points!', reward: true }],
+        ['Delivery', { message: 'Order preview complete with delivery selected. You earned 25 points!', reward: true }]
       ]
     }]]
   }]]
@@ -40,7 +40,7 @@ const farmSales = {
   message: 'See how Evercrop can handle everyday sales messages while you grow.',
   options: [
     ['Show a stock question', { message: 'Customer: Do you have bok choy today?\n\nAssistant: Yes, bok choy is available in today’s harvest box. Want to reserve one?' }],
-    ['Show order handoff', { message: 'Sample order for the farm: 1 harvest box, S$12, pickup Saturday. The farm has the details it needs to prepare the box.' }]
+    ['Show order handoff', { message: 'Order summary: 1 harvest box, S$12, pickup Saturday. The farm has the details it needs to prepare the box.' }]
   ]
 };
 

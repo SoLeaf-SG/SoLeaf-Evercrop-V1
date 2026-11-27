@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopper portal · Evercrop</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="stock.css">
+  <link rel="stylesheet" href="account.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet">
+  <script src="site.js" defer></script>
+  <script src="stock.js" defer></script>
+  <script src="account.js" defer></script>
+</head>
+<body data-stock-view="shop">
+  <header class="header" id="top" tabindex="-1">
+    <div class="wrap nav">
+      <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
+      <nav aria-label="Portal navigation">
+        <a href="index.html">Home</a>
+        <a href="shop.html" aria-current="page">Shopper portal</a>
+        <button id="shop-sign-out" type="button" hidden>Sign out</button>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="stock-hero">
+      <div class="wrap market-hero">
+        <div class="market-copy">
+          <p class="eyebrow">SHOPPER PORTAL</p>
+          <h1>Fresh from <em>Garden Row Farm.</em></h1>
+          <p>See what’s in stock, what it costs, and what you could cook tonight.</p>
+        </div>
+        <img class="market-photo" src="assets/harvest.jpg" alt="A crate of leafy greens, carrots and tomatoes on a farm">
+      </div>
+    </section>
+    <section class="wrap stock-section" aria-labelledby="stock-heading">
+      <p id="shop-account" class="account-note" hidden></p>
+      <div class="stock-demo" id="stock-demo" hidden><p>Customer view</p><a href="login.html">Return to sign in</a></div>
+
+      <div class="stock-toolbar">
+        <div><h2 id="stock-heading">Browse produce</h2><p id="stock-count" role="status"></p></div>
+        <div class="stock-filters">
+          <label>Search produce<input type="search" id="stock-search" placeholder="e.g. bok choy"></label>
+          <label>Availability<select id="stock-filter">
+            <option value="all">All stock</option>
+            <option value="available">Available</option>
+            <option value="low">Low stock</option>
+            <option value="out">Sold out</option>
+          </select></label>
+        </div>
+      </div>
+      <ul id="stock-list" class="stock-grid"></ul>
+      <p id="stock-empty" class="stock-empty" hidden>No produce matches these filters.</p>
+      <noscript><p>Enable JavaScript to view stock.</p></noscript>
+    </section>
+  </main>
+  <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
+  <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span> Back to top</button>
+</body>
+</html>
