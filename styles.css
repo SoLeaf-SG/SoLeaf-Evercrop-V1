@@ -239,8 +239,19 @@ main > .section:last-child { padding-bottom: 0; } /* footer margin already gives
 .tree-wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(40px, 5vw, 72px); align-items: center; }
 .tree-stage { padding: 32px; display: grid; gap: 20px; justify-items: center; text-align: center; }
 .tree-svg { width: 220px; height: 220px; }
-.tree-svg .part { transform-origin: 110px 190px; transition: transform .7s var(--ease), opacity .5s; }
-.tree-svg .hidden { opacity: 0; transform: scale(.4); }
+.tree-svg { overflow: visible; }
+.tree-svg .part { transition: transform 1s cubic-bezier(.34,1.3,.5,1) var(--d, 0s), opacity .6s var(--d, 0s), stroke-dashoffset 1s var(--ease) var(--d, 0s); }
+.tree-svg .part.off { opacity: 0; transition-delay: 0s; transition-duration: .4s; }
+.tree-svg .grow.off { transform: scale(0); }
+.tree-svg .draw { stroke-dasharray: 1; }
+.tree-svg .draw.off { stroke-dashoffset: 1; }
+/* trunk thickens and lengthens rather than popping in */
+.tree-svg .trunk { transform-origin: 110px 194px; transform: scale(.05, 0); transition: transform 1.2s var(--ease); }
+.tree-svg[data-stage="2"] .trunk { transform: scale(.5, .6); }
+.tree-svg[data-stage="3"] .trunk, .tree-svg[data-stage="4"] .trunk { transform: none; }
+.tree-svg .crown { transform-origin: 110px 194px; animation: tree-sway 6s ease-in-out infinite; }
+@keyframes tree-sway { 50% { transform: rotate(1.2deg); } }
+@media (prefers-reduced-motion: reduce) { .tree-svg .crown { animation: none; } .tree-svg .part, .tree-svg .trunk { transition-duration: 0s; transition-delay: 0s; } }
 .meter { width: 100%; height: 10px; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; }
 .meter i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--leaf), var(--lime)); box-shadow: 0 0 16px rgba(184,243,74,.5); transition: width .7s var(--ease); }
 .tree-meta { display: flex; justify-content: space-between; width: 100%; font-size: 13px; color: var(--subtle); }
@@ -257,13 +268,29 @@ main > .section:last-child { padding-bottom: 0; } /* footer margin already gives
 /* Map */
 .map-wrap { display: grid; grid-template-columns: 1.3fr .7fr; gap: 20px; align-items: stretch; }
 .map { position: relative; padding: clamp(16px, 3vw, 32px); overflow: hidden; display: grid; place-items: center; }
-.map svg { width: 100%; height: auto; }
+.map:not(.live) svg { width: 100%; height: auto; }
 .map .island { fill: rgba(63,132,96,.18); stroke: rgba(169,196,174,.45); stroke-width: 1.5; }
 .pin { cursor: pointer; }
 .pin circle.ring { fill: none; stroke: var(--lime); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ping 2.4s var(--ease) infinite; }
 .pin circle.dot { fill: var(--lime); stroke: #0b1f18; stroke-width: 3; transition: r .2s; }
 .pin:hover circle.dot, .pin.active circle.dot { r: 10; }
 @keyframes ping { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
+/* Live OneMap (Leaflet) */
+.map.live { padding: 0; display: block; min-height: 400px; }
+.map.live .leaflet-host { position: absolute; inset: 0; border-radius: inherit; }
+.map .leaflet-container { background: #0e1f19; font: inherit; }
+.map .leaflet-control-attribution { background: rgba(11,31,24,.85); color: var(--subtle); font-size: 11px; }
+.map .leaflet-control-attribution a { color: var(--muted); }
+.map .leaflet-container svg { display: inline; }
+.map .leaflet-bar a { background: #13302a; color: #eef3ec; border-color: var(--line); }
+.map .leaflet-bar a:hover { background: #1b4033; }
+.pin-icon { background: none; border: 0; }
+.pin-icon .pin { position: relative; display: block; width: 22px; height: 22px; outline-offset: 2px; }
+.pin-icon .ring, .pin-icon .dot { position: absolute; left: 2px; top: 2px; width: 18px; height: 18px; border-radius: 50%; }
+.pin-icon .ring { border: 2px solid var(--lime); animation: ping 2.4s var(--ease) infinite; }
+.pin-icon .dot { box-shadow: 0 0 12px rgba(184,243,74,.6); background: var(--lime); border: 3px solid #0b1f18; transition: transform .2s; }
+.pin-icon .pin:hover .dot, .pin-icon .pin.active .dot { transform: scale(1.4); }
+@media (prefers-reduced-motion: reduce) { .pin-icon .ring { animation: none; } }
 .farm-list { display: grid; gap: 12px; align-content: start; }
 .farm-item { padding: 18px 20px; display: grid; gap: 6px; cursor: pointer; text-align: left; border: 1px solid var(--line); transition: border-color .2s, background .2s; }
 .farm-item:hover, .farm-item.active { border-color: rgba(184,243,74,.5); background: rgba(184,243,74,.06); }

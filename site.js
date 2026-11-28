@@ -76,13 +76,13 @@ function renderChrome() {
         <div class="footer-grid">
           <div style="display:grid;gap:16px;align-content:start">
             ${LOGO}
-            <p class="muted" style="max-width:34ch;font-size:15px">Farm-direct sales on WhatsApp. A SoLeaf product, made in Singapore.</p>
+            <p class="muted" style="max-width:36ch;font-size:15px">Fresh produce from local farms, ordered over WhatsApp. A SoLeaf product.</p>
           </div>
           <div><h4>Product</h4><ul><li><a href="farms.html">For Farms</a></li><li><a href="shoppers.html">For Shoppers</a></li><li><a href="shoppers.html#tree">Grow a Tree</a></li></ul></div>
           <div><h4>Portal</h4><ul><li><a href="login.html">Log in</a></li><li><a href="register.html">Create account</a></li><li><a href="forgot-password.html">Reset password</a></li></ul></div>
           <div><h4>Company</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
         </div>
-        <div class="footer-bottom"><span>© ${new Date().getFullYear()} SoLeaf. All rights reserved.</span><span>Singapore</span></div>
+        <div class="footer-bottom"><span>© ${new Date().getFullYear()} SoLeaf. All rights reserved.</span></div>
       </div>
     </footer>`;
   }
@@ -139,27 +139,64 @@ function initChat() {
 
 /* Tree — 5 growth stages, shared by home preview and shopper portal */
 const TREE_STAGES = ['Seed', 'Sprout', 'Sapling', 'Young tree', 'Fruiting tree'];
+// Leaf cluster: overlapping blobs shaded light top-left → dark bottom-right; grows out from its branch tip.
+// Seeded random so the tree looks identical on every render.
+const treeRnd = (s => () => (s = (s * 9301 + 49297) % 233280) / 233280)(11);
+function leafCluster(cx, cy, r, n, from, to, delay) {
+  const blobs = [];
+  for (let i = 0; i < n; i++) {
+    const a = treeRnd() * Math.PI * 2, d = Math.sqrt(treeRnd()) * r * .75;
+    const x = cx + Math.cos(a) * d, y = cy + Math.sin(a) * d * .85, shade = ((y - cy) - (x - cx) * .5) / r;
+    blobs.push({ x, y, rr: r * (.32 + treeRnd() * .22), shade });
+  }
+  blobs.sort((p, q) => q.shade - p.shade); // dark (back/bottom) first, highlights on top
+  const fill = s => s > .25 ? 'lf3' : s > -.25 ? 'lf2' : 'lf1';
+  return `<g class="part grow off" data-from="${from}" data-to="${to}" style="--d:${delay}s;transform-origin:${cx}px ${cy + r * .6}px">` +
+    blobs.map(b => `<circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.rr.toFixed(1)}" fill="url(#${fill(b.shade)})"/>`).join('') + '</g>';
+}
+const fruit = (x, y, delay, c = 'fr') =>
+  `<g class="part grow off" data-from="4" style="--d:${delay}s;transform-origin:${x}px ${y - 6}px"><path d="M${x} ${y - 9} q1 4 0 4" stroke="#4a3322" stroke-width="1.2" fill="none"/><circle cx="${x}" cy="${y}" r="5.5" fill="url(#${c})"/></g>`;
 const TREE_SVG = `
 <svg class="tree-svg" viewBox="0 0 220 220" aria-hidden="true">
   <defs>
-    <radialGradient id="tg" cx="50%" cy="40%"><stop offset="0" stop-color="#b8f34a"/><stop offset="1" stop-color="#3f8460"/></radialGradient>
+    <radialGradient id="lf1" cx="35%" cy="30%"><stop offset="0" stop-color="#b6e86a"/><stop offset="1" stop-color="#5a9e45"/></radialGradient>
+    <radialGradient id="lf2" cx="35%" cy="30%"><stop offset="0" stop-color="#7dba4f"/><stop offset="1" stop-color="#2f6b37"/></radialGradient>
+    <radialGradient id="lf3" cx="35%" cy="30%"><stop offset="0" stop-color="#3f7d3c"/><stop offset="1" stop-color="#1b4227"/></radialGradient>
+    <radialGradient id="fr" cx="35%" cy="30%"><stop offset="0" stop-color="#ffb199"/><stop offset=".5" stop-color="#ef5b3c"/><stop offset="1" stop-color="#a8301c"/></radialGradient>
+    <radialGradient id="fy" cx="35%" cy="30%"><stop offset="0" stop-color="#ffe7a3"/><stop offset=".5" stop-color="#f5b83d"/><stop offset="1" stop-color="#b9781a"/></radialGradient>
+    <linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#3e2a1c"/><stop offset=".45" stop-color="#7a5638"/><stop offset="1" stop-color="#3a2618"/></linearGradient>
+    <radialGradient id="soil" cy="20%"><stop offset="0" stop-color="#6b5038"/><stop offset="1" stop-color="#3b2b1e"/></radialGradient>
   </defs>
-  <ellipse cx="110" cy="196" rx="70" ry="10" fill="rgba(184,243,74,.12)"/>
-  <path d="M60 192 Q110 176 160 192 Z" fill="#5b4632"/>
-  <g class="part" data-stage="0"><ellipse cx="110" cy="186" rx="7" ry="5" fill="#8a6f4d"/></g>
-  <g class="part" data-stage="1"><path d="M110 188 V164" stroke="#7fbf6a" stroke-width="4" stroke-linecap="round"/><path d="M110 170 Q96 160 92 148 Q106 150 110 168Z M110 166 Q124 154 130 144 Q132 160 110 166Z" fill="#9be15d"/></g>
-  <g class="part" data-stage="2"><path d="M110 190 V130" stroke="#6b5139" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="122" r="26" fill="url(#tg)"/></g>
-  <g class="part" data-stage="3"><path d="M110 190 V110 M110 140 L84 118 M110 130 L138 108" stroke="#6b5139" stroke-width="9" stroke-linecap="round"/><circle cx="110" cy="86" r="44" fill="url(#tg)"/><circle cx="74" cy="110" r="26" fill="url(#tg)"/><circle cx="146" cy="104" r="28" fill="url(#tg)"/></g>
-  <g class="part" data-stage="4"><circle cx="96" cy="74" r="7" fill="#ff7a59"/><circle cx="128" cy="92" r="7" fill="#ff7a59"/><circle cx="72" cy="110" r="6" fill="#ffc857"/><circle cx="150" cy="104" r="6" fill="#ff7a59"/><circle cx="114" cy="56" r="6" fill="#ffc857"/></g>
+  <ellipse cx="110" cy="195" rx="74" ry="9" fill="rgba(0,0,0,.35)"/>
+  <path d="M52 194 Q110 178 168 194 Z" fill="url(#soil)"/>
+  <g class="crown">
+    <g class="part grow off" data-from="0" data-to="0" style="transform-origin:110px 188px"><ellipse cx="110" cy="187" rx="6" ry="4" fill="#9a7650" transform="rotate(-20 110 187)"/><path d="M107 186 q3 -2 6 -1" stroke="#c9a77a" stroke-width="1" fill="none"/></g>
+    <path class="part draw off" data-from="1" data-to="1" pathLength="1" d="M110 190 Q107 178 111 164" stroke="#86c45a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <g class="part grow off" data-from="1" data-to="1" style="--d:.6s;transform-origin:111px 165px"><path d="M111 165 Q96 162 90 150 Q104 148 111 165Z" fill="url(#lf1)"/><path d="M111 165 Q124 158 132 146 Q134 160 111 165Z" fill="url(#lf2)"/></g>
+    <g class="trunk"><path d="M97 194 Q104 187 105 176 L107.5 92 Q110 87 112.5 92 L115 176 Q116 187 123 194 Z" fill="url(#bark)"/></g>
+    ${leafCluster(110, 124, 18, 9, 2, 2, .7)}
+    <path class="part draw off" data-from="3" pathLength="1" d="M108 142 Q92 128 74 110" stroke="#5a3e28" stroke-width="6" fill="none" stroke-linecap="round" style="--d:.5s"/>
+    <path class="part draw off" data-from="3" pathLength="1" d="M112 130 Q130 118 148 100" stroke="#5a3e28" stroke-width="5.5" fill="none" stroke-linecap="round" style="--d:.6s"/>
+    <path class="part draw off" data-from="3" pathLength="1" d="M109 112 Q100 98 92 84" stroke="#5a3e28" stroke-width="4" fill="none" stroke-linecap="round" style="--d:.7s"/>
+    <path class="part draw off" data-from="3" pathLength="1" d="M111 106 Q122 92 130 76" stroke="#5a3e28" stroke-width="4" fill="none" stroke-linecap="round" style="--d:.75s"/>
+    ${leafCluster(72, 106, 26, 12, 3, 9, 1.0)}
+    ${leafCluster(150, 98, 28, 12, 3, 9, 1.1)}
+    ${leafCluster(92, 80, 26, 12, 3, 9, 1.2)}
+    ${leafCluster(130, 74, 28, 12, 3, 9, 1.3)}
+    ${leafCluster(111, 62, 30, 14, 3, 9, 1.4)}
+    ${fruit(96, 74, .2)}${fruit(128, 92, .45, 'fy')}${fruit(70, 112, .7)}${fruit(152, 106, .55)}${fruit(116, 54, .9, 'fy')}${fruit(140, 72, 1.05)}
+  </g>
 </svg>`;
 function drawTree(container, stage) {
-  if (!container.querySelector('.tree-svg')) container.insertAdjacentHTML('afterbegin', TREE_SVG);
-  container.querySelectorAll('.part').forEach(p => {
-    const s = +p.dataset.stage;
-    // seed only shows at stage 0; sprout only at 1; trunk/canopy stack from 2 up
-    const visible = s === 4 ? stage >= 4 : s >= 2 ? stage === s || (s === 3 && stage === 4) : stage === s;
-    p.classList.toggle('hidden', !visible);
-  });
+  let svg = container.querySelector('.tree-svg');
+  if (!svg) {
+    container.insertAdjacentHTML('afterbegin', TREE_SVG);
+    svg = container.querySelector('.tree-svg');
+    svg.getBoundingClientRect(); // flush styles so the first render animates from bare soil
+  }
+  svg.dataset.stage = stage;
+  container.querySelectorAll('.part').forEach(p =>
+    p.classList.toggle('off', stage < +p.dataset.from || stage > +(p.dataset.to ?? 9)));
 }
 function initTreePreview() {
   const box = document.querySelector('[data-tree-preview]');
@@ -176,29 +213,41 @@ function initTreePreview() {
     stage = (stage + 1) % 5;
   };
   step();
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(step, 2200);
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(step, 3400);
 }
 
 /* Farm map */
 const FARMS = [
-  { id: 'kranji', name: 'Kranji Greens', area: 'Kranji', x: 214, y: 72, produce: ['Kai Lan', 'Bayam', 'Xiao Bai Cai'] },
-  { id: 'lck', name: 'Lim Chu Kang Leafy Co.', area: 'Lim Chu Kang', x: 150, y: 92, produce: ['Lettuce', 'Kale'] },
-  { id: 'neotiew', name: 'Neo Tiew Hydro Farm', area: 'Neo Tiew', x: 118, y: 128, produce: ['Cherry Tomato', 'Herbs'] },
-  { id: 'tengah', name: 'Tengah Herb Lab', area: 'Sungei Tengah', x: 178, y: 146, produce: ['Basil', 'Mint', 'Microgreens'] },
-  { id: 'punggol', name: 'Punggol Rooftop Farm', area: 'Punggol', x: 446, y: 102, produce: ['Chye Sim', 'Spinach'] }
+  // x/y = position on the offline SVG fallback; lat/lng = real map (demo farms, approximate area centres)
+  { id: 'kranji', name: 'Kranji Greens', area: 'Kranji', x: 214, y: 72, lat: 1.4262, lng: 103.7255, produce: ['Kai Lan', 'Bayam', 'Xiao Bai Cai'] },
+  { id: 'lck', name: 'Lim Chu Kang Leafy Co.', area: 'Lim Chu Kang', x: 150, y: 92, lat: 1.4205, lng: 103.7000, produce: ['Lettuce', 'Kale'] },
+  { id: 'neotiew', name: 'Neo Tiew Hydro Farm', area: 'Neo Tiew', x: 118, y: 128, lat: 1.4075, lng: 103.7105, produce: ['Cherry Tomato', 'Herbs'] },
+  { id: 'tengah', name: 'Tengah Herb Lab', area: 'Sungei Tengah', x: 178, y: 146, lat: 1.3850, lng: 103.7200, produce: ['Basil', 'Mint', 'Microgreens'] },
+  { id: 'punggol', name: 'Punggol Rooftop Farm', area: 'Punggol', x: 446, y: 102, lat: 1.4045, lng: 103.9020, produce: ['Chye Sim', 'Spinach'] }
 ];
+const pinAttrs = f => `class="pin" data-id="${f.id}" tabindex="0" role="button" aria-label="${f.name}, ${f.area}"`;
+// Leaflet from CDN with SRI; resolves false if offline/blocked so the SVG fallback stays
+function loadLeaflet() {
+  if (window.L) return Promise.resolve(true);
+  const css = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+    integrity: 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=', crossOrigin: '' });
+  document.head.appendChild(css);
+  return new Promise(res => document.head.appendChild(Object.assign(document.createElement('script'), {
+    src: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', integrity: 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=', crossOrigin: '',
+    onload: () => res(true), onerror: () => res(false) })));
+}
 function initMap() {
   const map = document.querySelector('[data-map]');
   if (!map) return;
   const list = document.querySelector('[data-farm-list]');
-  // shortcut: hand-drawn Singapore outline, not to scale — swap for a real map (Leaflet/OneMap) when farms are live
+  // Offline fallback first: hand-drawn outline, not to scale. Upgraded to OneMap below when Leaflet loads.
   map.innerHTML = `
   <svg viewBox="0 0 600 320" role="img" aria-label="Map of Singapore with partner farms">
     <path class="island" d="M34 168 C40 140 70 120 100 104 C130 86 160 66 196 58 C226 50 250 40 276 46 C300 52 318 66 344 70 C380 74 410 68 446 76 C486 84 520 104 548 128 C566 144 572 166 556 182 C536 198 500 200 470 206 C440 212 420 232 388 246 C352 262 314 276 276 274 C240 272 214 256 186 246 C150 234 116 236 86 226 C58 216 30 198 34 168 Z"/>
     <path class="island" d="M488 60 C504 54 528 56 540 64 C536 74 512 76 494 72 Z"/>
     <path class="island" d="M560 92 C572 86 588 90 590 102 C584 112 568 110 560 104 Z"/>
     <text x="290" y="180" fill="rgba(238,243,236,.25)" font-family="Manrope" font-weight="700" font-size="14" letter-spacing="6" text-anchor="middle">SINGAPORE</text>
-    ${FARMS.map(f => `<g class="pin" data-id="${f.id}" tabindex="0" role="button" aria-label="${f.name}, ${f.area}">
+    ${FARMS.map(f => `<g ${pinAttrs(f)}>
       <circle class="ring" cx="${f.x}" cy="${f.y}" r="8"/><circle class="dot" cx="${f.x}" cy="${f.y}" r="7"/></g>`).join('')}
   </svg>`;
   if (list) list.innerHTML = FARMS.map(f => `
@@ -206,12 +255,38 @@ function initMap() {
       <b>${f.name}</b><span>${f.area}</span>
       <div class="farm-tags">${f.produce.map(p => `<i>${p}</i>`).join('')}</div>
     </button>`).join('');
-  const select = id => document.querySelectorAll('[data-id]').forEach(el => el.classList.toggle('active', el.dataset.id === id));
-  document.querySelectorAll('.pin, .farm-item').forEach(el => {
-    el.addEventListener('click', () => select(el.dataset.id));
-    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.id); } });
+  let lmap = null;
+  const select = (id, pan) => {
+    document.querySelectorAll('[data-id]').forEach(el => el.classList.toggle('active', el.dataset.id === id));
+    const f = FARMS.find(x => x.id === id);
+    if (lmap && pan) lmap.panTo([f.lat, f.lng]);
+  };
+  const bind = els => els.forEach(el => {
+    const go = () => select(el.dataset.id, el.classList.contains('farm-item'));
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
   });
+  bind(document.querySelectorAll('.pin, .farm-item'));
   select(FARMS[0].id);
+
+  loadLeaflet().then(ok => {
+    if (!ok) return;
+    const active = (document.querySelector('.farm-item.active') || {}).dataset?.id || FARMS[0].id;
+    map.innerHTML = '<div class="leaflet-host" role="region" aria-label="Map of Singapore with partner farms"></div>';
+    map.classList.add('live');
+    const sg = L.latLngBounds([1.144, 103.535], [1.494, 104.502]);
+    lmap = L.map(map.firstElementChild, { scrollWheelZoom: false, maxBounds: sg, minZoom: 11, maxZoom: 18 });
+    // OneMap basemap: free, no key; attribution is required by SLA's terms
+    L.tileLayer('https://www.onemap.gov.sg/maps/tiles/Night/{z}/{x}/{y}.png', {
+      detectRetina: true, maxZoom: 19, minZoom: 11, bounds: [[1.16, 103.59], [1.48, 104.1]], // skip OneMap's off-island frame tiles
+      attribution: '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" alt="" style="display:inline;height:16px;width:16px;vertical-align:middle"> <a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a> &copy; contributors | <a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>'
+    }).addTo(lmap);
+    const icon = f => L.divIcon({ className: 'pin-icon', iconSize: [22, 22], html: `<span ${pinAttrs(f)}><i class="ring"></i><i class="dot"></i></span>` });
+    FARMS.forEach(f => L.marker([f.lat, f.lng], { icon: icon(f), keyboard: false, title: f.name }).addTo(lmap));
+    lmap.fitBounds(FARMS.map(f => [f.lat, f.lng]), { padding: [40, 40] });
+    bind(map.querySelectorAll('.pin'));
+    select(active);
+  });
 }
 
 /* Scroll-to-top button, every page */
