@@ -3,66 +3,72 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Get in touch with SoLeaf about selling or shopping through Evercrop.">
-  <title>Contact us — Evercrop</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <title>Contact · EverCrop</title>
+  <meta name="description" content="Get in touch with the EverCrop team, whether you run a farm, shop with us or want to partner.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-
-  <script src="site.js" defer></script>
-  <script src="account.js" defer></script>
-  <script src="faq-bot.js" defer></script>
 </head>
+<body data-page="contact">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div data-header></div>
 
-<body class="contact-page">
-<header class="header" id="top" tabindex="-1"><div class="wrap nav">
-    <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">Menu</span><span class="bars" aria-hidden="true"></span></button><nav id="site-nav" aria-label="Main navigation"><a href="index.html#how">How it works</a><a href="index.html#rewards">Grow a tree</a><a href="index.html#farms">For farms</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="nav-farm" id="shop-sign-in" href="login.html">Sign in</a><a class="nav-farm" id="shop-account-link" href="shop.html" hidden>My account</a></nav>
-  </div></header>
-<main class="wrap contact">
-  <div class="contact-intro">
-    <p class="eyebrow">CONTACT SOLEAF</p>
-    <h1>Contact Evercrop</h1>
-    <p class="intro">Get in touch with SoLeaf about selling your harvest, shopping with Evercrop, or working together.</p>
-    <a class="footer-link contact-email" href="mailto:soleaf.co@gmail.com">soleaf.co@gmail.com</a>
-  </div>
-  <form class="contact-form" data-email="soleaf.co@gmail.com">
-    <h2>Write to SoLeaf</h2>
-    <p id="contact-note">Prepare a draft to send from your email app.</p>
-    <label for="topic">What’s your enquiry about?</label>
-    <select id="topic" required>
-      <option value="" selected disabled>Choose a topic</option>
-      <option>Selling through Evercrop</option>
-      <option>Shopping and rewards</option>
-      <option>Partnerships and other enquiries</option>
-    </select>
-    <div class="contact-fields">
-      <div>
-        <label for="contact-name">Name</label>
-        <input id="contact-name" autocomplete="off" required maxlength="100">
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Contact</span>
+        <h1 class="h-xl">Let's <em class="serif">talk.</em></h1>
+        <p class="lead">Farm, shopper or partner, we usually reply within one working day.</p>
       </div>
-      <div>
-        <label for="contact-email">Email</label>
-        <input id="contact-email" type="email" autocomplete="off" required maxlength="254">
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <div class="card contact-item"><span class="icon-box"><i data-i="mail"></i></span><div><b>Email</b><a href="mailto:hello@soleafsg.com">hello@soleafsg.com</a></div></div>
+          <div class="card contact-item"><span class="icon-box"><i data-i="sprout"></i></span><div><b>For farms</b><span>Want EverCrop on your farm? Choose "I run a farm" and we'll arrange a walkthrough.</span></div></div>
+          <div class="card contact-item"><span class="icon-box"><i data-i="clock"></i></span><div><b>Response time</b><span>Mon to Fri, 9am to 6pm SGT</span></div></div>
+          <div class="card contact-item"><span class="icon-box"><i data-i="pin"></i></span><div><b>Based in</b><span>Singapore</span></div></div>
+          <div class="card contact-item"><span class="icon-box"><i data-i="leaf"></i></span><div><b>A SoLeaf product</b><a href="https://soleafsg.com/" target="_blank" rel="noopener">soleafsg.com ↗</a></div></div>
+        </div>
+
+        <form class="card contact-form" data-form="contact" novalidate>
+          <div class="form-note" data-note role="status" hidden></div>
+          <div class="two">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" required>
+              <span class="err"></span>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+              <span class="err"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="topic">I am</label>
+            <select id="topic" name="topic">
+              <option>A shopper</option>
+              <option>I run a farm</option>
+              <option>Interested in partnering</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+            <span class="err"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send message <i data-i="send"></i></button>
+          <p class="muted" style="font-size:13px">By sending, you agree to our <a href="privacy.html" style="color:var(--lime)">Privacy Policy</a>.</p>
+        </form>
       </div>
-    </div>
-    <label for="contact-message">Message</label>
-    <textarea id="contact-message" rows="4" required maxlength="1000"></textarea>
-    <button class="button" type="submit" aria-describedby="contact-note">Prepare email</button>
-    <p id="contact-result" role="status"></p>
-    <a class="footer-link" id="contact-draft" hidden>Open email app</a>
-  </form>
-</main>
-<footer class="site-footer"><div class="wrap">
-    <div class="footer-grid">
-      <div><a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Fresh veg straight from Singapore farms, ordered on WhatsApp.</p></div>
-      <nav aria-label="Shoppers"><h3>Shoppers</h3><a href="index.html#how">How it works</a><a href="index.html#rewards">Grow a tree</a><a href="register.html">Create account</a></nav>
-      <nav aria-label="Farms"><h3>Farms</h3><a href="index.html#farms">Sales assistant</a><a href="farm.html?demo=farm">Farm portal</a><a href="contact.html">Join the pilot</a></nav>
-      <nav aria-label="Company"><h3>Company</h3><a href="about.html">About</a><a href="contact.html">Contact</a><a href="login.html">Sign in</a></nav>
-    </div>
-    <p class="footer-note">© 2026 SoLeaf · Evercrop is a prototype. Prices, names and chats shown are examples.</p>
-  </div></footer>
-<button class="back-top" type="button" hidden><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></button>
+    </section>
+  </main>
+
+  <div data-footer></div>
+  <script src="site.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

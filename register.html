@@ -3,41 +3,71 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Create an account · Evercrop</title>
+  <title>Create account · EverCrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="account.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet">
-  <script src="site.js" defer></script>
-  <script src="account.js" defer></script>
 </head>
-<body class="account-page" data-account-view="register">
-  <header class="header" id="top" tabindex="-1">
-    <div class="wrap nav">
-      <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    </div>
-  </header>
-  <main class="wrap account-main">
-    <div class="account-shell">
-      <section class="account-card" aria-labelledby="account-title">
-        <p class="eyebrow">SHOPPER ACCOUNT</p>
-        <h1 id="account-title">Create an account</h1>
-        <p class="account-intro">Use your email address to create a shopper account.</p>
-        <p class="account-note">Your account is saved in this browser.</p>
-        <form id="account-form">
-            <label>Name<input id="account-name" autocomplete="name" maxlength="100" required></label>
-            <label>Email<input id="account-email" type="email" autocomplete="username" maxlength="254" required></label>
-            <label>Password (at least 8 characters)<input id="account-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
-            <label>Confirm password<input id="account-confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
-            <button class="button" type="submit">Create account</button>
-        </form>
-        <p id="account-status" role="status"></p>
-        <p class="account-footer">Already have an account? <a href="login.html">Sign in</a></p>
-        <noscript><p>Enable JavaScript to use your account.</p></noscript>
-      </section>
-      <div class="account-photo" aria-hidden="true"></div>
-    </div>
-  </main>
-  <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
-  <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></button>
+<body>
+  <div class="auth">
+    <aside class="auth-side">
+      <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
+      <div class="quote">
+        <h2 class="h-lg">From farm <em class="serif">to you.</em></h2>
+        <ul class="ticks">
+          <li>Farms sell direct with an AI WhatsApp chatbot</li>
+          <li>Shoppers pay farm prices, no middleman</li>
+          <li>Every order grows a tree that pays out real produce</li>
+        </ul>
+      </div>
+      <p class="muted" style="font-size:13px">A SoLeaf product · Singapore</p>
+    </aside>
+
+    <main class="auth-main">
+      <form class="auth-form" data-form="register" novalidate>
+        <header>
+          <h1>Create account</h1>
+          <p class="muted">Free for shoppers. Farms start on the 3-month plan.</p>
+        </header>
+        <div class="role-toggle" role="group" aria-label="Account type">
+          <button type="button" data-role="shopper" aria-pressed="true"><i data-i="cart"></i> I'm a shopper</button>
+          <button type="button" data-role="farm" aria-pressed="false"><i data-i="sprout"></i> I'm a farm</button>
+        </div>
+        <div class="form-note" data-note role="status" hidden></div>
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" autocomplete="name" required>
+          <span class="err"></span>
+        </div>
+        <div class="field" data-farm-only hidden>
+          <label for="farm">Farm name</label>
+          <input id="farm" name="farm" autocomplete="organization">
+          <span class="err"></span>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <span class="err"></span>
+        </div>
+        <div class="two">
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+            <span class="err"></span>
+          </div>
+          <div class="field">
+            <label for="confirm">Confirm</label>
+            <input id="confirm" name="confirm" type="password" autocomplete="new-password" required>
+            <span class="err"></span>
+          </div>
+        </div>
+        <label class="check" style="font-size:14px"><input type="checkbox" name="terms"> I agree to the <a href="terms.html" target="_blank" style="color:var(--lime)">Terms</a> and <a href="privacy.html" target="_blank" style="color:var(--lime)">Privacy Policy</a></label>
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+        <p class="auth-foot">Already have an account? <a href="login.html">Log in</a></p>
+      </form>
+    </main>
+  </div>
+  <script src="site.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

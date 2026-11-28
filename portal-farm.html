@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farm Portal · EverCrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-portal="farm" hidden>
+  <div class="portal">
+    <aside class="side">
+      <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
+      <nav aria-label="Portal">
+        <a href="#" class="active"><i data-i="home"></i>Overview</a>
+        <a href="#" data-soon><i data-i="cart"></i>Orders</a>
+        <a href="#" data-soon><i data-i="box"></i>Stock</a>
+        <a href="#" data-soon><i data-i="chat"></i>Chatbot</a>
+        <a href="#" data-soon><i data-i="chart"></i>Insights</a>
+        <a href="#" data-soon><i data-i="settings"></i>Settings</a>
+      </nav>
+      <div class="me">
+        <span class="av" data-user-initials></span>
+        <div><b data-user-name></b><span data-farm-name></span></div>
+        <button data-logout aria-label="Log out"><i data-i="logout"></i></button>
+      </div>
+    </aside>
+
+    <div>
+      <div class="mobile-top">
+        <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
+        <button class="btn btn-ghost btn-sm" data-logout>Log out</button>
+      </div>
+
+      <main class="main">
+        <div class="main-head">
+          <div>
+            <h1>Good morning, <span data-user-first></span></h1>
+            <p><span data-farm-name></span> · Starter plan, 74 days left</p>
+          </div>
+          <button class="btn btn-primary btn-sm" data-broadcast><i data-i="megaphone"></i>Send harvest alert</button>
+        </div>
+
+        <div class="stats">
+          <div class="card stat"><span>Orders this week</span><strong>128</strong><em>+24%</em></div>
+          <div class="card stat"><span>Revenue</span><strong>$2,940</strong><em>+18%</em></div>
+          <div class="card stat"><span>Chats handled by AI</span><strong>96%</strong><em>412 messages</em></div>
+          <div class="card stat"><span>Repeat customers</span><strong>63%</strong><em>Tree game active</em></div>
+        </div>
+
+        <div class="grid-2">
+          <section class="card panel">
+            <div class="panel-head"><h2>Recent orders</h2><a href="#" data-soon>View all</a></div>
+            <div class="table-scroll">
+              <table class="table">
+                <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+                <tbody data-orders></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="card panel">
+            <div class="panel-head"><h2>Orders by day</h2></div>
+            <div class="bars" data-bars></div>
+          </section>
+        </div>
+
+        <div class="grid-2">
+          <section class="card panel">
+            <div class="panel-head"><h2>Chatbot activity</h2><span class="badge ok">Online</span></div>
+            <div class="chat-feed" data-chats></div>
+          </section>
+          <section class="card panel">
+            <div class="panel-head"><h2>This week's harvest</h2><a href="#" data-soon>Edit stock</a></div>
+            <div style="display:grid;gap:16px" data-stock></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="site.js"></script>
+  <script src="auth.js"></script>
+  <script src="portal.js"></script>
+</body>
+</html>

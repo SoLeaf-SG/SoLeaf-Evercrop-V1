@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My EverCrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-portal="shopper" hidden>
+  <div class="portal">
+    <aside class="side">
+      <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
+      <nav aria-label="Portal">
+        <a href="#" class="active"><i data-i="tree"></i>My tree</a>
+        <a href="#shop"><i data-i="cart"></i>Shop farms</a>
+        <a href="#orders"><i data-i="box"></i>My orders</a>
+        <a href="shoppers.html#farms"><i data-i="pin"></i>Farm map</a>
+        <a href="#" data-soon><i data-i="settings"></i>Settings</a>
+      </nav>
+      <div class="me">
+        <span class="av" data-user-initials></span>
+        <div><b data-user-name></b><span>Shopper</span></div>
+        <button data-logout aria-label="Log out"><i data-i="logout"></i></button>
+      </div>
+    </aside>
+
+    <div>
+      <div class="mobile-top">
+        <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
+        <button class="btn btn-ghost btn-sm" data-logout>Log out</button>
+      </div>
+
+      <main class="main">
+        <div class="main-head">
+          <div>
+            <h1>Hi <span data-user-first></span>, your tree is thirsty 🌱</h1>
+            <p>Order, check in and invite friends to grow it.</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="card stat"><span>Water collected</span><strong data-water>0</strong><em>Total this tree</em></div>
+          <div class="card stat"><span>Check-in streak</span><strong><span data-streak>0</span> days</strong><em>7 days = +20 bonus</em></div>
+          <div class="card stat"><span>Saved vs supermarket</span><strong>$18.40</strong><em>This month</em></div>
+          <div class="card stat"><span>Produce boxes earned</span><strong data-boxes>0</strong><em>From your trees</em></div>
+        </div>
+
+        <div class="grid-2">
+          <section class="card panel" style="justify-items:center;text-align:center">
+            <div class="panel-head" style="width:100%"><h2>My tree</h2><span class="badge ok" data-tree-label>Seed</span></div>
+            <div data-tree-art></div>
+            <div class="meter"><i data-tree-meter></i></div>
+            <p class="muted" style="font-size:14px" data-tree-info></p>
+            <button class="btn btn-primary btn-block" data-harvest hidden><i data-i="gift"></i>Claim free produce box</button>
+          </section>
+          <section class="card panel">
+            <div class="panel-head"><h2>Earn water</h2></div>
+            <div class="task-list">
+              <div class="task"><span class="icon-box"><i data-i="calendar"></i></span><div><b>Daily check-in</b><span>+5 water a day</span></div><button class="btn btn-primary btn-sm" data-checkin>Check in +5</button></div>
+              <div class="task"><span class="icon-box"><i data-i="users"></i></span><div><b>Invite a friend</b><span>+50 when they order</span></div><button class="btn btn-ghost btn-sm" data-invite>Copy link</button></div>
+              <div class="task"><span class="icon-box"><i data-i="cart"></i></span><div><b>Place an order</b><span>+30 per order</span></div><a href="#shop" class="btn btn-ghost btn-sm">Shop</a></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="card panel" id="shop">
+          <div class="panel-head"><h2>Fresh this week</h2><a href="shoppers.html#farms">See farm map</a></div>
+          <div class="produce-grid" data-produce></div>
+        </section>
+
+        <section class="card panel" id="orders">
+          <div class="panel-head"><h2>My orders</h2></div>
+          <div class="table-scroll">
+            <table class="table">
+              <thead><tr><th>Order</th><th>Farm</th><th>Total</th><th>Status</th></tr></thead>
+              <tbody data-my-orders></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="site.js"></script>
+  <script src="auth.js"></script>
+  <script src="portal.js"></script>
+</body>
+</html>

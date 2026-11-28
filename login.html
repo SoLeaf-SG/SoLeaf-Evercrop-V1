@@ -3,47 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sign in · Evercrop</title>
+  <title>Log in · EverCrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="account.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet">
-  <script src="site.js" defer></script>
-  <script src="account.js" defer></script>
 </head>
-<body class="account-page" data-account-view="login">
-  <header class="header" id="top" tabindex="-1">
-    <div class="wrap nav">
-      <a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a>
-    </div>
-  </header>
-  <main class="wrap account-main">
-    <div class="account-shell">
-      <section class="account-card" aria-labelledby="account-title">
-        <p class="eyebrow">EVERCROP ACCOUNT</p>
-        <h1 id="account-title">Sign in</h1>
-        <p class="account-intro">Enter your email and password.</p>
-        <p class="account-note">Your account is saved in this browser.</p>
-        <form id="account-form">
-            <label>Email<input id="account-email" type="email" autocomplete="username" maxlength="254" required></label>
-            <label>Password<input id="account-password" type="password" autocomplete="current-password" maxlength="128" required></label>
-            <a class="account-link account-forgot" href="forgot-password.html">Forgot password?</a>
-            <button class="button" type="submit">Sign in</button>
-        </form>
-        <p id="account-status" role="status"></p>
-        <p class="account-footer">New to Evercrop? <a href="register.html">Create an account</a></p>
-        <section class="account-demo" aria-labelledby="account-demo-title">
-          <h2 id="account-demo-title">Choose a portal</h2>
-          <div class="account-demo-actions">
-            <a class="button secondary" href="farm.html?demo=farm">Continue as a farmer</a>
-            <a class="button secondary" href="shop.html?demo=customer">Continue as a customer</a>
+<body>
+  <div class="auth">
+    <aside class="auth-side">
+      <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
+      <div class="quote">
+        <h2 class="h-lg">Welcome <em class="serif">back.</em></h2>
+        <p>Farms: check today's orders and stock. Shoppers: water your tree and reorder your favourites.</p>
+      </div>
+      <p class="muted" style="font-size:13px">A SoLeaf product · Singapore</p>
+    </aside>
+
+    <main class="auth-main">
+      <form class="auth-form" data-form="login" novalidate>
+        <header>
+          <h1>Log in</h1>
+          <p class="muted">One login for farms and shoppers.</p>
+        </header>
+        <div class="form-note" data-note role="status" hidden></div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <span class="err"></span>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pw-wrap">
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+            <button type="button" data-toggle-pw aria-label="Show password" aria-pressed="false">Show</button>
           </div>
-        </section>
-        <noscript><p>Enable JavaScript to use your account.</p></noscript>
-      </section>
-      <div class="account-photo" aria-hidden="true"></div>
-    </div>
-  </main>
-  <footer><div class="wrap footer"><a class="brand" href="index.html" aria-label="Evercrop home"><span class="mark" aria-hidden="true"></span>evercrop<span>.</span></a><p>Evercrop is a project by SoLeaf.</p></div></footer>
-  <button class="back-top" type="button" hidden><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></button>
+          <span class="err"></span>
+        </div>
+        <div class="row-between">
+          <label class="check"><input type="checkbox" name="remember"> Remember me</label>
+          <a href="forgot-password.html">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <p class="auth-foot">New to EverCrop? <a href="register.html">Create an account</a></p>
+        <p class="auth-foot" style="font-size:13px;color:var(--subtle)">Prototype: demo accounts are listed in the README.</p>
+      </form>
+    </main>
+  </div>
+  <script src="site.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

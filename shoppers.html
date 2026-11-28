@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For Shoppers · EverCrop</title>
+  <meta name="description" content="Buy fresh produce straight from Singapore farms on WhatsApp. Pay farm prices and grow a tree that pays out a free produce box.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="shoppers">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div data-header></div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">For shoppers</span>
+          <h1 class="h-xl">Farm prices. <em class="serif">Picked this week.</em></h1>
+          <p class="lead">Order fresh vegetables straight from local farms by WhatsApp. No supermarket markup, and every order grows your tree.</p>
+          <div class="hero-actions">
+            <a href="register.html?role=shopper" class="btn btn-primary">Start shopping <i data-i="arrow"></i></a>
+            <a href="#tree" class="btn btn-ghost">How the tree works</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="wa-top">
+                <span class="wa-avatar"><i data-i="sprout"></i></span>
+                <div><div class="wa-name">Kranji Greens · EverCrop</div><div class="wa-status">online</div></div>
+              </div>
+              <div class="wa-body" data-chat aria-live="off"></div>
+              <div class="wa-input"><span>Message</span><b><i data-i="send"></i></b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Why it costs less</span>
+          <h2 class="h-lg">Skip the middle. <em class="serif">Keep the savings.</em></h2>
+        </div>
+        <div class="compare">
+          <div class="card reveal">
+            <span class="eyebrow">Supermarket</span>
+            <div class="flow"><span>Farm</span><em>→</em><span>Wholesaler</span><em>→</em><span>Retailer</span><em>→</em><span>You</span></div>
+            <p class="muted">Several markups and days in transit before it reaches your kitchen.</p>
+          </div>
+          <div class="card good reveal">
+            <span class="eyebrow">EverCrop</span>
+            <div class="flow"><span>Farm</span><em>→</em><span>You</span></div>
+            <p class="muted">Straight from the grower. Fresher food, a fairer price, and you know who grew it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tree" style="padding-top:0">
+      <div class="container tree-wrap">
+        <div class="card tree-stage reveal" data-tree-preview>
+          <div data-tree-art></div>
+          <h3 class="h-md" data-tree-label>Seed</h3>
+          <div class="meter"><i></i></div>
+          <div class="tree-meta"><span data-tree-pct>0% grown</span><span>5 stages</span></div>
+        </div>
+        <div class="reveal">
+          <div class="section-head" style="margin-bottom:0">
+            <span class="eyebrow">Grow a tree</span>
+            <h2 class="h-lg">Water it. Grow it. <em class="serif">Harvest it.</em></h2>
+            <p class="lead">Your tree goes from seed to fruit in five stages. Reach the last one and a partner farm sends you a free produce box.</p>
+          </div>
+          <div class="earn-grid">
+            <div class="card earn"><span class="icon-box"><i data-i="cart"></i></span><div><b>Order</b><span>+30 water per order</span></div></div>
+            <div class="card earn"><span class="icon-box"><i data-i="calendar"></i></span><div><b>Daily check-in</b><span>+5 water, streaks add up</span></div></div>
+            <div class="card earn"><span class="icon-box"><i data-i="users"></i></span><div><b>Invite a friend</b><span>+50 water each</span></div></div>
+            <div class="card earn reward"><span class="icon-box"><i data-i="gift"></i></span><div><b>Harvest</b><span>Free produce box</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="farms" style="padding-top:0">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Farms near you</span>
+          <h2 class="h-lg">Meet the people <em class="serif">who grow it.</em></h2>
+        </div>
+        <div class="map-wrap reveal">
+          <div class="card map" data-map></div>
+          <div class="farm-list" data-farm-list></div>
+        </div>
+        <p class="muted" style="font-size:13px;margin-top:16px">Demo farms shown for the prototype.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-bottom:0">
+      <div class="container">
+        <div class="card cta reveal">
+          <h2 class="h-lg">Plant your <em class="serif">first seed.</em></h2>
+          <p class="lead">Create a free account and get 50 water to start.</p>
+          <div class="hero-actions"><a href="register.html?role=shopper" class="btn btn-primary">Create free account</a><a href="login.html" class="btn btn-ghost">Log in</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-footer></div>
+  <script src="site.js"></script>
+</body>
+</html>

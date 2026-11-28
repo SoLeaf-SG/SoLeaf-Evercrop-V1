@@ -1,32 +1,36 @@
-# Evercrop by SoLeaf
+# EverCrop (prototype)
 
-Evercrop is a public website prototype for buying and selling fresh produce through WhatsApp. Shoppers can buy directly from local growers at farm-direct prices. Farms can use a sales assistant to answer stock questions and capture orders in chat.
+Public website + farm/shopper portals for EverCrop, a SoLeaf product: an AI WhatsApp chatbot that lets Singapore farms sell direct to customers, plus a tree-growing rewards game for shoppers.
 
-## Try the prototype
+Plain HTML, CSS and JS. No build step. Open `index.html` in a browser, or serve the folder:
 
-1. Open [index.html](index.html) in a browser. The site uses plain HTML, CSS, and JavaScript and requires no installation or build.
-2. Watch the phone in the hero play a sample WhatsApp order with a farm.
-3. Read **For farms** for the sales assistant pitch, or open the farm portal from **Farm portal** in the footer.
-4. In **Grow a tree**, use **Place a demo order · +25 pts** to grow the virtual tree from seedling to full canopy.
-5. Open **Contact** to try the enquiry form with sample details.
+```
+npx serve .
+```
 
-## Prototype scope
+## Pages
 
-The WhatsApp-style conversations, prices, orders, and rewards are simulated in the browser. Tree progress resets when you reload the homepage. The contact form demonstrates the enquiry flow without transmitting the submitted details.
+| File | What |
+|---|---|
+| `index.html` | Home: USP, WhatsApp demo, how it works, tree game, farm map |
+| `farms.html` | For farms: chatbot features, plans (3-month starter) |
+| `shoppers.html` | For shoppers: why it's cheaper, tree game, farm map |
+| `contact.html` | Contact form (front-end only, nothing is sent yet) |
+| `terms.html`, `privacy.html` | Draft Terms and PDPA Privacy Policy (need legal review) |
+| `login.html`, `register.html`, `forgot-password.html` | Auth (farm or shopper) |
+| `portal-farm.html`, `portal-shopper.html` | Dashboards with demo data |
 
-## Project files
+## Demo accounts
 
-| File | Purpose |
-| --- | --- |
-| [index.html](index.html) | Homepage, shopper and farm paths, and rewards |
-| [contact.html](contact.html) | Contact page and sample enquiry form |
-| [styles.css](styles.css) | Shared layout, typography, and responsive styles |
-| [app.js](app.js) | Homepage phone chat and demo-order points |
-| [tree.js](tree.js) | Animated reward tree, shared by the homepage and the shopper portal |
-| [farm.html](farm.html) | Farm portal: overview, WhatsApp orders inbox, inventory, AI assistant chats |
-| [shop.html](shop.html) | Shopper portal: home, shop and basket, orders, my tree, Ask Evercrop, preferences |
-| [stock.js](stock.js) | Shared portal demo data (stock, orders, points) kept in the browser; open a portal with `?reset` to start fresh |
-| [stock.css](stock.css) | Styles for both portals |
-| [site.js](site.js) | Sticky navigation offsets, hamburger menu, back-to-top button, and demo form |
-| [faq-bot.js](faq-bot.js) | "Ask Evercrop" help chat on public pages (scripted FAQ answers) |
-| [assets/harvest.jpg](assets/harvest.jpg) | Homepage harvest photo |
+| Role | Email | Password |
+|---|---|---|
+| Farm | farm@demo.sg | evercrop123 |
+| Shopper | shopper@demo.sg | evercrop123 |
+
+New accounts can be created on `register.html`.
+
+## Prototype limits
+
+- Accounts, sessions and tree progress are stored in the browser's localStorage. This is not secure and is for demo only.
+- The forgot-password page shows a confirmation but sends no email.
+- Farms, prices, orders and the Singapore map are illustrative.
