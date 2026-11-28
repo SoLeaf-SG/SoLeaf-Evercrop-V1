@@ -17,6 +17,7 @@ const ICONS = {
   pin: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
   arrow: '<path d="M5 12h14M12 5l7 7-7 7"/>',
   send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
   home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
   cart: '<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
   settings: '<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>',
@@ -72,6 +73,13 @@ function renderChrome() {
   if (footer) {
     footer.outerHTML = `
     <footer class="footer">
+      <svg class="footer-hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 52 C240 8 500 14 760 38 S1200 12 1440 40 V90 H0Z" fill="#9cc275" opacity=".55"/>
+        <path d="M0 66 C300 30 620 46 900 52 S1280 30 1440 54 V90 H0Z" fill="#5d9443"/>
+        <path d="M0 74 C300 46 620 60 900 64 S1280 46 1440 66" fill="none" stroke="#86b85e" stroke-width="2" stroke-dasharray="10 8" opacity=".7"/>
+        <path d="M0 82 C300 58 620 70 900 72 S1280 58 1440 76" fill="none" stroke="#86b85e" stroke-width="2" stroke-dasharray="10 8" opacity=".5"/>
+        <path d="M0 86 C360 70 720 92 1080 78 S1380 74 1440 80 V91 H0Z" style="fill:var(--forest)"/>
+      </svg>
       <div class="container">
         <div class="footer-grid">
           <div style="display:grid;gap:16px;align-content:start">
@@ -137,6 +145,104 @@ function initChat() {
   })();
 }
 
+/* Farm dashboard demo (farms page) — WhatsApp orders land live: feed, counters and stock update, then loop */
+const DASH_ITEMS = [{ name: 'Kai Lan', sold: 36, total: 60 }, { name: 'Cherry Tomato', sold: 14, total: 40 }, { name: 'Bayam', sold: 27, total: 32 }];
+const DASH_ORDERS = [
+  { who: 'Hui Min', item: 0, qty: 2, amt: 5.60 }, { who: 'Marcus', item: 2, qty: 2, amt: 5.00 }, { who: 'Wei Jie', item: 1, qty: 1, amt: 4.20 },
+  { who: 'Priya', item: 0, qty: 3, amt: 8.40 }, { who: 'Aaron', item: 2, qty: 3, amt: 7.50 }, { who: 'Siti', item: 1, qty: 2, amt: 8.40 }
+];
+function initFarmDash() {
+  const box = document.querySelector('[data-farm-dash]');
+  if (!box) return;
+  const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+  const sumOf = k => DASH_ORDERS.reduce((s, o) => s + o[k], 0);
+  const END = { orders: 128, rev: 2940 };
+  // Rendered as a browser window showing the farm portal, the desktop twin of the home page's phone mockup
+  box.className = 'browser';
+  box.removeAttribute('style');
+  box.innerHTML = `
+    <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">${icon('lock')}evercrop.sg/portal</span></div>
+    <div class="browser-body">
+      <aside class="mini-side" aria-hidden="true">
+        <span class="logo-mark">${icon('sprout')}</span>
+        ${['home', 'cart', 'box', 'chat', 'chart'].map((n, i) => `<span class="${i ? '' : 'on'}">${icon(n)}</span>`).join('')}
+      </aside>
+      <div class="dash-main">
+        <div class="panel-head"><div><h2>Good morning, Mei</h2><small class="dash-sub">Kranji Greens · this week</small></div><span class="badge ok live">Live</span></div>
+        <div class="stats dash-stats">
+          <div class="stat card"><span>Orders</span><strong data-k="orders"></strong><em>+24% vs last week</em></div>
+          <div class="stat card"><span>Revenue</span><strong data-k="rev"></strong><em>Paid via PayNow</em></div>
+          <div class="stat card wide-only"><span>Chats by AI</span><strong>96%</strong><em>412 messages answered</em></div>
+        </div>
+        <div class="dash-cols">
+          <div class="dash-col"><div class="dash-label">Latest WhatsApp orders</div><div class="dash-feed" aria-live="off"></div></div>
+          <div class="dash-col"><div class="dash-label">Harvest stock</div>
+            ${DASH_ITEMS.map((it, i) => `<div class="stock-row" data-item="${i}"><div><b>${it.name}</b><span></span></div><div class="meter"><i></i></div></div>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-note" role="status"></div>`;
+  const $k = k => box.querySelector(`[data-k="${k}"]`), feed = box.querySelector('.dash-feed'), note = box.querySelector('.dash-note');
+  const state = {};
+  const setStock = (i, sold) => {
+    const it = DASH_ITEMS[i], row = box.querySelector(`[data-item="${i}"]`), out = sold >= it.total;
+    row.querySelector('span').innerHTML = out ? '<em class="sold-tag">Sold out · listing closed</em>' : `${sold} / ${it.total} kg sold`;
+    row.querySelector('.meter i').style.width = Math.min(100, sold / it.total * 100) + '%';
+    row.classList.toggle('sold', out);
+  };
+  const render = () => {
+    $k('orders').textContent = state.orders; $k('rev').textContent = fmt(state.rev);
+    DASH_ITEMS.forEach((_, i) => setStock(i, state.stock[i]));
+  };
+  const feedRow = (o, paid) => `<div class="feed-row"><span class="av">${o.who.slice(0, 2).toUpperCase()}</span>
+    <div><b>${o.who}</b><small>${o.qty} kg ${DASH_ITEMS[o.item].name} · $${o.amt.toFixed(2)}</small></div>
+    <span class="badge ${paid ? 'ok' : 'new'}">${paid ? 'Paid' : 'New'}</span></div>`;
+  const reset = () => {
+    state.orders = END.orders - DASH_ORDERS.length; state.rev = END.rev - sumOf('amt');
+    state.stock = DASH_ITEMS.map(it => it.sold); render();
+    // earlier paid orders so the feed is never empty while the loop restarts
+    feed.innerHTML = [{ who: 'Daniel', item: 1, qty: 2, amt: 8.40 }, { who: 'Farah', item: 0, qty: 1, amt: 2.80 }, { who: 'Kenneth', item: 2, qty: 2, amt: 5.00 }]
+      .map(o => feedRow(o, true)).join('');
+  };
+  const showNote = (txt, ms = 2200) => { note.textContent = txt; note.classList.add('show'); return wait(ms).then(() => note.classList.remove('show')); };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const bump = el => { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); };
+  // count up the revenue so it visibly ticks rather than jumping
+  const tween = (from, to, ms) => new Promise(res => {
+    const t0 = performance.now();
+    const step = t => { const p = Math.min(1, (t - t0) / ms); state.rev = from + (to - from) * p; $k('rev').textContent = fmt(state.rev); p < 1 ? requestAnimationFrame(step) : res(); };
+    requestAnimationFrame(step);
+  });
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reset();
+    state.orders = END.orders; state.rev = END.rev;
+    DASH_ORDERS.forEach(o => state.stock[o.item] += o.qty);
+    feed.innerHTML = DASH_ORDERS.slice(-3).reverse().map(o => feedRow(o, true)).join('');
+    render(); return;
+  }
+  (async function loop() {
+    for (;;) {
+      reset();
+      await wait(1200);
+      for (const o of DASH_ORDERS) {
+        feed.insertAdjacentHTML('afterbegin', feedRow(o, false));
+        while (feed.children.length > 3) feed.lastElementChild.remove();
+        state.orders++; bump($k('orders')); $k('orders').textContent = state.orders;
+        state.stock[o.item] += o.qty; setStock(o.item, state.stock[o.item]);
+        await wait(900);
+        const badge = feed.firstElementChild.querySelector('.badge');
+        badge.className = 'badge ok'; badge.textContent = 'Paid';
+        bump($k('rev')); await tween(state.rev, state.rev + o.amt, 600);
+        if (state.stock[o.item] >= DASH_ITEMS[o.item].total) await showNote(`${DASH_ITEMS[o.item].name} sold out · chatbot stopped offering it`);
+        await wait(1000);
+      }
+      await showNote('📣 Harvest alert sent to 86 regulars', 2600);
+      await wait(1200);
+    }
+  })();
+}
+
 /* Tree — 5 growth stages, shared by home preview and shopper portal */
 const TREE_STAGES = ['Seed', 'Sprout', 'Sapling', 'Young tree', 'Fruiting tree'];
 // Leaf cluster: overlapping blobs shaded light top-left → dark bottom-right; grows out from its branch tip.
@@ -167,7 +273,7 @@ const TREE_SVG = `
     <linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#3e2a1c"/><stop offset=".45" stop-color="#7a5638"/><stop offset="1" stop-color="#3a2618"/></linearGradient>
     <radialGradient id="soil" cy="20%"><stop offset="0" stop-color="#6b5038"/><stop offset="1" stop-color="#3b2b1e"/></radialGradient>
   </defs>
-  <ellipse cx="110" cy="195" rx="74" ry="9" fill="rgba(0,0,0,.35)"/>
+  <ellipse cx="110" cy="195" rx="74" ry="9" fill="rgba(92,72,40,.18)"/>
   <path d="M52 194 Q110 178 168 194 Z" fill="url(#soil)"/>
   <g class="crown">
     <g class="part grow off" data-from="0" data-to="0" style="transform-origin:110px 188px"><ellipse cx="110" cy="187" rx="6" ry="4" fill="#9a7650" transform="rotate(-20 110 187)"/><path d="M107 186 q3 -2 6 -1" stroke="#c9a77a" stroke-width="1" fill="none"/></g>
@@ -277,7 +383,7 @@ function initMap() {
     const sg = L.latLngBounds([1.144, 103.535], [1.494, 104.502]);
     lmap = L.map(map.firstElementChild, { scrollWheelZoom: false, maxBounds: sg, minZoom: 11, maxZoom: 18 });
     // OneMap basemap: free, no key; attribution is required by SLA's terms
-    L.tileLayer('https://www.onemap.gov.sg/maps/tiles/Night/{z}/{x}/{y}.png', {
+    L.tileLayer('https://www.onemap.gov.sg/maps/tiles/Grey/{z}/{x}/{y}.png', {
       detectRetina: true, maxZoom: 19, minZoom: 11, bounds: [[1.16, 103.59], [1.48, 104.1]], // skip OneMap's off-island frame tiles
       attribution: '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" alt="" style="display:inline;height:16px;width:16px;vertical-align:middle"> <a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a> &copy; contributors | <a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>'
     }).addTo(lmap);
@@ -372,6 +478,7 @@ renderChrome();
 paintIcons();
 initReveal();
 initChat();
+initFarmDash();
 initTreePreview();
 initMap();
 initToTop();

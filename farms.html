@@ -6,7 +6,7 @@
   <title>For Farms · EverCrop</title>
   <meta name="description" content="Sell your harvest directly to customers with an AI WhatsApp chatbot that takes orders, payments and repeat sales for you.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="farms">
@@ -25,8 +25,8 @@
             <a href="#pricing" class="btn btn-ghost">See plans</a>
           </div>
         </div>
-        <div class="hero-visual">
-          <div class="card panel" style="width:min(460px,100%);position:relative">
+        <div class="hero-visual browser-visual">
+          <div class="card panel dash" data-farm-dash style="width:min(460px,100%);position:relative">
             <div class="panel-head"><h2>This week</h2><span class="badge ok">Live</span></div>
             <div class="stats" style="grid-template-columns:1fr 1fr">
               <div class="stat card"><span>Orders</span><strong>128</strong><em>+24% vs last week</em></div>
@@ -51,23 +51,6 @@
           <article class="card feature reveal"><span class="icon-box"><i data-i="box"></i></span><h3 class="h-md">Syncs with your stock</h3><p>Sells only what you've harvested. Items close automatically when they run out.</p></article>
           <article class="card feature reveal"><span class="icon-box"><i data-i="card"></i></span><h3 class="h-md">Collects payment</h3><p>Sends PayNow QR codes and marks orders paid. No chasing.</p></article>
           <article class="card feature reveal"><span class="icon-box"><i data-i="megaphone"></i></span><h3 class="h-md">Brings customers back</h3><p>Harvest alerts and the tree game keep regulars ordering week after week.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" style="padding-top:0">
-      <div class="container">
-        <div class="compare">
-          <div class="card reveal">
-            <span class="eyebrow">Today</span>
-            <div class="flow"><span>Farm</span><em>→</em><span>Wholesaler</span><em>→</em><span>Retailer</span><em>→</em><span>Customer</span></div>
-            <p class="muted">Every step takes a cut. Lose one big buyer and your harvest is exposed.</p>
-          </div>
-          <div class="card good reveal">
-            <span class="eyebrow">With EverCrop</span>
-            <div class="flow"><span>Farm</span><em>→</em><span>WhatsApp</span><em>→</em><span>Customer</span></div>
-            <p class="muted">You own the customer, the price and the relationship. Many buyers, less risk.</p>
-          </div>
         </div>
       </div>
     </section>
@@ -108,11 +91,10 @@
             <a href="register.html?role=farm&plan=growth" class="btn btn-ghost btn-block">Choose Growth</a>
           </article>
         </div>
-        <p class="muted" style="text-align:center;font-size:13px;margin-top:20px">Indicative prototype pricing.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-bottom:0">
+    <section class="section" style="padding-top:0;padding-bottom:0">
       <div class="container">
         <div class="card cta reveal">
           <h2 class="h-lg">Ready to sell <em class="serif">direct?</em></h2>
