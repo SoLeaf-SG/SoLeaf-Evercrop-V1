@@ -13,12 +13,12 @@
     <aside class="side">
       <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
       <nav aria-label="Portal">
-        <a href="#" class="active"><i data-i="home"></i>Overview</a>
-        <a href="#" data-soon><i data-i="cart"></i>Orders</a>
-        <a href="#" data-soon><i data-i="box"></i>Stock</a>
-        <a href="#" data-soon><i data-i="chat"></i>Chatbot</a>
-        <a href="#" data-soon><i data-i="chart"></i>Insights</a>
-        <a href="#" data-soon><i data-i="settings"></i>Settings</a>
+        <a href="#overview"><i data-i="home"></i>Overview</a>
+        <a href="#orders"><i data-i="cart"></i>Orders</a>
+        <a href="#stock"><i data-i="box"></i>Stock</a>
+        <a href="#chatbot"><i data-i="chat"></i>Chatbot</a>
+        <a href="#insights"><i data-i="chart"></i>Insights</a>
+        <a href="#settings"><i data-i="settings"></i>Settings</a>
       </nav>
       <div class="side-card">
         <div><b>Starter plan</b><span>74 of 90 days left</span></div>
@@ -35,47 +35,313 @@
       </div>
 
       <main class="main">
-        <div class="main-head">
-          <div>
-            <h1>Good morning, <span data-user-first></span></h1>
-            <p><span data-farm-name></span> · Starter plan, 74 days left</p>
+        <!-- Overview -->
+        <section class="view" data-view="overview">
+          <div class="main-head">
+            <div>
+              <h1>Good morning, <span data-user-first></span></h1>
+              <p><span data-farm-name></span> · Starter plan, 74 days left</p>
+            </div>
+            <button class="btn btn-primary btn-sm" data-broadcast><i data-i="megaphone"></i>Send harvest alert</button>
           </div>
-          <button class="btn btn-primary btn-sm" data-broadcast><i data-i="megaphone"></i>Send harvest alert</button>
-        </div>
+          <div class="stats">
+            <div class="card stat"><span>Orders this week</span><strong>128</strong><em>+24%</em></div>
+            <div class="card stat"><span>Revenue</span><strong>$2,940</strong><em>+18%</em></div>
+            <div class="card stat"><span>Chats handled by AI</span><strong>96%</strong><em>412 messages</em></div>
+            <div class="card stat"><span>Repeat customers</span><strong>63%</strong><em>Tree game active</em></div>
+          </div>
+          <div class="grid-2">
+            <section class="card panel">
+              <div class="panel-head"><h2>Recent orders</h2><a href="#orders">View all</a></div>
+              <div class="table-scroll">
+                <table class="table">
+                  <thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+                  <tbody data-recent-orders></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="card panel">
+              <div class="panel-head"><h2>Orders by day</h2></div>
+              <div class="bars" data-bars></div>
+            </section>
+          </div>
+          <div class="grid-2">
+            <section class="card panel">
+              <div class="panel-head"><h2>Chatbot activity</h2><span class="badge ok" data-bot-badge>Online</span></div>
+              <div class="chat-feed" data-chats></div>
+            </section>
+            <section class="card panel">
+              <div class="panel-head"><h2>This week's harvest</h2><a href="#stock">Edit stock</a></div>
+              <div style="display:grid;gap:16px" data-harvest></div>
+            </section>
+          </div>
+        </section>
 
-        <div class="stats">
-          <div class="card stat"><span>Orders this week</span><strong>128</strong><em>+24%</em></div>
-          <div class="card stat"><span>Revenue</span><strong>$2,940</strong><em>+18%</em></div>
-          <div class="card stat"><span>Chats handled by AI</span><strong>96%</strong><em>412 messages</em></div>
-          <div class="card stat"><span>Repeat customers</span><strong>63%</strong><em>Tree game active</em></div>
-        </div>
-
-        <div class="grid-2">
+        <!-- Orders -->
+        <section class="view" data-view="orders" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Orders</h1>
+              <p>Every order from WhatsApp and the portal, in one place.</p>
+            </div>
+          </div>
+          <div class="stats three">
+            <div class="card stat"><span>New orders</span><strong data-o-new>0</strong><em>Waiting for you to confirm</em></div>
+            <div class="card stat"><span>Awaiting payment</span><strong data-o-unpaid>$0.00</strong><em>PayNow reminders sent</em></div>
+            <div class="card stat"><span>Revenue this week</span><strong data-o-revenue>$0.00</strong><em>Across all orders</em></div>
+          </div>
           <section class="card panel">
-            <div class="panel-head"><h2>Recent orders</h2><a href="#" data-soon>View all</a></div>
+            <div class="shop-tools">
+              <label class="search"><i data-i="search"></i><input type="search" placeholder="Search customer or order number" aria-label="Search orders" data-o-search></label>
+            </div>
+            <div class="chips" data-o-chips role="group" aria-label="Filter by status"></div>
             <div class="table-scroll">
               <table class="table">
-                <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+                <thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Channel</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead>
                 <tbody data-orders></tbody>
               </table>
             </div>
+            <p class="cart-empty" data-o-empty hidden>No orders match.</p>
           </section>
-          <section class="card panel">
-            <div class="panel-head"><h2>Orders by day</h2></div>
-            <div class="bars" data-bars></div>
-          </section>
-        </div>
+        </section>
 
-        <div class="grid-2">
+        <!-- Stock -->
+        <section class="view" data-view="stock" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Stock</h1>
+              <p>What the chatbot can sell this week. Changes save automatically.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" data-add-toggle aria-expanded="false"><i data-i="sprout"></i>Add item</button>
+          </div>
+          <div class="stats">
+            <div class="card stat"><span>Items on sale</span><strong data-s-listed>0</strong><em>Visible to the chatbot</em></div>
+            <div class="card stat"><span>Packs in stock</span><strong data-s-packs>0</strong><em>Across items on sale</em></div>
+            <div class="card stat"><span>Low stock</span><strong data-s-low>0</strong><em>Under 10 packs left</em></div>
+            <div class="card stat"><span>Stock value</span><strong data-s-value>$0.00</strong><em>At current prices</em></div>
+          </div>
+          <form class="card panel add-item" data-add-item novalidate hidden>
+            <div class="panel-head"><h2>Add an item</h2></div>
+            <div class="add-grid">
+              <div class="field">
+                <label for="s-name">Produce name</label>
+                <input id="s-name" name="sname" placeholder="e.g. Butterhead Lettuce">
+                <span class="err"></span>
+              </div>
+              <div class="field">
+                <label for="s-pack">Pack size</label>
+                <input id="s-pack" name="pack" placeholder="e.g. 300 g">
+                <span class="err"></span>
+              </div>
+              <div class="field">
+                <label for="s-price">Price (S$)</label>
+                <input id="s-price" name="price" type="number" min="0.1" step="0.1" placeholder="2.80">
+                <span class="err"></span>
+              </div>
+              <div class="field">
+                <label for="s-qty">Packs in stock</label>
+                <input id="s-qty" name="qty" type="number" min="1" step="1" placeholder="40">
+                <span class="err"></span>
+              </div>
+            </div>
+            <div class="add-actions">
+              <button type="submit" class="btn btn-primary btn-sm">Add to harvest</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-add-cancel>Cancel</button>
+            </div>
+          </form>
+          <div class="stock-tools">
+            <label class="search"><i data-i="search"></i><input type="search" placeholder="Search produce" aria-label="Search produce" data-s-search></label>
+            <div class="chips" data-s-chips role="group" aria-label="Filter stock"></div>
+          </div>
+          <div class="stock-grid" data-stock></div>
+          <p class="cart-empty" data-s-empty hidden>No items match. Try another filter.</p>
+        </section>
+
+        <!-- Chatbot -->
+        <section class="view" data-view="chatbot" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Chatbot</h1>
+              <p>Set how your AI assistant greets and serves customers on WhatsApp.</p>
+            </div>
+          </div>
+          <div class="grid-2 bot-layout">
+            <form class="card panel" data-bot-form novalidate>
+              <div class="panel-head"><h2>Assistant settings</h2></div>
+              <div class="toggle-list">
+                <label class="toggle-row"><span class="icon-box"><i data-i="bolt"></i></span><div><b>Assistant online</b><span>Replies to customers automatically</span></div><input type="checkbox" class="switch" name="online"></label>
+                <label class="toggle-row"><span class="icon-box"><i data-i="pin"></i></span><div><b>Allow farm pickup</b><span>Offer self-collection at checkout</span></div><input type="checkbox" class="switch" name="pickup"></label>
+              </div>
+              <div class="field">
+                <label for="b-greeting">Greeting message</label>
+                <textarea id="b-greeting" name="greeting" maxlength="200"></textarea>
+                <span class="err"></span>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="b-hours">Reply hours</label>
+                  <select id="b-hours" name="hours">
+                    <option value="always">Always on (24/7)</option>
+                    <option value="day">8am to 8pm daily</option>
+                    <option value="week">Weekdays, 9am to 6pm</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="b-fee">Delivery fee (S$)</label>
+                  <input id="b-fee" name="fee" type="number" min="0" step="0.5">
+                  <span class="err"></span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="b-uen">PayNow UEN or mobile</label>
+                <input id="b-uen" name="uen" placeholder="e.g. 202612345K">
+              </div>
+              <button type="submit" class="btn btn-primary" style="justify-self:start">Save settings</button>
+            </form>
+            <section class="card panel bot-preview">
+              <div class="panel-head"><h2>Live preview</h2><span class="badge ok" data-preview-badge>Online</span></div>
+              <div class="phone sm">
+                <div class="phone-screen">
+                  <div class="wa-top">
+                    <span class="wa-avatar"><i data-i="sprout"></i></span>
+                    <div><div class="wa-name"><span data-farm-name></span> · EverCrop</div><div class="wa-status" data-preview-status>online</div></div>
+                  </div>
+                  <div class="wa-body" data-preview></div>
+                  <div class="wa-input"><span>Message</span><b><i data-i="send"></i></b></div>
+                </div>
+              </div>
+            </section>
+          </div>
           <section class="card panel">
-            <div class="panel-head"><h2>Chatbot activity</h2><span class="badge ok">Online</span></div>
-            <div class="chat-feed" data-chats></div>
+            <div class="panel-head"><h2>Recent conversations</h2></div>
+            <div class="chat-feed" data-chats-all></div>
           </section>
-          <section class="card panel">
-            <div class="panel-head"><h2>This week's harvest</h2><a href="#" data-soon>Edit stock</a></div>
-            <div style="display:grid;gap:16px" data-stock></div>
-          </section>
-        </div>
+        </section>
+
+        <!-- Insights -->
+        <section class="view" data-view="insights" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Insights</h1>
+              <p>How your farm is selling over the last 30 days.</p>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="card stat"><span>Revenue (30 days)</span><strong>$9,650</strong><em>+21% vs last month</em></div>
+            <div class="card stat"><span>Average order</span><strong data-i-aov>$0.00</strong><em>Per order</em></div>
+            <div class="card stat"><span>Repeat customers</span><strong>63%</strong><em>Ordered 2+ times</em></div>
+            <div class="card stat"><span>New customers</span><strong>38</strong><em>This month</em></div>
+          </div>
+          <div class="grid-2">
+            <section class="card panel">
+              <div class="panel-head"><h2>Revenue by week</h2></div>
+              <div class="bars" data-i-weeks></div>
+            </section>
+            <section class="card panel">
+              <div class="panel-head"><h2>Top products</h2><a href="#stock">Manage stock</a></div>
+              <div style="display:grid;gap:16px" data-i-top></div>
+            </section>
+          </div>
+          <div class="grid-2">
+            <section class="card panel">
+              <div class="panel-head"><h2>Top customers</h2></div>
+              <div class="chat-feed" data-i-customers></div>
+            </section>
+            <section class="card panel">
+              <div class="panel-head"><h2>Where orders come from</h2></div>
+              <div class="split-bar" aria-hidden="true"><i style="width:82%"></i><i style="width:18%"></i></div>
+              <div class="legend">
+                <div><span class="dot lime"></span><b>WhatsApp chatbot</b><em>82%</em></div>
+                <div><span class="dot sage"></span><b>EverCrop portal</b><em>18%</em></div>
+              </div>
+              <p class="muted" style="font-size:14px">Most customers order through the chatbot. Saturday mornings are your busiest time, so a Friday harvest alert works best.</p>
+            </section>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="view" data-view="settings" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Settings</h1>
+              <p>Manage your farm profile and notifications.</p>
+            </div>
+          </div>
+          <div class="grid-2 settings">
+            <form class="card panel" data-profile novalidate>
+              <div class="panel-head"><h2>Farm profile</h2></div>
+              <div class="avatar-edit">
+                <span class="av-circle xl" data-user-initials></span>
+                <div>
+                  <b>Farm logo</b>
+                  <span>JPG, PNG or WebP, up to 5 MB</span>
+                  <div class="avatar-actions">
+                    <label class="btn btn-ghost btn-sm">Upload logo<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" data-avatar-input hidden></label>
+                    <button type="button" class="btn btn-sm btn-text" data-avatar-remove hidden>Remove</button>
+                  </div>
+                </div>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="f-farm">Farm name</label>
+                  <input id="f-farm" name="fname" autocomplete="organization">
+                  <span class="err"></span>
+                </div>
+                <div class="field">
+                  <label for="f-name">Your name</label>
+                  <input id="f-name" name="pname" autocomplete="name">
+                  <span class="err"></span>
+                </div>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="f-email">Email</label>
+                  <input id="f-email" name="pemail" type="email" readonly>
+                </div>
+                <div class="field">
+                  <label for="f-phone">WhatsApp business number</label>
+                  <input id="f-phone" name="phone" type="tel" placeholder="+65 6123 4567">
+                  <span class="err"></span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-area">Location</label>
+                <select id="f-area" name="area">
+                  <option>Kranji</option><option>Lim Chu Kang</option><option>Neo Tiew</option><option>Sungei Tengah</option><option>Punggol</option><option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-about">About your farm</label>
+                <textarea id="f-about" name="about" maxlength="300" placeholder="Shown to shoppers on the farm map"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </form>
+            <form class="card panel prefs" data-notify>
+              <div class="panel-head"><h2>Preferences</h2></div>
+              <div class="toggle-list">
+                <div class="toggle-row lang-row" role="radiogroup" aria-labelledby="lang-title">
+                  <span class="icon-box"><i data-i="globe"></i></span>
+                  <div><b id="lang-title">Preferred language</b><span>Used for your portal alerts and reports</span></div>
+                  <div class="seg">
+                    <label><input type="radio" name="lang" value="en"><span>English</span></label>
+                    <label><input type="radio" name="lang" value="zh"><span>中文</span></label>
+                    <label><input type="radio" name="lang" value="ms"><span>Bahasa Melayu</span></label>
+                    <label><input type="radio" name="lang" value="ta"><span>தமிழ்</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="pref-group" role="group" aria-label="Notifications">
+                <div class="pref-label"><b>Notifications</b><span>Choose what we send you on WhatsApp</span></div>
+                <div class="toggle-list">
+                  <label class="toggle-row"><span class="icon-box"><i data-i="cart"></i></span><div><b>New orders</b><span>The moment a customer orders</span></div><input type="checkbox" class="switch" name="neworder"></label>
+                  <label class="toggle-row"><span class="icon-box"><i data-i="card"></i></span><div><b>Payments received</b><span>When a PayNow payment lands</span></div><input type="checkbox" class="switch" name="payment"></label>
+                  <label class="toggle-row"><span class="icon-box"><i data-i="box"></i></span><div><b>Low stock</b><span>When an item drops below 10 packs</span></div><input type="checkbox" class="switch" name="lowstock"></label>
+                  <label class="toggle-row"><span class="icon-box"><i data-i="chart"></i></span><div><b>Weekly report</b><span>Sales summary every Monday</span></div><input type="checkbox" class="switch" name="report"></label>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
       </main>
     </div>
   </div>

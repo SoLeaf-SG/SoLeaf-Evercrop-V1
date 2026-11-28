@@ -18,7 +18,7 @@ const toast = msg => {
   document.querySelectorAll('[data-logout]').forEach(b => b.addEventListener('click', EC.logout));
   document.querySelectorAll('[data-soon]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast('Coming soon'); }));
 
-  kind === 'farm' ? farm() : shopper(user);
+  kind === 'farm' ? farm(user) : shopper(user);
   document.body.hidden = false;
 })();
 
@@ -60,34 +60,317 @@ function renderUserMenu(user) {
   });
 }
 
-function farm() {
-  const orders = [
-    ['#1042', 'Aaron L.', 'Kai Lan × 2, Cherry Tomato', '$9.80', 'ok', 'Paid'],
-    ['#1041', 'Priya S.', 'Bayam × 3', '$7.50', 'go', 'Delivering'],
-    ['#1040', 'Wei Jie T.', 'Xiao Bai Cai × 4', '$10.40', 'wait', 'Awaiting payment'],
-    ['#1039', 'Nur A.', 'Kai Lan × 1, Bayam × 1', '$5.30', 'ok', 'Paid'],
-    ['#1038', 'Daniel K.', 'Cherry Tomato × 2', '$8.40', 'ok', 'Paid']
-  ];
-  $('[data-orders]').innerHTML = orders.map(([id, who, items, amt, cls, st]) =>
-    `<tr><td>${id}</td><td>${who}</td><td>${items}</td><td>${amt}</td><td><span class="badge ${cls}">${st}</span></td></tr>`).join('');
+/* ---------- Shared portal helpers ---------- */
+const money = n => '$' + n.toFixed(2);
+const LANGS = { en: 'English', zh: '中文', ms: 'Bahasa Melayu', ta: 'தமிழ்' };
+const esc = s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'); // for user text placed in HTML
 
+/* Hash router: each sidebar link (#name) shows the matching [data-view] */
+function initViews(fallback) {
+  const views = [...document.querySelectorAll('[data-view]')];
+  const show = () => {
+    const want = location.hash.slice(1) || fallback;
+    const view = views.some(v => v.dataset.view === want) ? want : fallback;
+    views.forEach(v => v.hidden = v.dataset.view !== view);
+    document.querySelectorAll('.side nav a, .tabbar a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + view));
+    scrollTo(0, 0);
+  };
+  addEventListener('hashchange', show);
+  return show;
+}
+
+/* Language pills + notification switches; saves on every change */
+function initPrefs(profile, key) {
+  const nf = $('[data-notify]');
+  Object.entries(profile.notify).forEach(([k, v]) => { if (nf[k]) nf[k].checked = v; });
+  nf.lang.value = profile.lang || 'en';
+  nf.addEventListener('change', e => {
+    profile.notify = Object.fromEntries([...nf.querySelectorAll('input[type=checkbox]')].map(i => [i.name, i.checked]));
+    profile.lang = nf.lang.value;
+    EC.write(key, profile);
+    toast(e.target.name === 'lang' ? `Language set to ${LANGS[profile.lang]}` : 'Notification preferences saved');
+  });
+}
+
+/* Profile photo / farm logo: centre-cropped and shrunk to 256px so it fits in localStorage */
+function initAvatar(profile, key, what) {
+  const remove = $('[data-avatar-remove]');
+  const paint = src => document.querySelectorAll('[data-user-initials]').forEach(el => {
+    el.style.backgroundImage = src ? `url("${src}")` : '';
+    el.classList.toggle('has-img', !!src);
+  });
+  paint(profile.avatar);
+  remove.hidden = !profile.avatar;
+  $('[data-avatar-input]').addEventListener('change', async e => {
+    const file = e.target.files[0]; e.target.value = '';
+    if (!file) return;
+    if (!/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) return toast('Please choose a JPG, PNG or WebP image');
+    if (file.size > 5 * 1024 * 1024) return toast('That image is over 5 MB');
+    try {
+      const img = await createImageBitmap(file);
+      const s = Math.min(img.width, img.height), c = document.createElement('canvas');
+      c.width = c.height = 256;
+      c.getContext('2d').drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 256, 256);
+      profile.avatar = c.toDataURL('image/jpeg', 0.85);
+      EC.write(key, profile); paint(profile.avatar);
+      remove.hidden = false;
+      toast(`${what} updated`);
+    } catch { toast('Could not read that image'); }
+  });
+  remove.addEventListener('click', () => {
+    delete profile.avatar; EC.write(key, profile); paint(null);
+    remove.hidden = true; toast(`${what} removed`);
+  });
+}
+
+function farm(user) {
+  const show = initViews('overview');
+  const ordersKey = `ec_farm_orders_${user.email}`, stockKey = `ec_farm_stock_${user.email}`,
+        botKey = `ec_bot_${user.email}`, profileKey = `ec_profile_${user.email}`;
+  const total = o => o.items.reduce((n, i) => n + i.qty * i.price, 0);
+  const initials = n => n.split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+
+  /* ---------- Data ---------- */
+  const orders = EC.read(ordersKey, null) || [
+    { id: '#1048', date: '28 Nov', customer: 'Hui Min C.', channel: 'WhatsApp', status: 'New', items: [{ name: 'Kai Lan', qty: 2, price: 2.8 }, { name: 'Bayam', qty: 2, price: 2.5 }] },
+    { id: '#1047', date: '28 Nov', customer: 'Marcus O.', channel: 'Portal', status: 'New', items: [{ name: 'Xiao Bai Cai', qty: 3, price: 2.6 }] },
+    { id: '#1046', date: '27 Nov', customer: 'Wei Jie T.', channel: 'WhatsApp', status: 'Awaiting payment', items: [{ name: 'Xiao Bai Cai', qty: 4, price: 2.6 }] },
+    { id: '#1045', date: '27 Nov', customer: 'Priya S.', channel: 'WhatsApp', status: 'Delivering', items: [{ name: 'Bayam', qty: 3, price: 2.5 }] },
+    { id: '#1044', date: '26 Nov', customer: 'Aaron L.', channel: 'Portal', status: 'Paid', items: [{ name: 'Kai Lan', qty: 2, price: 2.8 }, { name: 'Cherry Tomato', qty: 1, price: 4.2 }] },
+    { id: '#1043', date: '25 Nov', customer: 'Nur A.', channel: 'WhatsApp', status: 'Completed', items: [{ name: 'Kai Lan', qty: 1, price: 2.8 }, { name: 'Bayam', qty: 1, price: 2.5 }] },
+    { id: '#1042', date: '24 Nov', customer: 'Daniel K.', channel: 'WhatsApp', status: 'Completed', items: [{ name: 'Cherry Tomato', qty: 2, price: 4.2 }] },
+    { id: '#1041', date: '23 Nov', customer: 'Hui Min C.', channel: 'WhatsApp', status: 'Completed', items: [{ name: 'Kai Lan', qty: 3, price: 2.8 }] }
+  ];
+  const stock = EC.read(stockKey, null) || [
+    { id: 'kailan', name: 'Kai Lan', pack: '300 g', price: 2.8, stock: 18, sold: 42, listed: true },
+    { id: 'bayam', name: 'Bayam', pack: '300 g', price: 2.5, stock: 6, sold: 30, listed: true },
+    { id: 'xbc', name: 'Xiao Bai Cai', pack: '300 g', price: 2.6, stock: 13, sold: 12, listed: true },
+    { id: 'tomato', name: 'Cherry Tomato', pack: '250 g', price: 4.2, stock: 22, sold: 18, listed: true }
+  ];
+  const bot = EC.read(botKey, null) || { online: true, pickup: true, hours: 'always', fee: 4, uen: '',
+    greeting: `Hi! 👋 Welcome to ${user.farm || 'our farm'}. Here's what we harvested today:` };
+  const CHATS = [
+    ['Hui Min C.', 'Bot took order #1048 and sent a PayNow QR.', '2m'],
+    ['Marcus O.', 'Bot answered: "Do you deliver to Tampines?"', '9m'],
+    ['Wei Jie T.', 'Bot sent a payment reminder for #1046.', '1h'],
+    ['Priya S.', 'Bot answered: "Is the bayam pesticide-free?"', '3h'],
+    ['Daniel K.', 'Bot shared this week\'s harvest list.', 'Yesterday']
+  ];
+  const saveOrders = () => EC.write(ordersKey, orders), saveStock = () => EC.write(stockKey, stock);
+
+  /* ---------- Orders ---------- */
+  const NEXT = { New: ['Confirm', 'Awaiting payment'], 'Awaiting payment': ['Mark paid', 'Paid'], Paid: ['Send out', 'Delivering'], Delivering: ['Mark delivered', 'Completed'] };
+  const BADGE = { New: 'new', 'Awaiting payment': 'wait', Paid: 'ok', Delivering: 'go', Completed: 'done' };
+  const badge = s => `<span class="badge ${BADGE[s]}">${s}</span>`;
+  const itemList = o => o.items.map(i => `${esc(i.name)} × ${i.qty}`).join(', ');
+  let oFilter = 'All', oQuery = '';
+
+  function renderOrders() {
+    const count = s => orders.filter(o => o.status === s).length;
+    $('[data-o-new]').textContent = count('New');
+    $('[data-o-unpaid]').textContent = money(orders.filter(o => o.status === 'Awaiting payment').reduce((n, o) => n + total(o), 0));
+    $('[data-o-revenue]').textContent = money(orders.reduce((n, o) => n + total(o), 0));
+    $('[data-o-chips]').innerHTML = ['All', ...Object.keys(BADGE)].map(s =>
+      `<button type="button" data-status="${s}" aria-pressed="${s === oFilter}">${s} (${s === 'All' ? orders.length : count(s)})</button>`).join('');
+    const list = orders.filter(o => (oFilter === 'All' || o.status === oFilter) && (o.customer + o.id).toLowerCase().includes(oQuery));
+    $('[data-o-empty]').hidden = list.length > 0;
+    $('[data-orders]').innerHTML = list.map(o => `<tr>
+      <td>${o.id}</td><td>${o.date}</td><td>${esc(o.customer)}</td><td>${o.channel}</td>
+      <td class="wrap">${itemList(o)}</td><td>${money(total(o))}</td><td>${badge(o.status)}</td>
+      <td>${NEXT[o.status] ? `<button type="button" class="btn btn-ghost btn-xs" data-advance="${o.id}">${NEXT[o.status][0]}</button>` : ''}</td></tr>`).join('');
+  }
+  $('[data-orders]').addEventListener('click', e => {
+    const b = e.target.closest('[data-advance]'); if (!b) return;
+    const o = orders.find(x => x.id === b.dataset.advance);
+    o.status = NEXT[o.status][1];
+    saveOrders(); renderOrders(); renderOverview();
+    toast(`${o.id} is now ${o.status}`);
+  });
+  $('[data-o-chips]').addEventListener('click', e => {
+    const b = e.target.closest('[data-status]'); if (!b) return;
+    oFilter = b.dataset.status; renderOrders();
+  });
+  $('[data-o-search]').addEventListener('input', e => { oQuery = e.target.value.trim().toLowerCase(); renderOrders(); });
+
+  /* ---------- Stock ---------- */
+  const LOW = 10;
+  let sFilter = 'All', sQuery = '';
+  const afterStockChange = msg => { saveStock(); renderStock(); renderOverview(); renderPreview(); renderInsights(); if (msg) toast(msg); };
+
+  function renderStock() {
+    const listed = stock.filter(s => s.listed), low = stock.filter(s => s.stock < LOW);
+    $('[data-s-listed]').textContent = `${listed.length} of ${stock.length}`;
+    $('[data-s-packs]').textContent = listed.reduce((n, s) => n + s.stock, 0);
+    $('[data-s-low]').textContent = low.length;
+    $('[data-s-value]').textContent = money(listed.reduce((n, s) => n + s.stock * s.price, 0));
+    const counts = { All: stock.length, Listed: listed.length, Hidden: stock.length - listed.length, 'Low stock': low.length };
+    $('[data-s-chips]').innerHTML = Object.entries(counts).map(([k, n]) => `<button type="button" data-sfilter="${k}" aria-pressed="${k === sFilter}">${k} (${n})</button>`).join('');
+    const match = { All: () => true, Listed: s => s.listed, Hidden: s => !s.listed, 'Low stock': s => s.stock < LOW }[sFilter];
+    const list = stock.filter(s => match(s) && s.name.toLowerCase().includes(sQuery));
+    $('[data-s-empty]').hidden = list.length > 0;
+    $('[data-stock]').innerHTML = list.map(s => {
+      const all = s.sold + s.stock, n = esc(s.name);
+      return `<article class="stock-card${s.listed ? '' : ' is-hidden'}">
+        <div class="sc-head">
+          <div><b>${n}</b><span>${esc(s.pack)} pack</span></div>
+          <input type="checkbox" class="switch" ${s.listed ? 'checked' : ''} data-id="${s.id}" data-field="listed" aria-label="Sell ${n} on the chatbot">
+        </div>
+        <div class="sc-tags">
+          <span class="badge ${s.listed ? 'ok' : 'done'}">${s.listed ? 'On sale' : 'Hidden'}</span>
+          ${s.stock === 0 ? '<span class="badge wait">Sold out</span>' : s.stock < LOW ? '<span class="badge wait">Low stock</span>' : ''}
+        </div>
+        <div class="sc-sold">
+          <div><span>Sold this week</span><b>${s.sold} of ${all}</b></div>
+          <div class="meter"><i style="width:${all ? s.sold / all * 100 : 0}%"></i></div>
+        </div>
+        <div class="sc-fields">
+          <label><span>Price (S$)</span><input class="cell-input" type="number" min="0.1" step="0.1" value="${s.price.toFixed(2)}" data-id="${s.id}" data-field="price"></label>
+          <div class="sc-stepper"><span>In stock</span>
+            <div class="stepper">
+              <button type="button" data-step="-1" data-id="${s.id}" aria-label="One less ${n}">−</button>
+              <input type="number" min="0" step="1" value="${s.stock}" data-id="${s.id}" data-field="stock" aria-label="${n} packs in stock">
+              <button type="button" data-step="1" data-id="${s.id}" aria-label="One more ${n}">+</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="sc-remove" data-remove="${s.id}">Remove item</button>
+      </article>`;
+    }).join('');
+  }
+  const grid = $('[data-stock]');
+  grid.addEventListener('change', e => {
+    const el = e.target, item = stock.find(s => s.id === el.dataset.id);
+    if (!item || !el.dataset.field) return;
+    if (el.dataset.field === 'listed') { item.listed = el.checked; return afterStockChange(`${item.name} ${el.checked ? 'is on sale' : 'is hidden from the chatbot'}`); }
+    const v = Number(el.value), ok = el.dataset.field === 'price' ? v > 0 : Number.isInteger(v) && v >= 0;
+    if (!ok) { toast(el.dataset.field === 'price' ? 'Price must be more than $0' : 'Stock must be a whole number'); return renderStock(); }
+    item[el.dataset.field] = v;
+    afterStockChange(`${item.name} updated`);
+  });
+  grid.addEventListener('click', e => {
+    const step = e.target.closest('[data-step]'), rm = e.target.closest('[data-remove]');
+    if (step) { const item = stock.find(s => s.id === step.dataset.id); item.stock = Math.max(0, item.stock + Number(step.dataset.step)); afterStockChange(); }
+    if (rm) {
+      const item = stock.find(s => s.id === rm.dataset.remove);
+      if (!confirm(`Remove ${item.name} from your harvest list?`)) return;
+      stock.splice(stock.indexOf(item), 1);
+      afterStockChange(`${item.name} removed`);
+    }
+  });
+  $('[data-s-chips]').addEventListener('click', e => { const b = e.target.closest('[data-sfilter]'); if (b) { sFilter = b.dataset.sfilter; renderStock(); } });
+  $('[data-s-search]').addEventListener('input', e => { sQuery = e.target.value.trim().toLowerCase(); renderStock(); });
+
+  const af = $('[data-add-item]'), addBtn = $('[data-add-toggle]');
+  const setAdd = open => { af.hidden = !open; addBtn.setAttribute('aria-expanded', open); if (open) af.sname.focus(); };
+  addBtn.addEventListener('click', () => setAdd(af.hidden));
+  $('[data-add-cancel]').addEventListener('click', () => { af.reset(); af.querySelectorAll('input').forEach(i => setError(i, '')); setAdd(false); });
+  af.querySelectorAll('input').forEach(i => i.addEventListener('input', () => setError(i, '')));
+  af.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = af.sname.value.trim(), pack = af.pack.value.trim(), price = Number(af.price.value), qty = Number(af.qty.value);
+    let ok = setError(af.sname, name ? '' : 'Enter the produce name.');
+    ok = setError(af.pack, pack ? '' : 'e.g. 300 g') && ok;
+    ok = setError(af.price, price > 0 ? '' : 'Above $0') && ok;
+    ok = setError(af.qty, Number.isInteger(qty) && qty > 0 ? '' : 'Whole number') && ok;
+    if (!ok) return;
+    stock.unshift({ id: 'i' + Date.now(), name, pack, price, stock: qty, sold: 0, listed: true });
+    af.reset(); setAdd(false); sFilter = 'All';
+    afterStockChange(`${name} added to this week's harvest`);
+  });
+
+  /* ---------- Chatbot ---------- */
+  const bf = $('[data-bot-form]');
+  bf.online.checked = bot.online; bf.pickup.checked = bot.pickup; bf.greeting.value = bot.greeting;
+  bf.hours.value = bot.hours; bf.fee.value = bot.fee; bf.uen.value = bot.uen;
+  function renderPreview() {
+    const body = $('[data-preview]'), online = bf.online.checked;
+    const msg = (from, text) => {
+      const m = document.createElement('div');
+      m.className = `msg ${from}`; m.textContent = text; // farm-entered text, never parsed as HTML
+      body.appendChild(m); return m;
+    };
+    body.innerHTML = '';
+    msg('out', 'Hi! What\'s fresh this week?');
+    if (!online) { msg('in', 'Thanks for your message! We\'re away right now and will reply soon.'); }
+    else {
+      const m = msg('in', bf.greeting.value.trim() || 'Hi! Here\'s what we harvested today:');
+      const chips = document.createElement('div'); chips.className = 'chips';
+      stock.filter(s => s.listed).slice(0, 4).forEach(s => { const c = document.createElement('span'); c.textContent = `${s.name} ${money(s.price)}`; chips.appendChild(c); });
+      m.appendChild(chips);
+      const fee = Number(bf.fee.value) || 0;
+      msg('in', `Delivery is ${fee ? money(fee) : 'free'}${bf.pickup.checked ? ', or pick up at the farm for free' : ''}. Just tell me what you'd like!`);
+    }
+    $('[data-preview-status]').textContent = online ? 'online' : 'away';
+    document.querySelectorAll('[data-preview-badge], [data-bot-badge]').forEach(b => {
+      b.textContent = online ? 'Online' : 'Away'; b.className = `badge ${online ? 'ok' : 'done'}`;
+    });
+  }
+  bf.addEventListener('input', renderPreview);
+  bf.querySelectorAll('textarea, input:not([type=checkbox])').forEach(i => i.addEventListener('input', () => setError(i, '')));
+  bf.addEventListener('submit', e => {
+    e.preventDefault();
+    const fee = Number(bf.fee.value);
+    let ok = setError(bf.greeting, bf.greeting.value.trim() ? '' : 'Write a short greeting.');
+    ok = setError(bf.fee, bf.fee.value !== '' && fee >= 0 ? '' : 'Enter 0 or more.') && ok;
+    if (!ok) return;
+    Object.assign(bot, { online: bf.online.checked, pickup: bf.pickup.checked, greeting: bf.greeting.value.trim(), hours: bf.hours.value, fee, uen: bf.uen.value.trim() });
+    EC.write(botKey, bot);
+    toast('Chatbot settings saved');
+  });
+
+  /* ---------- Overview ---------- */
+  const chatRow = ([n, p, t]) => `<div class="chat-row"><span class="av">${initials(n)}</span><div><b>${n}</b><p>${p}</p></div><small>${t}</small></div>`;
+  function renderOverview() {
+    $('[data-recent-orders]').innerHTML = orders.slice(0, 5).map(o =>
+      `<tr><td>${o.id}</td><td>${o.date}</td><td>${esc(o.customer)}</td><td>${money(total(o))}</td><td>${badge(o.status)}</td></tr>`).join('');
+    $('[data-harvest]').innerHTML = stock.filter(s => s.listed).map(s => {
+      const all = s.sold + s.stock;
+      return `<div class="stock-row"><div><b>${esc(s.name)}</b><span>${s.sold} / ${all} packs sold</span></div><div class="meter"><i style="width:${all ? s.sold / all * 100 : 0}%"></i></div></div>`;
+    }).join('') || '<p class="cart-empty">Nothing listed yet. <a href="#stock">Add stock</a></p>';
+  }
   const week = [['Mon', 32], ['Tue', 45], ['Wed', 38], ['Thu', 60], ['Fri', 72], ['Sat', 95], ['Sun', 64]];
-  const max = Math.max(...week.map(w => w[1]));
-  $('[data-bars]').innerHTML = week.map(([d, v]) => `<div><i style="height:${v / max * 100}%" title="${v} orders"></i><span>${d}</span></div>`).join('');
+  const bars = (rows, fmt) => { const max = Math.max(...rows.map(r => r[1])); return rows.map(([d, v]) => `<div><i style="height:${v / max * 100}%" title="${fmt(v)}"></i><span>${d}</span></div>`).join(''); };
+  $('[data-bars]').innerHTML = bars(week, v => `${v} orders`);
+  $('[data-chats]').innerHTML = CHATS.slice(0, 3).map(chatRow).join('');
+  $('[data-chats-all]').innerHTML = CHATS.map(chatRow).join('');
+  $('[data-broadcast]').addEventListener('click', () => toast(`Harvest alert with ${stock.filter(s => s.listed).length} items sent to 214 customers`));
 
-  const chats = [
-    ['AL', 'Aaron L.', 'Bot confirmed order #1042 and sent PayNow QR.', '2m'],
-    ['PS', 'Priya S.', 'Bot answered: "Is the bayam pesticide-free?"', '14m'],
-    ['WT', 'Wei Jie T.', 'Bot sent payment reminder.', '1h']
-  ];
-  $('[data-chats]').innerHTML = chats.map(([av, n, p, t]) =>
-    `<div class="chat-row"><span class="av">${av}</span><div><b>${n}</b><p>${p}</p></div><small>${t}</small></div>`).join('');
+  /* ---------- Insights ---------- */
+  function renderInsights() {
+    $('[data-i-aov]').textContent = money(orders.reduce((n, o) => n + total(o), 0) / orders.length);
+    const top = [...stock].map(s => ({ ...s, rev: s.sold * s.price })).sort((a, b) => b.rev - a.rev).slice(0, 4);
+    const max = Math.max(...top.map(s => s.rev), 1);
+    $('[data-i-top]').innerHTML = top.map(s => `<div class="stock-row"><div><b>${esc(s.name)}</b><span>${money(s.rev)} · ${s.sold} sold</span></div><div class="meter"><i style="width:${s.rev / max * 100}%"></i></div></div>`).join('');
+    const by = {}; orders.forEach(o => { by[o.customer] ||= { n: 0, t: 0 }; by[o.customer].n++; by[o.customer].t += total(o); });
+    $('[data-i-customers]').innerHTML = Object.entries(by).sort((a, b) => b[1].t - a[1].t).slice(0, 4)
+      .map(([c, v]) => chatRow([esc(c), `${v.n} order${v.n > 1 ? 's' : ''}`, money(v.t)])).join('');
+  }
+  $('[data-i-weeks]').innerHTML = bars([['Week 1', 1820], ['Week 2', 2310], ['Week 3', 2580], ['Week 4', 2940]], v => '$' + v.toLocaleString());
 
-  const stock = [['Kai Lan', 42, 60], ['Cherry Tomato', 18, 40], ['Bayam', 30, 32], ['Xiao Bai Cai', 12, 25]];
-  $('[data-stock]').innerHTML = stock.map(([n, s, t]) =>
-    `<div class="stock-row"><div><b>${n}</b><span>${s} / ${t} kg sold</span></div><div class="meter"><i style="width:${s / t * 100}%"></i></div></div>`).join('');
+  /* ---------- Settings ---------- */
+  const profile = EC.read(profileKey, { phone: '', area: 'Kranji', about: '', notify: { neworder: true, payment: true, lowstock: true, report: false } });
+  const pf = $('[data-profile]');
+  pf.fname.value = user.farm || ''; pf.pname.value = user.name; pf.pemail.value = user.email;
+  pf.phone.value = profile.phone; pf.area.value = profile.area; pf.about.value = profile.about;
+  pf.querySelectorAll('input, textarea').forEach(i => i.addEventListener('input', () => setError(i, '')));
+  pf.addEventListener('submit', e => {
+    e.preventDefault();
+    const farmName = pf.fname.value.trim(), name = pf.pname.value.trim(), phone = pf.phone.value.trim();
+    let ok = setError(pf.fname, farmName ? '' : 'Enter your farm name.');
+    ok = setError(pf.pname, name ? '' : 'Enter your name.') && ok;
+    ok = setError(pf.phone, !phone || /^\+?[\d\s]{8,15}$/.test(phone) ? '' : 'Enter a valid phone number, e.g. +65 6123 4567.') && ok;
+    if (!ok) return;
+    Object.assign(profile, { phone, area: pf.area.value, about: pf.about.value.trim() });
+    EC.write(profileKey, profile);
+    const users = EC.read('ec_users', {});
+    if (users[user.email]) { Object.assign(users[user.email], { name, farm: farmName }); EC.write('ec_users', users); }
+    Object.assign(user, { name, farm: farmName }); fillUser(user);
+    toast('Farm profile saved');
+  });
+  initPrefs(profile, profileKey);
+  initAvatar(profile, profileKey, 'Farm logo');
 
-  $('[data-broadcast]').addEventListener('click', () => toast('Harvest alert sent to 214 customers'));
+  renderOrders(); renderStock(); renderOverview(); renderPreview(); renderInsights(); show();
 }
 
 function shopper(user) {
@@ -96,19 +379,9 @@ function shopper(user) {
   const treeKey = `ec_tree_${user.email}`, ordersKey = `ec_orders_${user.email}`, profileKey = `ec_profile_${user.email}`;
   const state = EC.read(treeKey, { water: 140, lastCheckin: null, streak: 2, boxes: 0 });
   const save = () => EC.write(treeKey, state);
-  const money = n => '$' + n.toFixed(2);
   const farmName = id => (FARMS.find(f => f.id === id) || {}).name || id;
 
-  /* ---------- Views (hash router: #tree #shop #orders #map #settings) ---------- */
-  const views = [...document.querySelectorAll('[data-view]')];
-  function show() {
-    const want = location.hash.slice(1) || 'tree';
-    const view = views.some(v => v.dataset.view === want) ? want : 'tree';
-    views.forEach(v => v.hidden = v.dataset.view !== view);
-    document.querySelectorAll('.side nav a, .tabbar a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + view));
-    scrollTo(0, 0);
-  }
-  addEventListener('hashchange', show);
+  const show = initViews('tree');
 
   /* ---------- My tree ---------- */
   const art = $('[data-tree-art]'), label = $('[data-tree-label]'), meter = $('[data-tree-meter]'),
@@ -226,7 +499,7 @@ function shopper(user) {
     document.querySelectorAll('[data-saved]').forEach(el => el.textContent = money(orders.reduce((n, o) => n + sum(o, 'saved'), 0)));
     $('[data-my-orders]').innerHTML = orders.map(o => `<tr>
       <td>${o.id}</td><td>${o.date}</td><td>${farmName(o.farm)}</td>
-      <td>${o.items.map(i => `${i.name} × ${i.qty}`).join(', ')}</td>
+      <td class="wrap">${o.items.map(i => `${i.name} × ${i.qty}`).join(', ')}</td>
       <td>${money(sum(o))}</td><td><span class="badge ${STATUS[o.status]}">${o.status}</span></td></tr>`).join('');
   }
 
@@ -254,9 +527,8 @@ function shopper(user) {
 
   /* ---------- Settings ---------- */
   const profile = EC.read(profileKey, { phone: '', address: '', notify: { orders: true, harvest: true, tree: false, news: false } });
-  const pf = $('[data-profile]'), nf = $('[data-notify]');
+  const pf = $('[data-profile]');
   pf.pname.value = user.name; pf.pemail.value = user.email; pf.phone.value = profile.phone; pf.address.value = profile.address;
-  Object.entries(profile.notify).forEach(([k, v]) => { if (nf[k]) nf[k].checked = v; });
   pf.querySelectorAll('input').forEach(i => i.addEventListener('input', () => setError(i, '')));
   pf.addEventListener('submit', e => {
     e.preventDefault();
@@ -271,42 +543,8 @@ function shopper(user) {
     user.name = name; fillUser(user);
     toast('Profile saved');
   });
-  const LANGS = { en: 'English', zh: '中文', ms: 'Bahasa Melayu', ta: 'தமிழ்' };
-  nf.lang.value = profile.lang || 'en';
-  nf.addEventListener('change', e => {
-    profile.notify = Object.fromEntries([...nf.querySelectorAll('input[type=checkbox]')].map(i => [i.name, i.checked]));
-    profile.lang = nf.lang.value;
-    EC.write(profileKey, profile);
-    toast(e.target.name === 'lang' ? `Language set to ${LANGS[profile.lang]}` : 'Notification preferences saved');
-  });
-
-  /* Profile photo: centre-cropped and shrunk to 256px so it fits in localStorage */
-  const paintAvatar = src => document.querySelectorAll('[data-user-initials]').forEach(el => {
-    el.style.backgroundImage = src ? `url("${src}")` : '';
-    el.classList.toggle('has-img', !!src);
-  });
-  paintAvatar(profile.avatar);
-  $('[data-avatar-remove]').hidden = !profile.avatar;
-  $('[data-avatar-input]').addEventListener('change', async e => {
-    const file = e.target.files[0]; e.target.value = '';
-    if (!file) return;
-    if (!/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) return toast('Please choose a JPG, PNG or WebP image');
-    if (file.size > 5 * 1024 * 1024) return toast('That image is over 5 MB');
-    try {
-      const img = await createImageBitmap(file);
-      const s = Math.min(img.width, img.height), c = document.createElement('canvas');
-      c.width = c.height = 256;
-      c.getContext('2d').drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, 256, 256);
-      profile.avatar = c.toDataURL('image/jpeg', 0.85);
-      EC.write(profileKey, profile); paintAvatar(profile.avatar);
-      $('[data-avatar-remove]').hidden = false;
-      toast('Profile photo updated');
-    } catch { toast('Could not read that image'); }
-  });
-  $('[data-avatar-remove]').addEventListener('click', () => {
-    delete profile.avatar; EC.write(profileKey, profile); paintAvatar(null);
-    $('[data-avatar-remove]').hidden = true; toast('Profile photo removed');
-  });
+  initPrefs(profile, profileKey);
+  initAvatar(profile, profileKey, 'Profile photo');
 
   /* ---------- Ask EverCrop: answers from this shopper's own data ----------
      shortcut: keyword intents over local data, not a real LLM — send {question, account summary} to an AI API once a backend exists */
