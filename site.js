@@ -26,6 +26,11 @@ const ICONS = {
   sprout: '<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
   mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
   clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  up: '<path d="m18 15-6-6-6 6"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+  bot: '<path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/>',
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>'
 };
 const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
@@ -77,7 +82,7 @@ function renderChrome() {
           <div><h4>Portal</h4><ul><li><a href="login.html">Log in</a></li><li><a href="register.html">Create account</a></li><li><a href="forgot-password.html">Reset password</a></li></ul></div>
           <div><h4>Company</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
         </div>
-        <div class="footer-bottom"><span>© ${new Date().getFullYear()} SoLeaf. EverCrop is a working prototype.</span><span>Singapore</span></div>
+        <div class="footer-bottom"><span>© ${new Date().getFullYear()} SoLeaf. All rights reserved.</span><span>Singapore</span></div>
       </div>
     </footer>`;
   }
@@ -209,9 +214,90 @@ function initMap() {
   select(FARMS[0].id);
 }
 
+/* Scroll-to-top button, every page */
+function initToTop() {
+  const b = document.createElement('button');
+  b.className = 'to-top'; b.setAttribute('aria-label', 'Back to top'); b.innerHTML = icon('up');
+  b.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+  document.body.appendChild(b);
+  const update = () => b.classList.toggle('show', scrollY > 480);
+  addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+/* Help chatbot, public pages only.
+   shortcut: keyword matching, not real AI — swap reply() for an API call when the bot backend exists. */
+const BOT_REPLIES = [
+  [/price|pricing|cost|plan|subscri|fee/, 'Farms start on the 3-month <b>Starter</b> plan at S$29/month, then <b>Growth</b> at S$59/month for full access. Shoppers use EverCrop for free. <a href="farms.html#pricing">See plans</a>'],
+  [/(join|sign|register|list|sell).*farm|farm.*(join|sign|register)|i (run|own|have) a farm|join as/, 'Great! Register your farm and you could be taking WhatsApp orders in about 10 minutes. <a href="register.html?role=farm">Register your farm</a>'],
+  [/tree|water|reward|point|game|free/, 'Every order adds <b>+30 water</b> to your tree, daily check-ins +5, and each friend you invite +50. A fully grown tree gets you a free produce box! <a href="shoppers.html#tree">How it works</a>'],
+  [/order|buy|how.*(work|shop)/, 'Just message a farm on WhatsApp. Our AI shows what\'s fresh, builds your order and sends a PayNow QR. No app needed.'],
+  [/deliver|pickup|pick up|ship/, 'Each farm sets its own delivery and pickup options. The chatbot shows the ones available when you order.'],
+  [/where|location|map|near/, 'Our partner farms are across Singapore, mostly around Kranji and Lim Chu Kang. <a href="index.html#farms">See the farm map</a>'],
+  [/cheap|lower|save|why/, 'You buy straight from the grower, so there\'s no wholesaler or retailer markup. Fresher produce, fairer price.'],
+  [/contact|human|person|email|talk|support/, 'You can reach our team at <a href="mailto:soleaf.co@gmail.com">soleaf.co@gmail.com</a> or through the <a href="contact.html">contact page</a>.'],
+  [/^(hi|hello|hey|yo)\b/, 'Hi there! 👋 Ask me about ordering, prices, tree rewards or joining as a farm.']
+];
+const BOT_QUICK = ['How do I order?', 'Farm pricing', 'Tree rewards', 'Join as a farm'];
+const reply = text => (BOT_REPLIES.find(([re]) => re.test(text.toLowerCase())) || [, 'I\'m still learning! Try one of the topics below, or <a href="contact.html">contact our team</a>.'])[1];
+
+function initBot() {
+  if (!document.querySelector('.header')) return; // public pages render the site header; the shopper portal mounts its own
+  mountBot({ quick: BOT_QUICK, reply, greeting: 'Hi! 👋 I\'m the EverCrop assistant. How can I help you today?' });
+}
+
+/* Floating chat widget, shared by the public site and the shopper portal */
+function mountBot({ title = 'EverCrop Assistant', status = 'Usually replies instantly', placeholder = 'Ask a question…', quick, reply, greeting }) {
+  document.body.classList.add('has-bot');
+  document.body.insertAdjacentHTML('beforeend', `
+    <button class="bot-launch" aria-label="Open chat assistant" aria-expanded="false">${icon('chat')}</button>
+    <section class="bot" role="dialog" aria-label="${title}">
+      <div class="bot-head">
+        <span class="wa-avatar">${icon('sprout')}</span>
+        <div><b>${title}</b><span>${status}</span></div>
+        <button class="bot-close" aria-label="Close chat">${icon('close')}</button>
+      </div>
+      <div class="bot-body" aria-live="polite"></div>
+      <div class="bot-quick">${quick.map(q => `<button type="button">${q}</button>`).join('')}</div>
+      <form class="bot-form"><input name="q" placeholder="${placeholder}" autocomplete="off" aria-label="Your message"><button aria-label="Send">${icon('send')}</button></form>
+    </section>`);
+  const panel = document.querySelector('.bot'), launch = document.querySelector('.bot-launch'),
+        body = panel.querySelector('.bot-body'), form = panel.querySelector('.bot-form');
+  const say = (html, from, isText) => {
+    const m = document.createElement('div');
+    m.className = `bot-msg ${from}`;
+    isText ? m.textContent = html : m.innerHTML = html; // user text is never parsed as HTML
+    body.appendChild(m); body.scrollTop = body.scrollHeight;
+  };
+  const ask = q => {
+    q = q.trim(); if (!q) return;
+    say(q, 'out', true);
+    const t = document.createElement('div');
+    t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>';
+    body.appendChild(t); body.scrollTop = body.scrollHeight;
+    setTimeout(() => { t.remove(); say(reply(q), 'in'); }, 700);
+  };
+  const toggle = open => {
+    panel.classList.toggle('open', open);
+    launch.setAttribute('aria-expanded', open);
+    launch.innerHTML = icon(open ? 'close' : 'chat');
+    if (open) {
+      if (!body.children.length) say(typeof greeting === 'function' ? greeting() : greeting, 'in');
+      form.q.focus();
+    }
+  };
+  launch.addEventListener('click', () => toggle(!panel.classList.contains('open')));
+  panel.querySelector('.bot-close').addEventListener('click', () => { toggle(false); launch.focus(); });
+  panel.querySelectorAll('.bot-quick button').forEach(b => b.addEventListener('click', () => ask(b.textContent)));
+  form.addEventListener('submit', e => { e.preventDefault(); ask(form.q.value); form.reset(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('open')) toggle(false); });
+}
+
 renderChrome();
 paintIcons();
 initReveal();
 initChat();
 initTreePreview();
 initMap();
+initToTop();
+initBot();

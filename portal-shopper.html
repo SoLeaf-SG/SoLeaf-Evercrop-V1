@@ -13,70 +13,198 @@
     <aside class="side">
       <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
       <nav aria-label="Portal">
-        <a href="#" class="active"><i data-i="tree"></i>My tree</a>
+        <a href="#tree"><i data-i="tree"></i>My tree</a>
         <a href="#shop"><i data-i="cart"></i>Shop farms</a>
         <a href="#orders"><i data-i="box"></i>My orders</a>
-        <a href="shoppers.html#farms"><i data-i="pin"></i>Farm map</a>
-        <a href="#" data-soon><i data-i="settings"></i>Settings</a>
+        <a href="#map"><i data-i="pin"></i>Farm map</a>
+        <a href="#settings"><i data-i="settings"></i>Settings</a>
       </nav>
-      <div class="me">
-        <span class="av" data-user-initials></span>
-        <div><b data-user-name></b><span>Shopper</span></div>
-        <button data-logout aria-label="Log out"><i data-i="logout"></i></button>
+      <div class="side-card">
+        <div><b>💧 <span data-water>0</span> water</b><span>Invite a friend for +50</span></div>
+        <button class="btn btn-primary btn-sm btn-block" data-invite>Copy invite link</button>
       </div>
+      <div data-user-menu></div>
     </aside>
 
     <div>
       <div class="mobile-top">
         <a href="index.html" class="logo"><span class="logo-mark"><i data-i="sprout"></i></span>EverCrop</a>
-        <button class="btn btn-ghost btn-sm" data-logout>Log out</button>
+        <div data-user-menu></div>
       </div>
 
       <main class="main">
-        <div class="main-head">
-          <div>
-            <h1>Hi <span data-user-first></span>, your tree is thirsty 🌱</h1>
-            <p>Order, check in and invite friends to grow it.</p>
-          </div>
-        </div>
-
-        <div class="stats">
-          <div class="card stat"><span>Water collected</span><strong data-water>0</strong><em>Total this tree</em></div>
-          <div class="card stat"><span>Check-in streak</span><strong><span data-streak>0</span> days</strong><em>7 days = +20 bonus</em></div>
-          <div class="card stat"><span>Saved vs supermarket</span><strong>$18.40</strong><em>This month</em></div>
-          <div class="card stat"><span>Produce boxes earned</span><strong data-boxes>0</strong><em>From your trees</em></div>
-        </div>
-
-        <div class="grid-2">
-          <section class="card panel" style="justify-items:center;text-align:center">
-            <div class="panel-head" style="width:100%"><h2>My tree</h2><span class="badge ok" data-tree-label>Seed</span></div>
-            <div data-tree-art></div>
-            <div class="meter"><i data-tree-meter></i></div>
-            <p class="muted" style="font-size:14px" data-tree-info></p>
-            <button class="btn btn-primary btn-block" data-harvest hidden><i data-i="gift"></i>Claim free produce box</button>
-          </section>
-          <section class="card panel">
-            <div class="panel-head"><h2>Earn water</h2></div>
-            <div class="task-list">
-              <div class="task"><span class="icon-box"><i data-i="calendar"></i></span><div><b>Daily check-in</b><span>+5 water a day</span></div><button class="btn btn-primary btn-sm" data-checkin>Check in +5</button></div>
-              <div class="task"><span class="icon-box"><i data-i="users"></i></span><div><b>Invite a friend</b><span>+50 when they order</span></div><button class="btn btn-ghost btn-sm" data-invite>Copy link</button></div>
-              <div class="task"><span class="icon-box"><i data-i="cart"></i></span><div><b>Place an order</b><span>+30 per order</span></div><a href="#shop" class="btn btn-ghost btn-sm">Shop</a></div>
+        <!-- My tree -->
+        <section class="view" data-view="tree">
+          <div class="main-head">
+            <div>
+              <h1>Hi <span data-user-first></span>, your tree is thirsty 🌱</h1>
+              <p>Order, check in and invite friends to grow it.</p>
             </div>
-          </section>
-        </div>
-
-        <section class="card panel" id="shop">
-          <div class="panel-head"><h2>Fresh this week</h2><a href="shoppers.html#farms">See farm map</a></div>
-          <div class="produce-grid" data-produce></div>
+          </div>
+          <div class="stats">
+            <div class="card stat"><span>Water collected</span><strong data-water>0</strong><em>Total this tree</em></div>
+            <div class="card stat"><span>Check-in streak</span><strong><span data-streak>0</span> days</strong><em>7 days = +20 bonus</em></div>
+            <div class="card stat"><span>Saved vs supermarket</span><strong data-saved>$0.00</strong><em>Across your orders</em></div>
+            <div class="card stat"><span>Produce boxes earned</span><strong data-boxes>0</strong><em>From your trees</em></div>
+          </div>
+          <div class="grid-2">
+            <section class="card panel" style="justify-items:center;text-align:center">
+              <div class="panel-head" style="width:100%"><h2>My tree</h2><span class="badge ok" data-tree-label>Seed</span></div>
+              <div data-tree-art></div>
+              <div class="meter"><i data-tree-meter></i></div>
+              <p class="muted" style="font-size:14px" data-tree-info></p>
+              <button class="btn btn-primary btn-block" data-harvest hidden><i data-i="gift"></i>Claim free produce box</button>
+            </section>
+            <section class="card panel">
+              <div class="panel-head"><h2>Earn water</h2></div>
+              <div class="task-list">
+                <div class="task"><span class="icon-box"><i data-i="calendar"></i></span><div><b>Daily check-in</b><span>+5 water a day</span></div><button class="btn btn-primary btn-sm" data-checkin>Check in +5</button></div>
+                <div class="task"><span class="icon-box"><i data-i="users"></i></span><div><b>Invite a friend</b><span>+50 when they order</span></div><button class="btn btn-ghost btn-sm" data-invite>Copy link</button></div>
+                <div class="task"><span class="icon-box"><i data-i="cart"></i></span><div><b>Place an order</b><span>+30 per order</span></div><a href="#shop" class="btn btn-ghost btn-sm">Shop</a></div>
+              </div>
+            </section>
+          </div>
         </section>
 
-        <section class="card panel" id="orders">
-          <div class="panel-head"><h2>My orders</h2></div>
-          <div class="table-scroll">
-            <table class="table">
-              <thead><tr><th>Order</th><th>Farm</th><th>Total</th><th>Status</th></tr></thead>
-              <tbody data-my-orders></tbody>
-            </table>
+        <!-- Shop farms -->
+        <section class="view" data-view="shop" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Shop farms</h1>
+              <p>Farm prices, harvested this week. Every order earns +30 water.</p>
+            </div>
+          </div>
+          <div class="shop-layout">
+            <div class="shop-main">
+              <div class="shop-tools">
+                <label class="search"><i data-i="search"></i><input type="search" placeholder="Search produce" aria-label="Search produce" data-search></label>
+              </div>
+              <div class="chips" data-farm-chips role="group" aria-label="Filter by farm"></div>
+              <div class="produce-grid" data-produce></div>
+              <p class="cart-empty" data-empty hidden>Nothing matches that search. Try another farm or keyword.</p>
+            </div>
+            <aside class="card panel cart">
+              <div class="panel-head"><h2>Your order</h2><span class="badge ok" data-cart-count>0 items</span></div>
+              <div class="cart-lines" data-cart-lines></div>
+              <div class="cart-sum">
+                <div><span>You save</span><b class="saved" data-cart-saved>$0.00</b></div>
+                <div class="total"><span>Total</span><b data-cart-total>$0.00</b></div>
+              </div>
+              <button class="btn btn-primary btn-block" data-checkout disabled><i data-i="cart"></i>Place order</button>
+              <p class="cart-note" data-cart-note></p>
+            </aside>
+          </div>
+          <div class="cart-bar" data-cart-bar hidden><b data-cart-bar-text></b><button type="button" class="btn btn-sm" data-cart-jump>View order</button></div>
+        </section>
+
+        <!-- My orders -->
+        <section class="view" data-view="orders" hidden>
+          <div class="main-head">
+            <div>
+              <h1>My orders</h1>
+              <p>Track every order from farm to door.</p>
+            </div>
+            <a href="#shop" class="btn btn-primary btn-sm"><i data-i="cart"></i>New order</a>
+          </div>
+          <div class="stats three">
+            <div class="card stat"><span>Orders placed</span><strong data-o-count>0</strong><em>Since joining</em></div>
+            <div class="card stat"><span>Total spent</span><strong data-o-spent>$0.00</strong><em>Paid to farms directly</em></div>
+            <div class="card stat"><span>Saved vs supermarket</span><strong data-saved>$0.00</strong><em>No middleman markup</em></div>
+          </div>
+          <section class="card panel">
+            <div class="panel-head"><h2>Order history</h2></div>
+            <div class="table-scroll">
+              <table class="table">
+                <thead><tr><th>Order</th><th>Date</th><th>Farm</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+                <tbody data-my-orders></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <!-- Farm map -->
+        <section class="view" data-view="map" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Farm map</h1>
+              <p>See where your food grows. Pick a farm to shop its harvest.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" data-shop-farm>Shop this farm</button>
+          </div>
+          <div class="map-wrap">
+            <div class="card map" data-map></div>
+            <div class="farm-list" data-farm-list></div>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="view" data-view="settings" hidden>
+          <div class="main-head">
+            <div>
+              <h1>Settings</h1>
+              <p>Manage your profile and notifications.</p>
+            </div>
+          </div>
+          <div class="grid-2 settings">
+            <form class="card panel" data-profile novalidate>
+              <div class="panel-head"><h2>Profile</h2></div>
+              <div class="avatar-edit">
+                <span class="av-circle xl" data-user-initials></span>
+                <div>
+                  <b>Profile photo</b>
+                  <span>JPG, PNG or WebP, up to 5 MB</span>
+                  <div class="avatar-actions">
+                    <label class="btn btn-ghost btn-sm">Upload photo<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" data-avatar-input hidden></label>
+                    <button type="button" class="btn btn-sm btn-text" data-avatar-remove hidden>Remove</button>
+                  </div>
+                </div>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="p-name">Full name</label>
+                  <input id="p-name" name="pname" autocomplete="name">
+                  <span class="err"></span>
+                </div>
+                <div class="field">
+                  <label for="p-email">Email</label>
+                  <input id="p-email" name="pemail" type="email" readonly>
+                </div>
+              </div>
+              <div class="field">
+                <label for="p-phone">WhatsApp number</label>
+                <input id="p-phone" name="phone" type="tel" autocomplete="tel" placeholder="+65 9123 4567">
+                <span class="err"></span>
+              </div>
+              <div class="field">
+                <label for="p-address">Delivery address</label>
+                <input id="p-address" name="address" autocomplete="street-address" placeholder="Block, street, unit, postal code">
+              </div>
+              <button type="submit" class="btn btn-primary" style="justify-self:start">Save changes</button>
+            </form>
+            <form class="card panel prefs" data-notify>
+              <div class="panel-head"><h2>Preferences</h2></div>
+              <div class="toggle-list">
+                <div class="toggle-row lang-row" role="radiogroup" aria-labelledby="lang-title">
+                  <span class="icon-box"><i data-i="globe"></i></span>
+                  <div><b id="lang-title">Preferred language</b><span>Used by Ask EverCrop and for messages</span></div>
+                  <div class="seg">
+                    <label><input type="radio" name="lang" value="en"><span>English</span></label>
+                    <label><input type="radio" name="lang" value="zh"><span>中文</span></label>
+                    <label><input type="radio" name="lang" value="ms"><span>Bahasa Melayu</span></label>
+                    <label><input type="radio" name="lang" value="ta"><span>தமிழ்</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="pref-group" role="group" aria-label="Notifications">
+                <div class="pref-label"><b>Notifications</b><span>Choose what we send you on WhatsApp</span></div>
+                <div class="toggle-list">
+                  <label class="toggle-row"><span class="icon-box"><i data-i="box"></i></span><div><b>Order updates</b><span>Confirmations and delivery status</span></div><input type="checkbox" class="switch" name="orders"></label>
+                  <label class="toggle-row"><span class="icon-box"><i data-i="sprout"></i></span><div><b>Harvest alerts</b><span>Fresh stock from your farms</span></div><input type="checkbox" class="switch" name="harvest"></label>
+                  <label class="toggle-row"><span class="icon-box"><i data-i="tree"></i></span><div><b>Tree reminders</b><span>A daily nudge to keep your streak</span></div><input type="checkbox" class="switch" name="tree"></label>
+                  <label class="toggle-row"><span class="icon-box"><i data-i="megaphone"></i></span><div><b>News and offers</b><span>New farms and seasonal deals</span></div><input type="checkbox" class="switch" name="news"></label>
+                </div>
+              </div>
+            </form>
           </div>
         </section>
       </main>
