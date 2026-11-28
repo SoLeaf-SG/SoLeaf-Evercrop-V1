@@ -389,7 +389,15 @@ function initMap() {
     }).addTo(lmap);
     const icon = f => L.divIcon({ className: 'pin-icon', iconSize: [22, 22], html: `<span ${pinAttrs(f)}><i class="ring"></i><i class="dot"></i></span>` });
     FARMS.forEach(f => L.marker([f.lat, f.lng], { icon: icon(f), keyboard: false, title: f.name }).addTo(lmap));
-    lmap.fitBounds(FARMS.map(f => [f.lat, f.lng]), { padding: [40, 40] });
+    const fit = () => lmap.fitBounds(FARMS.map(f => [f.lat, f.lng]), { padding: [40, 40] });
+    fit();
+    // The portal builds the map inside a hidden tab (0×0), so redraw and re-fit once it is actually shown or resized
+    let wasHidden = !map.offsetWidth;
+    new ResizeObserver(() => {
+      if (!map.offsetWidth) { wasHidden = true; return; }
+      lmap.invalidateSize();
+      if (wasHidden) { wasHidden = false; fit(); }
+    }).observe(map);
     bind(map.querySelectorAll('.pin'));
     select(active);
   });
