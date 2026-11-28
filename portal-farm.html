@@ -91,10 +91,10 @@
             <div class="card stat"><span>Revenue this week</span><strong data-o-revenue>$0.00</strong><em>Across all orders</em></div>
           </div>
           <section class="card panel">
-            <div class="shop-tools">
+            <div class="order-tools">
               <label class="search"><i data-i="search"></i><input type="search" placeholder="Search customer or order number" aria-label="Search orders" data-o-search></label>
+              <label class="status-select"><select data-o-status aria-label="Filter by status"></select></label>
             </div>
-            <div class="chips" data-o-chips role="group" aria-label="Filter by status"></div>
             <div class="table-scroll">
               <table class="table">
                 <thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Channel</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead>
@@ -151,7 +151,7 @@
           </form>
           <div class="stock-tools">
             <label class="search"><i data-i="search"></i><input type="search" placeholder="Search produce" aria-label="Search produce" data-s-search></label>
-            <div class="chips" data-s-chips role="group" aria-label="Filter stock"></div>
+            <label class="status-select"><select data-s-status aria-label="Filter stock"></select></label>
           </div>
           <div class="stock-grid" data-stock></div>
           <p class="cart-empty" data-s-empty hidden>No items match. Try another filter.</p>

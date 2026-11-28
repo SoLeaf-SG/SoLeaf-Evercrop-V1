@@ -724,7 +724,7 @@ main > .section:last-child { padding-bottom: 0; } /* footer margin already gives
 .add-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 16px; }
 .add-actions { display: flex; gap: 10px; }
 .stock-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.stock-tools .search { flex: 1 1 260px; }
+.stock-tools .search { flex: 0 1 360px; }
 .stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
 .stock-card { display: grid; gap: 16px; align-content: start; padding: 20px; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--glass); transition: border-color .2s, opacity .2s; }
 .stock-card:hover { border-color: var(--line-strong); }
@@ -823,3 +823,19 @@ main > .section:last-child { padding-bottom: 0; } /* footer margin already gives
 }
 /* Home: tighter gaps between sections (the strip-to-"Why EverCrop" gap is set separately and unchanged) */
 body[data-page="home"] .section { padding-block: calc(var(--section-y) * .65); }
+
+/* Farm orders: compact search + status dropdown on one row */
+.order-tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.order-tools .search { flex: 0 1 360px; }
+.status-select { position: relative; flex: 0 0 auto; }
+.status-select select { appearance: none; -webkit-appearance: none; height: 46px; padding: 0 42px 0 18px; border-radius: 999px; border: 1px solid var(--line-strong);
+  background: var(--glass); font: 600 14px/1 var(--font-display); color: var(--text); cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+.status-select::after { content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; margin-top: -6px; border-right: 2px solid var(--subtle); border-bottom: 2px solid var(--subtle); transform: rotate(45deg); pointer-events: none; }
+.status-select select:hover { border-color: var(--sage); }
+.status-select select:focus { outline: none; border-color: var(--lime); box-shadow: 0 0 0 4px rgba(59,125,50,.12); }
+@media (max-width: 520px) { .order-tools .search, .stock-tools .search, .status-select, .status-select select { flex: 1 1 100%; width: 100%; } }
+/* Settings: Preferences card stretches to match the profile card; the last toggle list shares out the extra height */
+.settings .prefs { display: flex; flex-direction: column; }
+.settings .prefs > .pref-group:last-child { flex: 1; grid-template-rows: auto 1fr; }
+.settings .prefs > .pref-group:last-child .toggle-list { grid-auto-rows: 1fr; }
+.settings .prefs > .pref-group:last-child .toggle-row { align-items: center; }

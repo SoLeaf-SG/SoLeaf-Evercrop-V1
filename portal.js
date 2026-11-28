@@ -170,8 +170,9 @@ function farm(user) {
     $('[data-o-new]').textContent = count('New');
     $('[data-o-unpaid]').textContent = money(orders.filter(o => o.status === 'Awaiting payment').reduce((n, o) => n + total(o), 0));
     $('[data-o-revenue]').textContent = money(orders.reduce((n, o) => n + total(o), 0));
-    $('[data-o-chips]').innerHTML = ['All', ...Object.keys(BADGE)].map(s =>
-      `<button type="button" data-status="${s}" aria-pressed="${s === oFilter}">${s} (${s === 'All' ? orders.length : count(s)})</button>`).join('');
+    // rebuilt each render so the counts stay current; keeps the chosen status selected
+    $('[data-o-status]').innerHTML = ['All', ...Object.keys(BADGE)].map(s =>
+      `<option value="${s}"${s === oFilter ? ' selected' : ''}>${s === 'All' ? 'All statuses' : s} (${s === 'All' ? orders.length : count(s)})</option>`).join('');
     const list = orders.filter(o => (oFilter === 'All' || o.status === oFilter) && (o.customer + o.id).toLowerCase().includes(oQuery));
     $('[data-o-empty]').hidden = list.length > 0;
     $('[data-orders]').innerHTML = list.map(o => `<tr>
@@ -186,10 +187,7 @@ function farm(user) {
     saveOrders(); renderOrders(); renderOverview();
     toast(`${o.id} is now ${o.status}`);
   });
-  $('[data-o-chips]').addEventListener('click', e => {
-    const b = e.target.closest('[data-status]'); if (!b) return;
-    oFilter = b.dataset.status; renderOrders();
-  });
+  $('[data-o-status]').addEventListener('change', e => { oFilter = e.target.value; renderOrders(); });
   $('[data-o-search]').addEventListener('input', e => { oQuery = e.target.value.trim().toLowerCase(); renderOrders(); });
 
   /* ---------- Stock ---------- */
@@ -204,7 +202,7 @@ function farm(user) {
     $('[data-s-low]').textContent = low.length;
     $('[data-s-value]').textContent = money(listed.reduce((n, s) => n + s.stock * s.price, 0));
     const counts = { All: stock.length, Listed: listed.length, Hidden: stock.length - listed.length, 'Low stock': low.length };
-    $('[data-s-chips]').innerHTML = Object.entries(counts).map(([k, n]) => `<button type="button" data-sfilter="${k}" aria-pressed="${k === sFilter}">${k} (${n})</button>`).join('');
+    $('[data-s-status]').innerHTML = Object.entries(counts).map(([k, n]) => `<option value="${k}"${k === sFilter ? ' selected' : ''}>${k === 'All' ? 'All items' : k} (${n})</option>`).join('');
     const match = { All: () => true, Listed: s => s.listed, Hidden: s => !s.listed, 'Low stock': s => s.stock < LOW }[sFilter];
     const list = stock.filter(s => match(s) && s.name.toLowerCase().includes(sQuery));
     $('[data-s-empty]').hidden = list.length > 0;
@@ -257,7 +255,7 @@ function farm(user) {
       afterStockChange(`${item.name} removed`);
     }
   });
-  $('[data-s-chips]').addEventListener('click', e => { const b = e.target.closest('[data-sfilter]'); if (b) { sFilter = b.dataset.sfilter; renderStock(); } });
+  $('[data-s-status]').addEventListener('change', e => { sFilter = e.target.value; renderStock(); });
   $('[data-s-search]').addEventListener('input', e => { sQuery = e.target.value.trim().toLowerCase(); renderStock(); });
 
   const af = $('[data-add-item]'), addBtn = $('[data-add-toggle]');
